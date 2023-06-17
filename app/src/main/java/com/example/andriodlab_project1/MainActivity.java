@@ -30,8 +30,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // get the data
-       /* ConnectionAsyncTask connectionAsyncTask = new ConnectionAsyncTask(MainActivity.this);
-        connectionAsyncTask.execute("https://run.mocky.io/v3/d1a9c002-6e88-4d1e-9f39-930615876bca");*/
+
         User newUser = new User();
 
 
@@ -81,9 +80,5 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    /*public void fillDestinations(List<TravelDestination> destinations) {
-        for (int i = 0; i < destinations.size(); i++) {
-            dataBaseHelper.insertTravelDestination(destinations.get(i));
-        }
-    }*/
+
 }
