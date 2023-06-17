@@ -2,25 +2,25 @@ package com.example.andriodlab_project1;
 
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.List;
+import com.example.andriodlab_project1.admin.AdminDataBaseHelper;
+import com.example.andriodlab_project1.common.SharedPrefManager;
+import com.example.andriodlab_project1.common.User;
+import com.example.andriodlab_project1.common.signup;
+
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
-    DataBaseHelper dataBaseHelper = new DataBaseHelper(MainActivity.this,"R1190207", null,1);
+    AdminDataBaseHelper adminDataBaseHelper = new AdminDataBaseHelper(MainActivity.this,"R1190207", null,1);
 
     public static User user = new User();
 
@@ -57,16 +57,16 @@ public class MainActivity extends AppCompatActivity {
 
                 String enteredEmail = email.getText().toString().trim();
                 String enterPassword = password.getText().toString().trim();
-                if (!dataBaseHelper.isRegistered(enteredEmail)){
+                if (!adminDataBaseHelper.isRegistered(enteredEmail)){
                     Toast.makeText(MainActivity.this, "This email is not registered!", Toast.LENGTH_SHORT).show();
-                }else if(!dataBaseHelper.correctSignIn(enteredEmail, enterPassword)){
+                }else if(!adminDataBaseHelper.correctSignIn(enteredEmail, enterPassword)){
                     Toast.makeText(MainActivity.this, "Incorrect password!", Toast.LENGTH_SHORT).show();
                 }else{
                     if (rememberMe.isChecked())
                         sharedPrefManager.writeString("email", email.getText().toString().trim());
                     else
                         sharedPrefManager.writeString("email", "noValue");
-                    user = dataBaseHelper.getUserByEmail(email.getText().toString().trim());
+                    user = adminDataBaseHelper.getAdminByEmail(email.getText().toString().trim());
                     startActivity(new Intent(MainActivity.this, signup.class));
                 }
             }

@@ -1,4 +1,4 @@
-package com.example.andriodlab_project1;
+package com.example.andriodlab_project1.common;
 
 
 import android.content.Context;
@@ -16,7 +16,7 @@ public class SharedPrefManager {
         editor = sharedPreferences.edit();
     }
 
-    static SharedPrefManager getInstance(Context context) {
+    public static SharedPrefManager getInstance(Context context) {
         if (ourInstance != null) {
             return ourInstance;
         }

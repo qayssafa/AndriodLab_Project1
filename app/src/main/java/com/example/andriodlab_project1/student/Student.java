@@ -1,4 +1,6 @@
-package com.example.andriodlab_project1;
+package com.example.andriodlab_project1.student;
+
+import com.example.andriodlab_project1.common.User;
 
 public class Student extends User {
     private String mobileNumber;
@@ -8,6 +10,10 @@ public class Student extends User {
         super(email, firstName, lastName, password);
         this.mobileNumber = mobileNumber;
         this.address = address;
+    }
+
+    public Student() {
+
     }
 
     public String getMobileNumber() {
