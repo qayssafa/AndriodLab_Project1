@@ -21,6 +21,10 @@ public class Instructor extends User {
         this.coursesTaught = coursesTaught;
     }
 
+    public Instructor() {
+
+    }
+
     public String getMobileNumber() {
         return mobileNumber;
     }

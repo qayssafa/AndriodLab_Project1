@@ -15,12 +15,16 @@ import com.example.andriodlab_project1.admin.AdminDataBaseHelper;
 import com.example.andriodlab_project1.common.SharedPrefManager;
 import com.example.andriodlab_project1.common.User;
 import com.example.andriodlab_project1.common.signup;
+import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
+import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
     AdminDataBaseHelper adminDataBaseHelper = new AdminDataBaseHelper(MainActivity.this,"R1190207", null,1);
+    StudentDataBaseHelper studentDataBaseHelper = new StudentDataBaseHelper(MainActivity.this,"R1190207", null,1);
+    InstructorDataBaseHelper instructorDataBaseHelper = new InstructorDataBaseHelper(MainActivity.this,"R1190207", null,1);
 
     public static User user = new User();
 
