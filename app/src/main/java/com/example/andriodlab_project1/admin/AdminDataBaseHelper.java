@@ -74,5 +74,8 @@ public class AdminDataBaseHelper extends SQLiteOpenHelper {
         return cursor.moveToFirst();
     }
 
+//    public Cursor RemoveCourse(int CourseID){
+//
+//    }
 
 }

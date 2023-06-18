@@ -7,8 +7,8 @@ public class Admin extends User {
         super(email, firstName, lastName, password);
     }
 
-
     public Admin() {
 
     }
+
 }

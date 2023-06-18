@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".admin.CreateCourseActivity">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/addcourse" />
+
+    <TextView
+        android:id="@+id/CourseNumberTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course Number : "
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="356dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="259dp"
+        tools:layout_editor_absoluteY="356dp" />
+
+    <TextView
+        android:id="@+id/CourseTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course Title : "
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="420dp" />
+
+    <EditText
+        android:id="@+id/CourseTitleInput"
+        android:layout_width="113dp"
+        android:layout_height="40dp"
+        android:ems="10"
+        android:hint="Course Title"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="405dp" />
+
+    <TextView
+        android:id="@+id/CourseMainTopicsText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course main topics (comma separated)"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="487dp" />
+
+    <EditText
+        android:id="@+id/CourseMainTopicsInput"
+        android:layout_width="125dp"
+        android:layout_height="47dp"
+        android:ems="10"
+        android:hint="main topics"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="472dp" />
+
+    <TextView
+        android:id="@+id/PrerequistesText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prerequisites (comma separated)"
+        tools:layout_editor_absoluteX="19dp"
+        tools:layout_editor_absoluteY="556dp" />
+
+    <EditText
+        android:id="@+id/PrerequisitesInput"
+        android:layout_width="116dp"
+        android:layout_height="37dp"
+        android:ems="10"
+        android:hint="Prerequistes"
+        android:inputType="text"
+        tools:layout_editor_absoluteX="270dp"
+        tools:layout_editor_absoluteY="545dp" />
+
+    <TextView
+        android:id="@+id/InsertPhotoText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Insert Photo"
+        tools:layout_editor_absoluteX="19dp"
+        tools:layout_editor_absoluteY="632dp" />
+
+    <Button
+        android:id="@+id/InsertPhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#65AFFB"
+        android:backgroundTint="#65AFFB"
+        android:text="Upload"
+        app:iconTint="#65AFFB"
+        tools:layout_editor_absoluteX="284dp"
+        tools:layout_editor_absoluteY="613dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
