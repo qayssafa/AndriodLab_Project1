@@ -8,28 +8,26 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class InstructorDataBaseHelper extends SQLiteOpenHelper {
-    public InstructorDataBaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+import com.example.andriodlab_project1.common.DataBaseHelper;
+
+public class InstructorDataBaseHelper {
+    private DataBaseHelper dbHelper;
+    public InstructorDataBaseHelper(Context context) {
+        dbHelper = new DataBaseHelper(context);
+        createTableIfNotExists();
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    private void createTableIfNotExists() {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         sqLiteDatabase.execSQL("CREATE TABLE INSTRUCTOR(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL," +
                 "MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL)");
-
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
     public boolean insertInstructor(Instructor instructor) {
-        SQLiteDatabase sqLiteDatabaseR = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + instructor.getEmail() + "\";", null);
         if (!cursor.moveToFirst()) {
-            SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("EMAIL", instructor.getEmail());
             contentValues.put("FIRST NAME", instructor.getFirstName());
@@ -48,7 +46,7 @@ public class InstructorDataBaseHelper extends SQLiteOpenHelper {
 
 
     public Instructor getInstructorByEmail(String email){
-        SQLiteDatabase sqLiteDatabaseR = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Instructor instructor = new Instructor();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\";", null);
         if (cursor.moveToFirst()) {
@@ -66,13 +64,13 @@ public class InstructorDataBaseHelper extends SQLiteOpenHelper {
 
 
     public boolean isRegistered(String email){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\";", null);
         return cursor.moveToFirst();
     }
 
     public boolean correctSignIn(String email, String password){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }

@@ -9,32 +9,29 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.andriodlab_project1.common.DataBaseHelper;
+
 /**
  * Admin Table
  */
-public class AdminDataBaseHelper extends SQLiteOpenHelper {
-    public AdminDataBaseHelper(@Nullable Context context, @Nullable String name, @Nullable SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
+public class AdminDataBaseHelper {
+
+    private DataBaseHelper dbHelper;
+    public AdminDataBaseHelper(Context context) {
+        dbHelper = new DataBaseHelper(context);
+        createTableIfNotExists();
     }
 
-
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+    private void createTableIfNotExists() {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         sqLiteDatabase.execSQL("CREATE TABLE ADMIN(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT NOT NULL)");
-
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
     public boolean insertAdmin(Admin admin) {
-        SQLiteDatabase sqLiteDatabaseR = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM ADMIN WHERE EMAIL = \"" + admin.getEmail() + "\";", null);
         if (!cursor.moveToFirst()) {
-            SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("EMAIL", admin.getEmail());
             contentValues.put("FIRSTNAME", admin.getFirstName());
@@ -49,7 +46,7 @@ public class AdminDataBaseHelper extends SQLiteOpenHelper {
 
 
     public Admin getAdminByEmail(String email){
-        SQLiteDatabase sqLiteDatabaseR = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Admin admin = new Admin();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM ADMIN WHERE EMAIL = \"" + email + "\";", null);
         if (cursor.moveToFirst()) {
@@ -63,13 +60,13 @@ public class AdminDataBaseHelper extends SQLiteOpenHelper {
 
 
     public boolean isRegistered(String email){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM ADMIN WHERE EMAIL = \"" + email + "\";", null);
         return cursor.moveToFirst();
     }
 
     public boolean correctSignIn(String email, String password){
-        SQLiteDatabase sqLiteDatabase = getReadableDatabase();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM ADMIN WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }
