@@ -51,16 +51,25 @@ public class CourseDataBaseHelper {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
         int rowsAffected=sqLiteDatabase.delete("COURSE", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
         sqLiteDatabase.close();
-        boolean isDeleted = rowsAffected > 0;
-        return isDeleted;
+        if (rowsAffected > 0) {
+            return true;
+            //toastMessage
+            // Update was successful
+            // You can perform any additional actions or show a success message
+        } else {
+            return false;
+            //toastMessage
+            // Update failed
+            // Handle the case where the course with the given courseId doesn't exist or other errors occurred
+        }
     }
-    public boolean updateCourse(Course course) {
+    public Boolean updateCourse(Course course) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID  = \"" + course.getCorseID() + "\";", null);
         if (!cursor.moveToFirst()) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put("Course_Title",course.getCourseTitle());
+            contentValues.put("Course_Title", course.getCourseTitle());
             StringBuilder stringBuilder = new StringBuilder();
             for (String topic : course.getCourseMainTopics()) {
                 stringBuilder.append(topic).append(",");
@@ -68,8 +77,19 @@ public class CourseDataBaseHelper {
             contentValues.put("Course_Main_Topics", stringBuilder.toString());
             contentValues.put("Prerequisites", course.getPrerequisites());
             //Photo
-            //sqLiteDatabase.update("COURSE", null, contentValues);
-            return true;
+            int rowsAffected = sqLiteDatabaseR.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCorseID())});
+            sqLiteDatabaseR.close();
+            if (rowsAffected > 0) {
+                return true;
+                //toastMessage
+                // Update was successful
+                // You can perform any additional actions or show a success message
+            } else {
+                return false;
+                //toastMessage
+                // Update failed
+                // Handle the case where the course with the given courseId doesn't exist or other errors occurred
+            }
         }
         return false;
     }
