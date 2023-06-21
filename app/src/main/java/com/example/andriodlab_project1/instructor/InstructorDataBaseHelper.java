@@ -16,18 +16,27 @@ public class InstructorDataBaseHelper {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
     }
-
     private void createTableIfNotExists() {
-        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM INSTRUCTOR ", null);
-        if (cursor.getColumnCount() != 0) {
-            // Table already exists
-            cursor.close();
-        } else {
+        if (isTableCreatedFirstTime("INSTRUCTOR")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             sqLiteDatabase.execSQL("CREATE TABLE INSTRUCTOR(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL," +
                     "MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL)");
         }
+    }
+    public boolean isTableCreatedFirstTime(String tableName) {
+        boolean isFirstTime = false;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", null);
+
+        if (cursor != null) {
+            if (!cursor.moveToFirst()) {
+                // Table doesn't exist
+                isFirstTime = true;
+            }
+            cursor.close();
+        }
+        db.close();
+        return isFirstTime;
     }
 
     public boolean insertInstructor(Instructor instructor) {

@@ -23,19 +23,27 @@ public class AdminDataBaseHelper {
     }
 
     private void createTableIfNotExists() {
-        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM ADMIN " , null);
-
-        if (cursor.getColumnCount() != 0) {
-            // Table already exists
-            cursor.close();
-        } else {
+        if (isTableCreatedFirstTime("ADMIN")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             // Create the table
-            sqLiteDatabase.execSQL("CREATE TABLE ADMIN(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT NOT NULL)");
+            sqLiteDatabase.execSQL("CREATE TABLE ADMIN(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT NOT NULL)");        } else {
         }
     }
+    public boolean isTableCreatedFirstTime(String tableName) {
+        boolean isFirstTime = false;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", null);
 
+        if (cursor != null) {
+            if (!cursor.moveToFirst()) {
+                // Table doesn't exist
+                isFirstTime = true;
+            }
+            cursor.close();
+        }
+        db.close();
+        return isFirstTime;
+    }
     public boolean insertAdmin(Admin admin) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM ADMIN WHERE EMAIL = \"" + admin.getEmail() + "\";", null);
@@ -79,9 +87,5 @@ public class AdminDataBaseHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM ADMIN WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }
-
-//    public Cursor RemoveCourse(int CourseID){
-//
-//    }
 
 }
