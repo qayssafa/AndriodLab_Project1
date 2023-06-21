@@ -18,9 +18,16 @@ public class InstructorDataBaseHelper {
     }
 
     private void createTableIfNotExists() {
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        sqLiteDatabase.execSQL("CREATE TABLE INSTRUCTOR(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL," +
-                "MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL)");
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM INSTRUCTOR ", null);
+        if (cursor.getColumnCount() != 0) {
+            // Table already exists
+            cursor.close();
+        } else {
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+            sqLiteDatabase.execSQL("CREATE TABLE INSTRUCTOR(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL," +
+                    "MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL)");
+        }
     }
 
     public boolean insertInstructor(Instructor instructor) {
@@ -30,10 +37,10 @@ public class InstructorDataBaseHelper {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("EMAIL", instructor.getEmail());
-            contentValues.put("FIRST NAME", instructor.getFirstName());
-            contentValues.put("LAST NAME", instructor.getLastName());
+            contentValues.put("FIRSTNAME", instructor.getFirstName());
+            contentValues.put("LASTNAME", instructor.getLastName());
             contentValues.put("PASSWORD", instructor.getPassword());
-            contentValues.put("MOBILE NUMBER", instructor.getMobileNumber());
+            contentValues.put("MOBILENUMBER", instructor.getMobileNumber());
             contentValues.put("ADDRESS", instructor.getAddress());
             contentValues.put("SPECIALIZATION", instructor.getSpecialization());
             contentValues.put("DEGREE", instructor.getDegree());

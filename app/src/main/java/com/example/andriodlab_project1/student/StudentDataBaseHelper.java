@@ -20,8 +20,15 @@ public class StudentDataBaseHelper {
     }
 
     private void createTableIfNotExists() {
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        sqLiteDatabase.execSQL("CREATE TABLE STUDENT(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL,MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL)");
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM STUDENT ", null);
+        if (cursor.getColumnCount() != 0) {
+            // Table already exists
+            cursor.close();
+        } else {
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+            sqLiteDatabase.execSQL("CREATE TABLE STUDENT(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL,MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL)");
+        }
     }
 
     public boolean insertStudent(Student student) {
@@ -31,10 +38,10 @@ public class StudentDataBaseHelper {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("EMAIL", student.getEmail());
-            contentValues.put("FIRST NAME", student.getFirstName());
-            contentValues.put("LAST NAME", student.getLastName());
+            contentValues.put("FIRSTNAME", student.getFirstName());
+            contentValues.put("LASTNAME", student.getLastName());
             contentValues.put("PASSWORD", student.getPassword());
-            contentValues.put("MOBILE NUMBER", student.getMobileNumber());
+            contentValues.put("MOBILENUMBER", student.getMobileNumber());
             contentValues.put("ADDRESS", student.getAddress());
             sqLiteDatabase.insert("STUDENT", null, contentValues);
             return true;

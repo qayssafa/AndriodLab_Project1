@@ -23,8 +23,17 @@ public class AdminDataBaseHelper {
     }
 
     private void createTableIfNotExists() {
-        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        sqLiteDatabase.execSQL("CREATE TABLE ADMIN(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT NOT NULL)");
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM ADMIN " , null);
+
+        if (cursor.getColumnCount() != 0) {
+            // Table already exists
+            cursor.close();
+        } else {
+            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+            // Create the table
+            sqLiteDatabase.execSQL("CREATE TABLE ADMIN(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT, LASTNAME TEXT, PASSWORD TEXT NOT NULL)");
+        }
     }
 
     public boolean insertAdmin(Admin admin) {
