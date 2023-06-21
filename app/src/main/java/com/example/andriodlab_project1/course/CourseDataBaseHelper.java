@@ -18,18 +18,25 @@ public class CourseDataBaseHelper {
         createTableIfNotExists();
     }
     private void createTableIfNotExists() {
-        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE " , null);
-
-        if (cursor.getColumnCount() != 0) {
-            // Table already exists
-            cursor.close();
-        } else {
+        if (isTableCreatedFirstTime("COURSE")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             // Create the table
             sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID INTEGER PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
-                    "Prerequisites TEXT NOT NULL,Photo Blob)");
+                    "Prerequisites TEXT NOT NULL,Photo Blob)");        }
+    }
+    public boolean isTableCreatedFirstTime(String tableName) {
+        boolean isFirstTime = false;
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT name FROM sqlite_master WHERE type='table' AND name='" + tableName + "'", null);
+        if (cursor != null) {
+            if (!cursor.moveToFirst()) {
+                // Table doesn't exist
+                isFirstTime = true;
+            }
+            cursor.close();
         }
+        db.close();
+        return isFirstTime;
     }
     public boolean insertCourse(Course course) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
