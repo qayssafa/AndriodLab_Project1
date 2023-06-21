@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CourseDataBaseHelper {
     private DataBaseHelper dbHelper;
     public CourseDataBaseHelper(Context context) {
@@ -92,6 +95,21 @@ public class CourseDataBaseHelper {
             }
         }
         return false;
+    }
+
+    public List<String> getAllCourses() {
+        List<String> courses = new ArrayList<String>();
+        SQLiteDatabase db  = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT c.Course_Title FROM COURSE c",null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                courses.add(cursor.getString(0));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+        return courses;
     }
     /**
      * public String[] getArray() {

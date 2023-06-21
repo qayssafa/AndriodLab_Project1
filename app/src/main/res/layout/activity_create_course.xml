@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/su"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin.CreateCourseActivity">
@@ -72,15 +73,13 @@
         tools:layout_editor_absoluteX="19dp"
         tools:layout_editor_absoluteY="556dp" />
 
-    <EditText
+    <Button
         android:id="@+id/PrerequisitesInput"
-        android:layout_width="116dp"
-        android:layout_height="37dp"
-        android:ems="10"
-        android:hint="Prerequistes"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="270dp"
-        tools:layout_editor_absoluteY="545dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Button"
+        tools:layout_editor_absoluteX="284dp"
+        tools:layout_editor_absoluteY="537dp" />
 
     <TextView
         android:id="@+id/InsertPhotoText"
@@ -100,5 +99,13 @@
         app:iconTint="#65AFFB"
         tools:layout_editor_absoluteX="284dp"
         tools:layout_editor_absoluteY="613dp" />
+
+    <Button
+        android:id="@+id/submitData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        tools:layout_editor_absoluteX="166dp"
+        tools:layout_editor_absoluteY="669dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
