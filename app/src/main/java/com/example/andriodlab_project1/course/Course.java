@@ -1,74 +1,60 @@
 package com.example.andriodlab_project1.course;
 
-import java.util.Arrays;
+import java.sql.Blob;
+import java.util.ArrayList;
 
 public class Course {
+    private int CorseID;
+    private String CourseTitle;
+    private ArrayList<String>CourseMainTopics;
+    private ArrayList<String>Prerequisites;
+    private Blob photo;
 
-    private String courseNumber;
-    private String courseTitle;
-    private String[] courseMainTopics;
-    private String[] coursePreRequisites;
-    private String coursePhoto;
-
-    public Course(String courseNumber, String courseTitle, String[] courseMainTopics, String[] coursePreRequisites, String coursePhoto) {
-        this.courseNumber = courseNumber;
-        this.courseTitle = courseTitle;
-        this.courseMainTopics = courseMainTopics;
-        this.coursePreRequisites = coursePreRequisites;
-        this.coursePhoto = coursePhoto;
+    public Course(int courseId, String courseTitle, ArrayList<String> courseMainTopics, ArrayList<String> prerequisites, Blob photo) {
+        CorseID = courseId;
+        CourseTitle = courseTitle;
+        CourseMainTopics = courseMainTopics;
+        Prerequisites = prerequisites;
+        this.photo = photo;
     }
 
     public Course() {
     }
 
-    public String getCourseNumber() {
-        return courseNumber;
-    }
-
-    public void setCourseNumber(String courseNumber) {
-        this.courseNumber = courseNumber;
+    public int getCorseID() {
+        return CorseID;
     }
 
     public String getCourseTitle() {
-        return courseTitle;
+        return CourseTitle;
+    }
+
+    public ArrayList<String> getCourseMainTopics() {
+        return CourseMainTopics;
+    }
+
+
+    public ArrayList<String> getPrerequisites() {
+        return Prerequisites;
+    }
+
+    public Blob getPhoto() {
+        return photo;
     }
 
     public void setCourseTitle(String courseTitle) {
-        this.courseTitle = courseTitle;
+        CourseTitle = courseTitle;
     }
 
-    public String[] getCourseMainTopics() {
-        return courseMainTopics;
+    public void setCourseMainTopics(ArrayList<String> courseMainTopics) {
+        CourseMainTopics = courseMainTopics;
     }
 
-    public void setCourseMainTopics(String[] courseMainTopics) {
-        this.courseMainTopics = courseMainTopics;
+    public void setPrerequisites(ArrayList<String> prerequisites) {
+        Prerequisites = prerequisites;
     }
 
-    public String[] getCoursePreRequisites() {
-        return coursePreRequisites;
-    }
-
-    public void setCoursePreRequisites(String[] coursePreRequisites) {
-        this.coursePreRequisites = coursePreRequisites;
-    }
-
-    public String getCoursePhoto() {
-        return coursePhoto;
-    }
-
-    public void setCoursePhoto(String coursePhoto) {
-        this.coursePhoto = coursePhoto;
-    }
-
-    @Override
-    public String toString() {
-        return "Course{" +
-                "courseNumber='" + courseNumber + '\'' +
-                ", courseTitle='" + courseTitle + '\'' +
-                ", courseMainTopics=" + Arrays.toString(courseMainTopics) +
-                ", coursePreRequisites=" + Arrays.toString(coursePreRequisites) +
-                ", coursePhoto='" + coursePhoto + '\'' +
-                '}';
+    public void setPhoto(Blob photo) {
+        this.photo = photo;
     }
 }
