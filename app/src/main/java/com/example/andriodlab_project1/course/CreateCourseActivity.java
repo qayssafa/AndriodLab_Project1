@@ -7,9 +7,13 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextPaint;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.common.MultiSelectSpinner;
@@ -23,13 +27,18 @@ public class CreateCourseActivity extends AppCompatActivity {
     private CourseDataBaseHelper dbHelper;
     private MultiSelectSpinner multiSelectSpinner;
     private static int RESULT_LOAD_IMAGE = 1;
+    private EditText courseId;
+    private EditText CourseTitleInput;
+    private EditText CourseMainTopicsInput;
+    byte[] blob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_course);
-
+        courseId=findViewById(R.id.courseId);
+        CourseTitleInput=findViewById(R.id.CourseTitleInput);
+        CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
         dbHelper = new CourseDataBaseHelper(this);
-        DataBaseHelper dataBaseHelper=new DataBaseHelper(this);
         List<String> courses = dbHelper.getAllCourses();
         String[] coursesArray = courses.toArray(new String[0]);
 
@@ -56,7 +65,23 @@ public class CreateCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<String> selectedCourses = multiSelectSpinner.getSelectedItems();
+                while (courseId.getText().toString().isEmpty()||courseId.getText().toString().isBlank()||dbHelper.isCourseExists(courseId.getText().toString())){
+                    Toast.makeText(CreateCourseActivity.this, "This Course Number not Valid!", Toast.LENGTH_SHORT).show();
+                }
+                String courseNumber=courseId.getText().toString();
+                while (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
+                    Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
+                }
+                String courseName=CourseTitleInput.getText().toString();
 
+                while (CourseMainTopicsInput.getText().toString().isEmpty()||CourseMainTopicsInput.getText().toString().isBlank()){
+                    Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
+                }
+                String courseTopics=CourseMainTopicsInput.getText().toString();
+                //courseTopics should be list
+                //check errors
+                Course course=new Course(courseNumber,courseName,courseTopics,multiSelectSpinner.getSelectedItems(),blob);
+                dbHelper.insertCourse(course);
             }
         });
 
@@ -80,7 +105,7 @@ public class CreateCourseActivity extends AppCompatActivity {
             // Convert to Blob
             try {
                 File file = new File(picturePath);
-                byte[] blob = new byte[(int) file.length()];
+                blob = new byte[(int) file.length()];
 
                 FileInputStream fileInputStream = new FileInputStream(file);
                 fileInputStream.read(blob);

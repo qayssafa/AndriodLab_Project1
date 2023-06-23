@@ -39,8 +39,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(MainActivity.this, CreateCourseActivity.class);
-        startActivity(intent);
         setContentView(R.layout.activity_main);
         // get the data
         dataBaseHelper=new DataBaseHelper(this);
@@ -100,12 +98,14 @@ public class MainActivity extends AppCompatActivity {
                     }
                     if (adminDataBaseHelper.isRegistered(enteredEmail)) {
                         user = adminDataBaseHelper.getAdminByEmail(email.getText().toString().trim());
+                        startActivity(new Intent(MainActivity.this, AdminMainActivity.class));
                     } else if (studentDataBaseHelper.isRegistered(enteredEmail)) {
                         user = studentDataBaseHelper.getStudentByEmail(email.getText().toString().trim());
+                        startActivity(new Intent(MainActivity.this, Student.class));
                     } else if (instructorDataBaseHelper.isRegistered(enteredEmail)) {
                         user = instructorDataBaseHelper.getInstructorByEmail(email.getText().toString().trim());
+                        startActivity(new Intent(MainActivity.this, signup.class));
                     }
-                    startActivity(new Intent(MainActivity.this, signup.class));
                 }
             }
         });
