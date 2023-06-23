@@ -10,8 +10,8 @@ public class Course {
     private String Prerequisites;
     private Blob photo;
 
-    public Course(int courseId, String courseTitle, ArrayList<String> courseMainTopics,String prerequisites, Blob photo) {
-        CorseID = courseId;
+    public Course(int corseID, String courseTitle, ArrayList<String> courseMainTopics, String prerequisites, Blob photo) {
+        CorseID = corseID;
         CourseTitle = courseTitle;
         CourseMainTopics = courseMainTopics;
         Prerequisites = prerequisites;
@@ -33,13 +33,16 @@ public class Course {
         return CourseMainTopics;
     }
 
-
     public String getPrerequisites() {
         return Prerequisites;
     }
 
     public Blob getPhoto() {
         return photo;
+    }
+
+    public void setCorseID(int corseID) {
+        CorseID = corseID;
     }
 
     public void setCourseTitle(String courseTitle) {
