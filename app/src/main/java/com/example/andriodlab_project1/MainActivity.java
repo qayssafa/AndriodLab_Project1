@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.admin.AdminDataBaseHelper;
+import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.common.SharedPrefManager;
 import com.example.andriodlab_project1.common.User;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);
+        startActivity(intent);
         setContentView(R.layout.activity_main);
         // get the data
         dataBaseHelper=new DataBaseHelper(this);
