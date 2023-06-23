@@ -18,6 +18,7 @@ import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.common.SharedPrefManager;
 import com.example.andriodlab_project1.common.User;
 import com.example.andriodlab_project1.common.signup;
+import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.student.Student;
@@ -38,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Intent intent = new Intent(MainActivity.this, AdminMainActivity.class);
+        Intent intent = new Intent(MainActivity.this, CreateCourseActivity.class);
         startActivity(intent);
         setContentView(R.layout.activity_main);
         // get the data

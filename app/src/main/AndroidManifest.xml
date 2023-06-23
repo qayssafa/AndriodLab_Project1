@@ -17,7 +17,8 @@
         <activity
             android:name=".admin.AdminMainActivity"
             android:exported="false" />
-        <activity android:name=".admin.CreateCourseActivity"
+        <activity
+            android:name=".course.CreateCourseActivity"
             android:exported="false" />
         <activity
             android:name=".common.signup"
