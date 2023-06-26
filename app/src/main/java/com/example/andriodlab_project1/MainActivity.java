@@ -17,11 +17,13 @@ import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.common.SharedPrefManager;
 import com.example.andriodlab_project1.common.User;
-import com.example.andriodlab_project1.signup.signup;
+import com.example.andriodlab_project1.instructor.InstructorMainActivity;
+import com.example.andriodlab_project1.signup.SignUPMainActivity;
 import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
+import com.example.andriodlab_project1.student.StudentMainActivity;
 
 import java.util.Objects;
 
@@ -100,10 +102,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, AdminMainActivity.class));
                     } else if (studentDataBaseHelper.isRegistered(enteredEmail)) {
                         user = studentDataBaseHelper.getStudentByEmail(email.getText().toString().trim());
-                        startActivity(new Intent(MainActivity.this, Student.class));
+                        startActivity(new Intent(MainActivity.this, StudentMainActivity.class));
                     } else if (instructorDataBaseHelper.isRegistered(enteredEmail)) {
                         user = instructorDataBaseHelper.getInstructorByEmail(email.getText().toString().trim());
-                        startActivity(new Intent(MainActivity.this, signup.class));
+                        startActivity(new Intent(MainActivity.this, InstructorMainActivity.class));
                     }
                 }
             }
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, signup.class));
+                startActivity(new Intent(MainActivity.this, SignUPMainActivity.class));
             }
         });
     }

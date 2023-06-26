@@ -65,7 +65,7 @@ public class CreateCourseActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<String> selectedCourses = multiSelectSpinner.getSelectedItems();
-                while (courseId.getText().toString().isEmpty()||courseId.getText().toString().isBlank()||dbHelper.isCourseExists(courseId.getText().toString())){
+                while (courseId.getText().toString().isEmpty()||courseId.getText().toString().isBlank()||dbHelper.isCourseExists(Integer.parseInt(courseId.getText().toString()))){
                     Toast.makeText(CreateCourseActivity.this, "This Course Number not Valid!", Toast.LENGTH_SHORT).show();
                 }
                 String courseNumber=courseId.getText().toString();
@@ -80,8 +80,9 @@ public class CreateCourseActivity extends AppCompatActivity {
                 String courseTopics=CourseMainTopicsInput.getText().toString();
                 //courseTopics should be list
                 //check errors
+              /*
                 Course course=new Course(courseNumber,courseName,courseTopics,multiSelectSpinner.getSelectedItems(),blob);
-                dbHelper.insertCourse(course);
+                dbHelper.insertCourse(course);*/
             }
         });
 

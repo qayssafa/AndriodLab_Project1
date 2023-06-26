@@ -4,13 +4,13 @@ import java.sql.Blob;
 import java.util.ArrayList;
 
 public class Course {
-    private String CorseID;
+    private int CorseID;
     private String CourseTitle;
     private ArrayList<String>CourseMainTopics;
     private String Prerequisites;
     private Blob photo;
 
-    public Course(String corseID, String courseTitle, ArrayList<String> courseMainTopics, String prerequisites, Blob photo) {
+    public Course(int corseID, String courseTitle, ArrayList<String> courseMainTopics, String prerequisites, Blob photo) {
         CorseID = corseID;
         CourseTitle = courseTitle;
         CourseMainTopics = courseMainTopics;
@@ -21,7 +21,7 @@ public class Course {
     public Course() {
     }
 
-    public String getCorseID() {
+    public int getCorseID() {
         return CorseID;
     }
 
@@ -41,9 +41,7 @@ public class Course {
         return photo;
     }
 
-    public void setCorseID(String corseID) {
-        CorseID = corseID;
-    }
+
 
     public void setCourseTitle(String courseTitle) {
         CourseTitle = courseTitle;

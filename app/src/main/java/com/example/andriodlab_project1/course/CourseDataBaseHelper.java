@@ -21,7 +21,7 @@ public class CourseDataBaseHelper {
         if (isTableCreatedFirstTime("COURSE")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             // Create the table
-            sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID TEXT PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
+            sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID INT PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
                     "Prerequisites TEXT NOT NULL,Photo Blob)");        }
     }
     public boolean isTableCreatedFirstTime(String tableName) {
@@ -57,9 +57,9 @@ public class CourseDataBaseHelper {
         }
         return false;
     }
-    public boolean deleteCourse(String courseId){
+    public boolean deleteCourse(int courseId){
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        int rowsAffected=sqLiteDatabase.delete("COURSE", "COURSE_ID = ?", new String[]{courseId});
+        int rowsAffected=sqLiteDatabase.delete("COURSE", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
         sqLiteDatabase.close();
         if (rowsAffected > 0) {
             return true;
@@ -103,7 +103,7 @@ public class CourseDataBaseHelper {
         }
         return false;
     }
-    public boolean isCourseExists(String courseId) {
+    public boolean isCourseExists(int courseId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID = \"" + courseId + "\";", null);
         boolean isCourseExists = (cursor != null && cursor.getCount() > 0);

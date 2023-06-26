@@ -21,7 +21,13 @@
             android:name=".course.CreateCourseActivity"
             android:exported="false" />
         <activity
-            android:name=".signup.signup"
+            android:name=".student.StudentMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".signup.SignUPMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".instructor.InstructorMainActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

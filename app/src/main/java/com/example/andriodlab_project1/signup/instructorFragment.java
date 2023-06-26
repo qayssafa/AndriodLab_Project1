@@ -2,74 +2,78 @@ package com.example.andriodlab_project1.signup;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Spinner;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 import com.example.andriodlab_project1.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link instructorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class instructorFragment extends Fragment {
-    Spinner dropdown;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public instructorFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment instructor.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static instructorFragment newInstance(String param1, String param2) {
-        instructorFragment fragment = new instructorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-
-
-    }
-
+    private EditText phoneInstructor;
+    private EditText addressInstructor;
+    private EditText specialization ;
+    private EditText courses;
+    private CheckBox checkBoxBSc;
+    private CheckBox checkBoxMSc;
+    private CheckBox checkBoxPhD;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_instructor, container, false);
-
     }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        phoneInstructor = (EditText) getActivity().findViewById(R.id.editPhone);
+        addressInstructor = (EditText) getActivity().findViewById(R.id.editAddress);
+        specialization = (EditText) getActivity().findViewById(R.id.editSpecialization);
+        courses = (EditText) getActivity().findViewById(R.id.editListOfCourses);
+        checkBoxBSc=(CheckBox) getActivity().findViewById(R.id.checkBoxBSc);
+        checkBoxMSc=(CheckBox) getActivity().findViewById(R.id.checkBoxMSc);
+        checkBoxPhD=(CheckBox) getActivity().findViewById(R.id.checkBoxPhD);
+    }
+    public String getPhoneInstructorValue() {
 
+        if (phoneInstructor != null) {
+            return phoneInstructor.getText().toString();
+        }
+        return null;
+    }
+    public String getAddressInstructorValue() {
 
+        if (addressInstructor != null) {
+            return addressInstructor.getText().toString();
+        }
+        return null;
+    }
+    public String getSpecializationValue() {
 
+        if (specialization != null) {
+            return specialization.getText().toString();
+        }
+        return null;
+    }
+    public String getListOfCoursesValue() {
+
+        if (courses != null) {
+            return courses.getText().toString();
+        }
+        return null;
+    }
+    public boolean isCheckedBSc(){
+        return checkBoxBSc.isChecked();
+    }
+    public boolean isCheckedMSc(){
+        return checkBoxMSc.isChecked();
+    }
+    public boolean isCheckedPhD(){
+        return checkBoxPhD.isChecked();
+    }
 }
