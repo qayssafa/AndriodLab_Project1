@@ -37,7 +37,7 @@
         android:ems="10"
         android:inputType="text"
         android:text="Course Number"
-        tools:layout_editor_absoluteX="238dp"
+        tools:layout_editor_absoluteX="222dp"
         tools:layout_editor_absoluteY="343dp" />
 
     <TextView

@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.admin.AdminDataBaseHelper;
@@ -20,9 +18,7 @@ import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SignUPMainActivity extends AppCompatActivity {

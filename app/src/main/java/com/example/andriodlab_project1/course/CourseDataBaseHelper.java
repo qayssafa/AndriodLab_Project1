@@ -21,7 +21,7 @@ public class CourseDataBaseHelper {
         if (isTableCreatedFirstTime("COURSE")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             // Create the table
-            sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID INT PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
+            sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID INTEGER PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
                     "Prerequisites TEXT NOT NULL,Photo Blob)");        }
     }
     public boolean isTableCreatedFirstTime(String tableName) {
