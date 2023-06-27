@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andriodlab_project1.R;
-import com.example.andriodlab_project1.common.MultiSelectSpinner;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -27,9 +26,7 @@ import java.util.List;
 
 public class CreateCourseActivity extends AppCompatActivity {
     private CourseDataBaseHelper dbHelper;
-    private MultiSelectSpinner multiSelectSpinner;
     private static int RESULT_LOAD_IMAGE = 1;
-    private TextView courseId;
     private EditText CourseTitleInput;
     private EditText CourseMainTopicsInput;
     byte[] blob;
@@ -37,7 +34,6 @@ public class CreateCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_course);
-        courseId=findViewById(R.id.courseId);
         CourseTitleInput=findViewById(R.id.CourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
         TextView Prerequisites = findViewById(R.id.Prerequisites);
@@ -45,16 +41,11 @@ public class CreateCourseActivity extends AppCompatActivity {
         List<String> courses = dbHelper.getAllCourses();
         String[] coursesArray = courses.toArray(new String[0]);
 
-        multiSelectSpinner = new MultiSelectSpinner(this, coursesArray);
-       /* Button btnShowSpinner = findViewById(R.id.PrerequisitesInput);
-        btnShowSpinner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                multiSelectSpinner.showDialog();
-            }
-        });*/
-        String[] continents = {"1", "2", "3", "4", "5", "5", "6"};
+
+        String[] continents = dbHelper.getAllCourses().toArray(new String[0]);
+
         boolean[] selectedContinents = new boolean[continents.length];
+
         ArrayList<Integer> continentsList = new ArrayList<>();
         Prerequisites.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,11 +103,7 @@ public class CreateCourseActivity extends AppCompatActivity {
         SubmitDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<String> selectedCourses = multiSelectSpinner.getSelectedItems();
-                while (courseId.getText().toString().isEmpty()||courseId.getText().toString().isBlank()||dbHelper.isCourseExists(Integer.parseInt(courseId.getText().toString()))){
-                    Toast.makeText(CreateCourseActivity.this, "This Course Number not Valid!", Toast.LENGTH_SHORT).show();
-                }
-                String courseNumber=courseId.getText().toString();
+
                 while (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }
@@ -125,12 +112,11 @@ public class CreateCourseActivity extends AppCompatActivity {
                 while (CourseMainTopicsInput.getText().toString().isEmpty()||CourseMainTopicsInput.getText().toString().isBlank()){
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }
-                String courseTopics=CourseMainTopicsInput.getText().toString();
-                //courseTopics should be list
-                //check errors
-              /*
-                Course course=new Course(courseNumber,courseName,courseTopics,multiSelectSpinner.getSelectedItems(),blob);
-                dbHelper.insertCourse(course);*/
+                ArrayList<String> courseTopics=convertStringToList(CourseMainTopicsInput.getText().toString());
+                Course course=new Course(courseName,courseTopics,continentsList,null);
+                if (dbHelper.insertCourse(course)){
+                    Toast.makeText(CreateCourseActivity.this, "This Courses Added successfully.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -162,6 +148,22 @@ public class CreateCourseActivity extends AppCompatActivity {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        }
+    }
+    public ArrayList<String> convertStringToList(String input) {
+        if (input.isEmpty() || input.isBlank()) {
+            Toast.makeText(CreateCourseActivity.this, "This Courses Topics not Valid!", Toast.LENGTH_SHORT).show();
+            return null;
+        }
+        else {
+            String trimmedInput = input.trim();
+            if (trimmedInput.endsWith(",")) {
+                trimmedInput = trimmedInput.substring(0, trimmedInput.length() - 1);
+            }
+
+            String[] splitArray = trimmedInput.split(",");
+            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(splitArray));
+            return arrayList;
         }
     }
 }

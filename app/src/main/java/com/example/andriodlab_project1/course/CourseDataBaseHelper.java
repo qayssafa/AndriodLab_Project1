@@ -4,10 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.common.DataBaseHelper;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +19,8 @@ public class CourseDataBaseHelper {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             // Create the table
             sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID INTEGER PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
-                    "Prerequisites TEXT NOT NULL,Photo Blob)");        }
+                    "Prerequisites TEXT NOT NULL,Photo Blob)");
+        }
     }
     public boolean isTableCreatedFirstTime(String tableName) {
         boolean isFirstTime = false;
@@ -49,8 +47,19 @@ public class CourseDataBaseHelper {
             for (String topic : course.getCourseMainTopics()) {
                 stringBuilder.append(topic).append(",");
             }
+            if (stringBuilder.length() > 0) {
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1); // Remove the last comma
+            }
             contentValues.put("Course_Main_Topics", stringBuilder.toString());
-            contentValues.put("Prerequisites", course.getPrerequisites());
+
+            StringBuilder stringBuilderForPre = new StringBuilder();
+            for (Integer pre : course.getPrerequisites()) {
+                stringBuilderForPre.append(pre).append(",");
+            }
+            if (stringBuilderForPre.length() > 0) {
+                stringBuilderForPre.deleteCharAt(stringBuilderForPre.length() - 1); // Remove the last comma
+            }
+            contentValues.put("Prerequisites", stringBuilderForPre.toString());
             //Photo
             sqLiteDatabase.insert("COURSE", null, contentValues);
             return true;
@@ -84,8 +93,18 @@ public class CourseDataBaseHelper {
             for (String topic : course.getCourseMainTopics()) {
                 stringBuilder.append(topic).append(",");
             }
+            if (stringBuilder.length() > 0) {
+                stringBuilder.deleteCharAt(stringBuilder.length() - 1); // Remove the last comma
+            }
             contentValues.put("Course_Main_Topics", stringBuilder.toString());
-            contentValues.put("Prerequisites", course.getPrerequisites());
+            StringBuilder stringBuilderForPre = new StringBuilder();
+            for (Integer pre : course.getPrerequisites()) {
+                stringBuilderForPre.append(pre).append(",");
+            }
+            if (stringBuilderForPre.length() > 0) {
+                stringBuilderForPre.deleteCharAt(stringBuilderForPre.length() - 1); // Remove the last comma
+            }
+            contentValues.put("Prerequisites", stringBuilderForPre.toString());
             //Photo
             int rowsAffected = sqLiteDatabaseR.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCorseID())});
             sqLiteDatabaseR.close();
@@ -128,19 +147,4 @@ public class CourseDataBaseHelper {
         db.close();
         return courses;
     }
-    /**
-     * public String[] getArray() {
-     *         SQLiteDatabase db = this.getReadableDatabase();
-     *         String selectQuery = "SELECT " + COLUMN_NAME + " FROM " + TABLE_NAME;
-     *         Cursor cursor = db.rawQuery(selectQuery, null);
-     *         String[] array = null;
-     *         if (cursor.moveToFirst()) {
-     *             String serializedArray = cursor.getString(0);
-     *             array = serializedArray.split(",");
-     *         }
-     *         cursor.close();
-     *         db.close();
-     *         return array;
-     *     }
-     */
 }

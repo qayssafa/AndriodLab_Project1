@@ -6,12 +6,11 @@ import java.util.ArrayList;
 public class Course {
     private int CorseID;
     private String CourseTitle;
-    private ArrayList<String>CourseMainTopics;
-    private String Prerequisites;
+    private ArrayList<String> CourseMainTopics;
+    private ArrayList<Integer> Prerequisites;
     private Blob photo;
 
-    public Course(int corseID, String courseTitle, ArrayList<String> courseMainTopics, String prerequisites, Blob photo) {
-        CorseID = corseID;
+    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<Integer> prerequisites, Blob photo) {
         CourseTitle = courseTitle;
         CourseMainTopics = courseMainTopics;
         Prerequisites = prerequisites;
@@ -33,7 +32,7 @@ public class Course {
         return CourseMainTopics;
     }
 
-    public String getPrerequisites() {
+    public ArrayList<Integer> getPrerequisites() {
         return Prerequisites;
     }
 
@@ -41,7 +40,9 @@ public class Course {
         return photo;
     }
 
-
+    public void setCorseID(int corseID) {
+        CorseID = corseID;
+    }
 
     public void setCourseTitle(String courseTitle) {
         CourseTitle = courseTitle;
@@ -51,7 +52,7 @@ public class Course {
         CourseMainTopics = courseMainTopics;
     }
 
-    public void setPrerequisites(String prerequisites) {
+    public void setPrerequisites(ArrayList<Integer> prerequisites) {
         Prerequisites = prerequisites;
     }
 
