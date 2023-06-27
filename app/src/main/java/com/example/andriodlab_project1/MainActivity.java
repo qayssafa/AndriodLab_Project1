@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         Button signIn = findViewById(R.id.btnSignIn);
         Button signUp = findViewById(R.id.btnSignUp);
         CheckBox rememberMe = findViewById(R.id.cbRememberMe);
-        rememberMe.setChecked(false);
+        rememberMe.setChecked(true);
         SharedPrefManager sharedPrefManager = SharedPrefManager.getInstance(this);
         if (!Objects.equals(sharedPrefManager.readString("email", "noValue"), "noValue")){
             email.setText(sharedPrefManager.readString("email", "noValue"));

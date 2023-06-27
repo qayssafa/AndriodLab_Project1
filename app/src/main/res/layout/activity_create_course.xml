@@ -16,143 +16,97 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0"
-        app:srcCompat="@drawable/addcourse" />
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/create_new_course_" />
 
     <TextView
-        android:id="@+id/CourseNumberTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Number : "
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/Prerequisites"
+        android:layout_width="224dp"
+        android:layout_height="44dp"
+        android:background="@android:drawable/editbox_background"
+        android:backgroundTint="#65affb"
+        android:drawableEnd="@android:drawable/arrow_down_float"
+        android:drawablePadding="16dp"
+        android:padding="21dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.052"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/courseId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Course Number"
-        tools:layout_editor_absoluteX="222dp"
-        tools:layout_editor_absoluteY="343dp" />
-
-    <TextView
-        android:id="@+id/CourseTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course Title : "
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.754" />
 
     <EditText
         android:id="@+id/CourseTitleInput"
-        android:layout_width="113dp"
-        android:layout_height="40dp"
+        android:layout_width="235dp"
+        android:layout_height="44dp"
         android:ems="10"
+        android:gravity="center"
         android:hint="Course Title"
         android:inputType="text"
+        android:textColorHint="#000000"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.798"
+        app:layout_constraintHorizontal_bias="0.505"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.575" />
-
-    <TextView
-        android:id="@+id/CourseMainTopicsText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Course main topics"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.055"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.661" />
+        app:layout_constraintVertical_bias="0.484" />
 
     <EditText
         android:id="@+id/CourseMainTopicsInput"
-        android:layout_width="125dp"
+        android:layout_width="241dp"
         android:layout_height="47dp"
         android:ems="10"
         android:hint="main topics"
         android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.832"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        android:gravity="center"
+        android:textColorHint="#000000"
 
-    <TextView
-        android:id="@+id/PrerequistesText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Prerequisites"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.057"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.733" />
+        app:layout_constraintVertical_bias="0.633" />
 
-    <Button
-        android:id="@+id/PrerequisitesInput"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.743"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.748" />
 
-    <TextView
-        android:id="@+id/InsertPhotoText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Insert Photo"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.047"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.808" />
-
-    <Button
-        android:id="@+id/InsertPhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="#65AFFB"
-        android:backgroundTint="#65AFFB"
-        android:text="Upload"
-        app:iconTint="#65AFFB"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.748"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.841" />
 
     <Button
         android:id="@+id/submitData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Submit"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.479"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/InsertPhotoButton"
+        android:layout_width="234dp"
+        android:layout_height="46dp"
+        android:backgroundTint="#65affb"
+        android:text="Insert"
+
+        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.972" />
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.884" />
+
+    <TextView
+        android:id="@+id/courseId"
+        android:layout_width="207dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="240dp"
+        android:gravity="center"
+        android:text="Course ID"
+        app:layout_constraintBottom_toTopOf="@+id/CourseTitleInput"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintVertical_bias="0.186" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,33 +1,35 @@
 package com.example.andriodlab_project1.course;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.TextPaint;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
-import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.common.MultiSelectSpinner;
-import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CreateCourseActivity extends AppCompatActivity {
     private CourseDataBaseHelper dbHelper;
     private MultiSelectSpinner multiSelectSpinner;
     private static int RESULT_LOAD_IMAGE = 1;
-    private EditText courseId;
+    private TextView courseId;
     private EditText CourseTitleInput;
     private EditText CourseMainTopicsInput;
     byte[] blob;
@@ -38,18 +40,64 @@ public class CreateCourseActivity extends AppCompatActivity {
         courseId=findViewById(R.id.courseId);
         CourseTitleInput=findViewById(R.id.CourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
+        TextView Prerequisites = findViewById(R.id.Prerequisites);
         dbHelper = new CourseDataBaseHelper(this);
         List<String> courses = dbHelper.getAllCourses();
         String[] coursesArray = courses.toArray(new String[0]);
 
         multiSelectSpinner = new MultiSelectSpinner(this, coursesArray);
-        Button btnShowSpinner = findViewById(R.id.PrerequisitesInput);
+       /* Button btnShowSpinner = findViewById(R.id.PrerequisitesInput);
         btnShowSpinner.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 multiSelectSpinner.showDialog();
             }
+        });*/
+        String[] continents = {"1", "2", "3", "4", "5", "5", "6"};
+        boolean[] selectedContinents = new boolean[continents.length];
+        ArrayList<Integer> continentsList = new ArrayList<>();
+        Prerequisites.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(CreateCourseActivity.this);
+                builder.setTitle("Prerequisites:");
+                builder.setCancelable(false);
+                builder.setMultiChoiceItems(continents, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                        if(isChecked){
+                            continentsList.add(which);
+                            Collections.sort(continentsList);
+                        }else{
+                            continentsList.remove(Integer.valueOf(which));
+                        }
+                    }
+                });
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Arrays.fill(selectedContinents, false);
+                        continentsList.clear();
+                    }
+                });
+                builder.show();
+            }
         });
+
+
+        //////////////////
 
         Button buttonLoadImage = (Button) findViewById(R.id.InsertPhotoButton);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
