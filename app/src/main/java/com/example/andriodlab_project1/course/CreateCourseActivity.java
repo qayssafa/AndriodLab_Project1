@@ -99,7 +99,7 @@ public class CreateCourseActivity extends AppCompatActivity {
             }
         });
 
-        Button SubmitDataButton = findViewById(R.id.submitData);
+        Button SubmitDataButton = findViewById(R.id.Update);
         SubmitDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

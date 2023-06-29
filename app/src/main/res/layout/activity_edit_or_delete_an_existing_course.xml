@@ -30,23 +30,6 @@
         app:layout_constraintVertical_bias="0.307"
         tools:ignore="UnknownIdInLayout" />
 
-    <TextView
-        android:id="@+id/list2"
-        android:layout_width="119dp"
-        android:layout_height="38dp"
-        android:background="@android:drawable/editbox_background"
-        android:backgroundTint="#65affb"
-        android:drawableEnd="@android:drawable/arrow_down_float"
-        android:drawablePadding="16dp"
-        android:padding="21dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.719"
-        app:layout_constraintStart_toStartOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3"
-        app:layout_constraintVertical_bias="0.663"
-        tools:ignore="UnknownIdInLayout" />
-
     <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
@@ -105,10 +88,23 @@
         android:id="@+id/Delete"
         android:layout_width="92dp"
         android:layout_height="37dp"
+        android:layout_marginBottom="4dp"
         android:text="Delete"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/imageView3"
         app:layout_constraintHorizontal_bias="0.636"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/pre"
+        android:layout_width="128dp"
+        android:layout_height="22dp"
+        android:text="4"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.685"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView3"
+        app:layout_constraintVertical_bias="0.658" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
