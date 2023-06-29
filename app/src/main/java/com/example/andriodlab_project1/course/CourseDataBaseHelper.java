@@ -87,8 +87,9 @@ public class CourseDataBaseHelper {
     }
     public Boolean updateCourse(Course course) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID  = \"" + course.getCourseID() + "\";", null);
-        if (!cursor.moveToFirst()) {
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID = ?", new String[]{String.valueOf(course.getCourseID())});
+
+        if (cursor.moveToFirst()) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("Course_Title", course.getCourseTitle());
@@ -108,9 +109,10 @@ public class CourseDataBaseHelper {
                 stringBuilderForPre.deleteCharAt(stringBuilderForPre.length() - 1); // Remove the last comma
             }
             contentValues.put("Prerequisites", stringBuilderForPre.toString());
+
             //Photo
-            int rowsAffected = sqLiteDatabaseR.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCourseID())});
-            sqLiteDatabaseR.close();
+            int rowsAffected = sqLiteDatabase.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCourseID())});
+            sqLiteDatabase.close();
             if (rowsAffected > 0) {
                 return true;
                 //toastMessage
