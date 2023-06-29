@@ -11,6 +11,7 @@ import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourse;
 import com.example.andriodlab_project1.course.EditPage;
+import com.example.andriodlab_project1.course.ViewTheStudentsOfAnyCourse;
 import com.example.andriodlab_project1.course_for_registration.CourseForRegistrationActivity;
 
 public class AdminMainActivity extends AppCompatActivity {
@@ -29,7 +30,7 @@ public class AdminMainActivity extends AppCompatActivity {
         CreateCourseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, EditPage.class);
+                Intent intent = new Intent(AdminMainActivity.this, CreateCourseActivity.class);
                 startActivity(intent);
             }
         });
@@ -44,7 +45,7 @@ public class AdminMainActivity extends AppCompatActivity {
         editOrRemoveCourse.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, EditOrDeleteAnExistingCourse.class);
+                Intent intent = new Intent(AdminMainActivity.this, ViewTheStudentsOfAnyCourse.class);
                 startActivity(intent);
             }
         });

@@ -38,9 +38,6 @@ public class CreateCourseActivity extends AppCompatActivity {
         CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
         TextView Prerequisites = findViewById(R.id.list);
         dbHelper = new CourseDataBaseHelper(this);
-        List<String> courses = dbHelper.getAllCourses();
-        String[] coursesArray = courses.toArray(new String[0]);
-
 
         String[] continents = dbHelper.getAllCourses().toArray(new String[0]);
 

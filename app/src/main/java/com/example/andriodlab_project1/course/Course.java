@@ -41,7 +41,7 @@ public class Course {
     }
 
     public void setCourseID(int courseID) {
-        CorseID = courseID;
+        this.CorseID = courseID;
     }
 
     public void setCourseTitle(String courseTitle) {

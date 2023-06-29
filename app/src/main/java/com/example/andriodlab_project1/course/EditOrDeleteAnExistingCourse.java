@@ -30,7 +30,7 @@ public class EditOrDeleteAnExistingCourse extends AppCompatActivity {
     private Button delete;
     private Button edit;
     private int selected;
-
+    public static int id;
     private boolean[] selectedContinents;
     private ArrayList<Integer> continentsList ;
     @Override
@@ -66,6 +66,7 @@ public class EditOrDeleteAnExistingCourse extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                         course= dbHelper.getCourseByID(Integer.parseInt(continents[selected]));
+                        id=Integer.parseInt(continents[selected]);
                         courseNumber.setText(String.valueOf(course.getCourseID()));
                         courseTitle.setText(course.getCourseTitle());
                         courseMainTobic.setText(convertArrayListToString(course.getCourseMainTopics()));
