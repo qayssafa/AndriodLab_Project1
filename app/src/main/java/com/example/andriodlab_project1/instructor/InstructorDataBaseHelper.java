@@ -90,6 +90,17 @@ public class InstructorDataBaseHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }
+    public String getEmailByFullName(String firstName, String lastName) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT EMAIL FROM INSTRUCTOR WHERE FIRSTNAME = ? AND LASTNAME = ?", new String[]{firstName, lastName});
+        String email = null;
+        if (cursor.moveToFirst()) {
+            email = cursor.getString(0);
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return email;
+    }
 
 
 }

@@ -21,13 +21,16 @@
             android:name=".common.AdminSlideScreen"
             android:exported="false" />
         <activity
-            android:name=".course.EditPage"
+            android:name=".course.EditPageActivity"
             android:exported="false" />
         <activity
-            android:name=".course.EditOrDeleteAnExistingCourse"
+            android:name=".course.EditOrDeleteAnExistingCourseActivity"
             android:exported="false" />
         <activity
             android:name=".admin.AdminMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".course_for_registration.MakeCourseAvailableForRegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".course.CreateCourseActivity"

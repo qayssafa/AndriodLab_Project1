@@ -18,9 +18,11 @@ public class AvailableCourseDataBaseHelper{
         if (isTableCreatedFirstTime("AvailableCourse")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             sqLiteDatabase.execSQL("CREATE TABLE AvailableCourse (" +
-                    "course_id INTEGER PRIMARY KEY, " +
+                            "registration_Number INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "course_id INTEGER, " +
                     "instructor_email TEXT, " + // Add instructor_name column
                     "registration_deadline TEXT, " +
+                    "number_of_student INTEGER,"+
                     "instructor_name TEXT, " +
                     "course_start_date TEXT, " +
                     "course_schedule TEXT, " +
@@ -44,27 +46,27 @@ public class AvailableCourseDataBaseHelper{
         db.close();
         return isFirstTime;
     }
-    public void insertAvailableCourse(AvailableCourse availableCourse,String instructorEmail) {
+    public boolean insertAvailableCourse(AvailableCourse availableCourse,String instructorEmail,int numberOfStudent) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Get the instructor name based on the provided instructor email
         String instructorName = getInstructorName(instructorEmail);
-
         ContentValues values = new ContentValues();
         values.put("course_id",availableCourse.getCourseId());
         values.put("instructor_email", instructorEmail);
         values.put("registration_deadline", availableCourse.getRegistrationDeadline());
         values.put("instructor_name", instructorName);
+        values.put("number_of_student", numberOfStudent);
         values.put("course_start_date", availableCourse.getCourseStartDate());
         values.put("course_schedule", availableCourse.getCourseSchedule());
         values.put("venue", availableCourse.getVenue());
-
         long rowId = db.insert("AvailableCourse", null, values);
-
         if (rowId != -1) {
             // Successful insertion
+            return true;
         } else {
             // Failed insertion
+            return false;
         }
     }
     private String getInstructorName(String instructorEmail) {
