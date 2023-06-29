@@ -9,11 +9,14 @@ import android.widget.Button;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourse;
 import com.example.andriodlab_project1.course_for_registration.CourseForRegistrationActivity;
 
 public class AdminMainActivity extends AppCompatActivity {
     private Button CreateCourseButton;
     private Button courseForRegestration;
+
+    private Button editOrRemoveCourse;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +24,7 @@ public class AdminMainActivity extends AppCompatActivity {
 
         CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
+        editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);
         CreateCourseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -35,5 +39,14 @@ public class AdminMainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        editOrRemoveCourse.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(AdminMainActivity.this, EditOrDeleteAnExistingCourse.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

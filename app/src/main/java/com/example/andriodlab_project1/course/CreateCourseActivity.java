@@ -36,7 +36,7 @@ public class CreateCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_course);
         CourseTitleInput=findViewById(R.id.CourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
-        TextView Prerequisites = findViewById(R.id.Prerequisites);
+        TextView Prerequisites = findViewById(R.id.list);
         dbHelper = new CourseDataBaseHelper(this);
         List<String> courses = dbHelper.getAllCourses();
         String[] coursesArray = courses.toArray(new String[0]);
