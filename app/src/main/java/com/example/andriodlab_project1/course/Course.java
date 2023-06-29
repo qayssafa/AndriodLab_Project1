@@ -20,7 +20,7 @@ public class Course {
     public Course() {
     }
 
-    public int getCorseID() {
+    public int getCourseID() {
         return CorseID;
     }
 
@@ -40,8 +40,8 @@ public class Course {
         return photo;
     }
 
-    public void setCorseID(int corseID) {
-        CorseID = corseID;
+    public void setCourseID(int courseID) {
+        CorseID = courseID;
     }
 
     public void setCourseTitle(String courseTitle) {

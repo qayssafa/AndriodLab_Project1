@@ -52,8 +52,6 @@ public class AvailableCourse {
   public void setRegistrationDeadline(Date registrationDeadline) {
     this.registrationDeadline = registrationDeadline;
   }
-
-
   public void setCourseStartDate(Date courseStartDate) {
     this.courseStartDate = courseStartDate;
   }

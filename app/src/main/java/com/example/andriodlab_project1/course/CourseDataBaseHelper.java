@@ -4,8 +4,11 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+
 import com.example.andriodlab_project1.common.DataBaseHelper;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CourseDataBaseHelper {
@@ -38,7 +41,7 @@ public class CourseDataBaseHelper {
     }
     public boolean insertCourse(Course course) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID  = \"" + course.getCorseID() + "\";", null);
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID  = \"" + course.getCourseID() + "\";", null);
         if (!cursor.moveToFirst()) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -84,7 +87,7 @@ public class CourseDataBaseHelper {
     }
     public Boolean updateCourse(Course course) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID  = \"" + course.getCorseID() + "\";", null);
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID  = \"" + course.getCourseID() + "\";", null);
         if (!cursor.moveToFirst()) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
@@ -106,7 +109,7 @@ public class CourseDataBaseHelper {
             }
             contentValues.put("Prerequisites", stringBuilderForPre.toString());
             //Photo
-            int rowsAffected = sqLiteDatabaseR.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCorseID())});
+            int rowsAffected = sqLiteDatabaseR.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCourseID())});
             sqLiteDatabaseR.close();
             if (rowsAffected > 0) {
                 return true;
@@ -134,9 +137,10 @@ public class CourseDataBaseHelper {
     }
 
     public List<String> getAllCourses() {
+
         List<String> courses = new ArrayList<String>();
         SQLiteDatabase db  = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT c.Course_Title FROM COURSE c",null);
+        Cursor cursor = db.rawQuery("SELECT c.COURSE_ID FROM COURSE c",null);
 
         if (cursor.moveToFirst()) {
             do {
@@ -146,5 +150,51 @@ public class CourseDataBaseHelper {
         cursor.close();
         db.close();
         return courses;
+    }
+    public Course getCourseByID(int courseID) {
+        SQLiteDatabase db  = dbHelper.getReadableDatabase();
+        // Retrieve the course details from the database using the given course ID
+        Cursor cursor = db.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID = ?", new String[]{String.valueOf(courseID)});
+
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(0);
+            String title = cursor.getString(1);
+            String mainTopics = cursor.getString(2);
+            String prerequisites = cursor.getString(3);
+
+            // Create and return a Course object with the retrieved attributes
+            Course course=new Course();
+            course.setCourseTitle(title);
+            course.setCourseID(id);
+            course.setCourseMainTopics(convertStringToList(mainTopics));
+            course.setPrerequisites(convertFromIntegerToList(prerequisites));
+            return course;
+        }
+        // If no course is found with the given ID, return null
+        return null;
+    }
+    public ArrayList<String> convertStringToList(String input) {
+            String trimmedInput = input.trim();
+            if (trimmedInput.endsWith(",")) {
+                trimmedInput = trimmedInput.substring(0, trimmedInput.length() - 1);
+            }
+            String[] splitArray = trimmedInput.split(",");
+            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(splitArray));
+            return arrayList;
+    }
+    public ArrayList<Integer> convertFromIntegerToList(String input){
+        String[] elementsArray = input.split(",");
+
+        ArrayList<Integer> elementsList = new ArrayList<>();
+        for (String element : elementsArray) {
+            if (!element.isEmpty()){
+                int value = Integer.parseInt(element);
+                elementsList.add(value);
+            }else {
+                 elementsList.add(0);
+                 return elementsList;
+            }
+        }
+        return elementsList;
     }
 }
