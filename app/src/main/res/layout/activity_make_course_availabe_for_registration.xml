@@ -124,6 +124,10 @@
         android:layout_height="wrap_content"
         android:text="submit"
         tools:layout_editor_absoluteX="158dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteY="668dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
