@@ -15,16 +15,16 @@
         android:theme="@style/Theme.AndriodLab_Project1"
         tools:targetApi="31">
         <activity
-            android:name=".course.ViewTheStudentsOfAnyCourse"
-            android:exported="false" />
-        <activity
-            android:name=".common.AdminSlideScreen"
+            android:name=".enrollment.ViewTheStudentsOfAnyCourseActivity"
             android:exported="false" />
         <activity
             android:name=".course.EditPageActivity"
             android:exported="false" />
         <activity
             android:name=".course.EditOrDeleteAnExistingCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".course_for_registration.ViewPreviousOfferings"
             android:exported="false" />
         <activity
             android:name=".admin.AdminMainActivity"
@@ -43,6 +43,9 @@
             android:exported="false" />
         <activity
             android:name=".instructor.InstructorMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".student.SearchAndViewCourseAreAvailable"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

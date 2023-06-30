@@ -1,16 +1,16 @@
-package com.example.andriodlab_project1.Student2Course;
+package com.example.andriodlab_project1.enrollment;
 
-public class Student2COURSE {
+public class Enrollment {
 
     private int CourseID;
     private String StudentEmail;
 
-    public Student2COURSE(int courseID, String studentEmail) {
+    public Enrollment(int courseID, String studentEmail) {
         CourseID = courseID;
         StudentEmail = studentEmail;
     }
 
-    public Student2COURSE() {
+    public Enrollment() {
     }
 
     public int getCourseID() {

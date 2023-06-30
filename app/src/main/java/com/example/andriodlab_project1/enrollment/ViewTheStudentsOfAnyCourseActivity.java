@@ -1,4 +1,4 @@
-package com.example.andriodlab_project1.course;
+package com.example.andriodlab_project1.enrollment;
 
 import android.os.Bundle;
 import android.widget.TableLayout;
@@ -13,7 +13,7 @@ import com.example.andriodlab_project1.student.Student;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewTheStudentsOfAnyCourse extends AppCompatActivity {
+public class ViewTheStudentsOfAnyCourseActivity extends AppCompatActivity {
 
     private TableLayout studentTable;
 

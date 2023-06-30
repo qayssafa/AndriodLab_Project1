@@ -15,7 +15,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.databinding.ActivityCreateCourseBinding;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -25,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class CreateCourseActivity extends AppCompatActivity {
+public class CreateCourseActivity extends DrawerBaseActivity {
     private CourseDataBaseHelper dbHelper;
     private static int RESULT_LOAD_IMAGE = 1;
     private EditText CourseTitleInput;
@@ -34,6 +36,7 @@ public class CreateCourseActivity extends AppCompatActivity {
     private String value;
 
     byte[] blob;
+    ActivityCreateCourseBinding activityCreateCourseBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

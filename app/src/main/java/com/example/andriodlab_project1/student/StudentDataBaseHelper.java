@@ -10,6 +10,9 @@ import androidx.annotation.Nullable;
 
 import com.example.andriodlab_project1.common.DataBaseHelper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class StudentDataBaseHelper {
     private DataBaseHelper dbHelper;
@@ -87,5 +90,18 @@ public class StudentDataBaseHelper {
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM STUDENT WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }
+    public List<String> getAllStudents() {
+        List<String> students = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String selectQuery = "SELECT EMAIL FROM STUDENT";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        while (cursor.moveToNext()) {
+            String studentId = cursor.getString(0);
+            students.add(studentId);
+        }
+        cursor.close();
+        return students;
+    }
+
 
 }
