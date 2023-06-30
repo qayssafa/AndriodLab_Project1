@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
+import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +26,8 @@ public class EditPageActivity extends AppCompatActivity {
     private EditText CourseMainTopicsInput;
     private List<Map.Entry<String, String>> continents;
     private CourseDataBaseHelper dbHelper;
+    private NotificationDataBaseHelper notificationDataBaseHelper;
+    private EnrollmentDataBaseHelper enrollmentDataBaseHelper;
     private TextView Prerequisites;
     private Button SubmitDataButton;
     private boolean[] selectedContinents;
@@ -36,6 +40,8 @@ public class EditPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_page);
         dbHelper = new CourseDataBaseHelper(this);
+        enrollmentDataBaseHelper = new EnrollmentDataBaseHelper(this);
+        notificationDataBaseHelper = new NotificationDataBaseHelper(this);
         CourseTitleInput=findViewById(R.id.EditCourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.EditCourseMainTopicsInput);
         Prerequisites = findViewById(R.id.Editlist);
@@ -102,6 +108,12 @@ public class EditPageActivity extends AppCompatActivity {
                 EditOrDeleteAnExistingCourseActivity editOrDeleteAnExistingCourse;
                 course.setCourseID(EditOrDeleteAnExistingCourseActivity.id);
                 if (dbHelper.updateCourse(course)){
+                    ArrayList<String> studentsAreTakenCourse=enrollmentDataBaseHelper.getStudentsByCourseId(EditOrDeleteAnExistingCourseActivity.id);
+                    if (!studentsAreTakenCourse.isEmpty()){
+                        for (String s:studentsAreTakenCourse) {
+                            notificationDataBaseHelper.insertNotification(s,"This Course "+CourseDataBaseHelper.getCourseName(EditOrDeleteAnExistingCourseActivity.id)+"its updated check Please.");
+                        }
+                    }
                     Toast.makeText(EditPageActivity.this, "This Courses Updated successfully.", Toast.LENGTH_SHORT).show();
                 }else {
                     Toast.makeText(EditPageActivity.this, "This Courses Updated Failed.", Toast.LENGTH_SHORT).show();

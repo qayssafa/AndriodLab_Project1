@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseDataBaseHelper {
-    private DataBaseHelper dbHelper;
+    private static DataBaseHelper dbHelper;
     public CourseDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
@@ -128,7 +128,7 @@ public class CourseDataBaseHelper {
         }
         return false;
     }
-    public boolean isCourseExists(int courseId) {
+    public static boolean isCourseExists(int courseId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID = \"" + courseId + "\";", null);
         boolean isCourseExists = (cursor != null && cursor.getCount() > 0);
@@ -139,6 +139,15 @@ public class CourseDataBaseHelper {
         return isCourseExists;
     }
 
+    public static String getCourseName(int courseId){
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT c.Course_Title FROM COURSE c WHERE COURSE_ID = ?", new String[]{String.valueOf(courseId)});
+        if (cursor.moveToFirst()) {
+            String title = cursor.getString(0);
+            return title;
+        }
+        return null;
+    }
     public List<Map.Entry<String, String>>  getAllCourses() {
         List<Map.Entry<String, String>> courses = new ArrayList<>();
 

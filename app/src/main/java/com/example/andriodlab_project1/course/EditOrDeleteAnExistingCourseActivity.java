@@ -15,8 +15,10 @@ import com.example.andriodlab_project1.R;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EditOrDeleteAnExistingCourseActivity extends AppCompatActivity {
@@ -49,63 +51,70 @@ public class EditOrDeleteAnExistingCourseActivity extends AppCompatActivity {
         preRequest = findViewById(R.id.preRequest);
         dbHelper = new CourseDataBaseHelper(this);
         continents = dbHelper.getAllCourses();
+        if (!(continents.isEmpty())) {
+            listOfCourse.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(EditOrDeleteAnExistingCourseActivity.this);
+                    builder.setTitle("Courses :");
+                    builder.setCancelable(false);
 
-        listOfCourse.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditOrDeleteAnExistingCourseActivity.this);
-                builder.setTitle("Courses :");
-                builder.setCancelable(false);
-                items = convertListToCharSequenceArray(continents);
+                    items = convertListToCharSequenceArray(continents);
+                    builder.setSingleChoiceItems(items, selected, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            selected = which;  // Update the selected continent index
+                        }
+                    });
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            if (selected < 0) {
+                                Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                entry = continents.get(selected);
+                                value = entry.getKey();
+                                course = dbHelper.getCourseByID(Integer.parseInt(value));
+                                id = Integer.parseInt(value);
+                                courseNumber.setText(String.valueOf(course.getCourseID()));
+                                courseTitle.setText(course.getCourseTitle());
+                                courseMainTobic.setText(convertArrayListToString(course.getCourseMainTopics()));
+                                preRequest.setText(convertArrayListToString(course.getPrerequisites()));
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
 
-                builder.setSingleChoiceItems(items,selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selected = which;  // Update the selected continent index
-                    }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        entry = continents.get(selected);
-                        value = entry.getKey();
-                        course= dbHelper.getCourseByID(Integer.parseInt(value));
-                        id=Integer.parseInt(value);
-                        courseNumber.setText(String.valueOf(course.getCourseID()));
-                        courseTitle.setText(course.getCourseTitle());
-                        courseMainTobic.setText(convertArrayListToString(course.getCourseMainTopics()));
-                        preRequest.setText(convertArrayListToString(course.getPrerequisites()));
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.show();
-            }
-        });
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (dbHelper.deleteCourse(Integer.parseInt(value))){
-                    Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Successfully.", Toast.LENGTH_SHORT).show();
-                    continents.remove(selected);
-                }else {
-                    Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Failed.", Toast.LENGTH_SHORT).show();
+                    builder.show();
                 }
-            }
-        });
-        edit.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(EditOrDeleteAnExistingCourseActivity.this, EditPageActivity.class);
-                startActivity(intent);
-            }
-        });
+            });
+            delete.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (dbHelper.deleteCourse(Integer.parseInt(value))) {
+                        Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Successfully.", Toast.LENGTH_SHORT).show();
+                        continents.remove(selected);
+                    } else {
+                        Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Failed.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            edit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(EditOrDeleteAnExistingCourseActivity.this, EditPageActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }else {
+            Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public static String convertArrayListToString(ArrayList<String> arrayList) {

@@ -28,6 +28,7 @@ public class SignUPMainActivity extends AppCompatActivity {
     private AdminDataBaseHelper dbHelperAdmin;
     private CourseDataBaseHelper dbHelperCourse;
 
+    public static String studentEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +114,7 @@ public class SignUPMainActivity extends AppCompatActivity {
                     checkResult=checkUser(lFirstName, lLastName,lEmail,lPassword,lConfirmPassword,lPhone,lAddress,true,0);
                     if (checkResult){
                         student1=new Student(lEmail,lFirstName,lLastName,lPassword,lPhone,lAddress);
+                        studentEmail=lEmail;
                         dbHelperStudent.insertStudent(student1);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
                     }

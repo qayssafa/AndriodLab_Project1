@@ -11,8 +11,7 @@ public class AvailableCourse {
   private String courseSchedule;
   private String venue;
 
-  public AvailableCourse(int courseId, String registrationDeadline,
-                         String courseStartDate, String courseSchedule, String venue) {
+  public AvailableCourse(int courseId, String registrationDeadline, String courseStartDate, String courseSchedule, String venue) {
     this.courseId = courseId;
     this.registrationDeadline = registrationDeadline;
     this.courseStartDate = courseStartDate;
@@ -24,7 +23,9 @@ public class AvailableCourse {
     return courseId;
   }
 
-
+  public void setCourseId(int courseId) {
+    this.courseId = courseId;
+  }
 
   public String getRegistrationDeadline() {
   return registrationDeadline;
@@ -43,11 +44,6 @@ public class AvailableCourse {
   public String getVenue() {
     return venue;
   }
-
-  public void setCourseId(int courseId) {
-    this.courseId = courseId;
-  }
-
 
   public void setRegistrationDeadline(String registrationDeadline) {
     this.registrationDeadline = registrationDeadline;
