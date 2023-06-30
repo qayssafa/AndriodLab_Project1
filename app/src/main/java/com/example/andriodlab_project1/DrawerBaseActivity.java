@@ -17,9 +17,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.andriodlab_project1.admin.AdminMainActivity;
+import com.example.andriodlab_project1.admin.ApplicantDecide;
+import com.example.andriodlab_project1.admin.ViewProfilesOfStudentAndInstructor;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
 import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
+import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.enrollment.ViewTheStudentsOfAnyCourseActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -68,15 +71,15 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
             overridePendingTransition(0, 0);
             finish();
         } else if (id == R.id.VUP) {
-            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            startActivity(new Intent(DrawerBaseActivity.this, ViewProfilesOfStudentAndInstructor.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CH) {
-            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            startActivity(new Intent(DrawerBaseActivity.this, ViewPreviousOfferings.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.RD) {
-                startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+                startActivity(new Intent(DrawerBaseActivity.this, ApplicantDecide.class));
                 overridePendingTransition(0, 0);
                 finish();
         }else if (id == R.id.CS) {
