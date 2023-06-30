@@ -6,16 +6,22 @@ import android.os.Bundle;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.databinding.ActivityApplicantDecideBinding;
 
-public class ApplicantDecide extends AppCompatActivity {
+public class ApplicantDecide extends DrawerBaseActivity {
 
     private CheckBox checkboxAccept;
     private CheckBox checkboxReject;
+
+    ActivityApplicantDecideBinding activityApplicantDecideBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_applicant_decide);
+        activityApplicantDecideBinding = ActivityApplicantDecideBinding.inflate(getLayoutInflater());
+        setContentView(activityApplicantDecideBinding.getRoot());
+        //setContentView(R.layout.activity_applicant_decide);
 
         checkboxAccept = findViewById(R.id.AcceptChcek);
         checkboxReject = findViewById(R.id.RejectCheck);

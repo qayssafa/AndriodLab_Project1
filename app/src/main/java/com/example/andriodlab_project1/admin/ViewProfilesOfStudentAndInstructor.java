@@ -13,10 +13,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.common.User;
+import com.example.andriodlab_project1.databinding.ActivityViewProfilesOfStudentAndInstructorBinding;
 
-public class ViewProfilesOfStudentAndInstructor extends AppCompatActivity {
+public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity {
     EditText UserEmail;
     EditText UserFname;
     EditText UserLname;
@@ -27,10 +29,14 @@ public class ViewProfilesOfStudentAndInstructor extends AppCompatActivity {
 
     ImageView Userphoto;
 
+    ActivityViewProfilesOfStudentAndInstructorBinding activityViewProfilesOfStudentAndInstructorBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_profiles_of_student_and_instructor);
+        activityViewProfilesOfStudentAndInstructorBinding = ActivityViewProfilesOfStudentAndInstructorBinding.inflate(getLayoutInflater());
+        setContentView(activityViewProfilesOfStudentAndInstructorBinding.getRoot());
+        //setContentView(R.layout.activity_view_profiles_of_student_and_instructor);
 
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.INVISIBLE);

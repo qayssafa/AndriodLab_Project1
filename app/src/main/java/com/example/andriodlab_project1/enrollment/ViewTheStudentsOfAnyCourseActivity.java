@@ -7,22 +7,28 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.databinding.ActivityViewTheStudentsOfAnyCourseBinding;
 import com.example.andriodlab_project1.student.Student;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewTheStudentsOfAnyCourseActivity extends AppCompatActivity {
+public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
 
     private TableLayout studentTable;
 
     private List<Student> students = new ArrayList<>();
 
+    ActivityViewTheStudentsOfAnyCourseBinding activityViewTheStudentsOfAnyCourseBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_the_students_of_any_course);
+        activityViewTheStudentsOfAnyCourseBinding = ActivityViewTheStudentsOfAnyCourseBinding.inflate(getLayoutInflater());
+        setContentView(activityViewTheStudentsOfAnyCourseBinding.getRoot());
+        //setContentView(R.layout.activity_view_the_students_of_any_course);
 
         studentTable = findViewById(R.id.student_show_table);
 

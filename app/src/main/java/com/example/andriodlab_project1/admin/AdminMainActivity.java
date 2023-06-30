@@ -30,7 +30,7 @@ public class AdminMainActivity extends DrawerBaseActivity {
         activityAdminMainBinding = ActivityAdminMainBinding.inflate(getLayoutInflater());
         setContentView(activityAdminMainBinding.getRoot());
 
-        CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
+        /*CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
         editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);
         viewOffering = (Button)findViewById(R.id.viewOffering);
@@ -62,7 +62,7 @@ public class AdminMainActivity extends DrawerBaseActivity {
                 Intent intent = new Intent(AdminMainActivity.this, ViewPreviousOfferings.class);
                 startActivity(intent);
             }
-        });
+        });*/
 
     }
 }
