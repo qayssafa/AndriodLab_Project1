@@ -23,12 +23,16 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class CreateCourseActivity extends AppCompatActivity {
     private CourseDataBaseHelper dbHelper;
     private static int RESULT_LOAD_IMAGE = 1;
     private EditText CourseTitleInput;
     private EditText CourseMainTopicsInput;
+    private Map.Entry<String, String> entry;
+    private String value;
+
     byte[] blob;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,25 +43,29 @@ public class CreateCourseActivity extends AppCompatActivity {
         TextView Prerequisites = findViewById(R.id.list);
         dbHelper = new CourseDataBaseHelper(this);
 
-        String[] continents = dbHelper.getAllCourses().toArray(new String[0]);
+        List<Map.Entry<String, String>> continents = dbHelper.getAllCourses();
 
-        boolean[] selectedContinents = new boolean[continents.length];
+        boolean[] selectedContinents = new boolean[continents.size()];
 
-        ArrayList<Integer> continentsList = new ArrayList<>();
+        ArrayList<String> continentsList = new ArrayList<>();
         Prerequisites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CreateCourseActivity.this);
                 builder.setTitle("Prerequisites:");
                 builder.setCancelable(false);
-                builder.setMultiChoiceItems(continents, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
+                CharSequence[] items = convertListToCharSequenceArray(continents);
+
+                builder.setMultiChoiceItems(items, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if(isChecked){
-                            continentsList.add(which);
+                            entry = continents.get(which);
+                            value = entry.getValue();
+                            continentsList.add(value);
                             Collections.sort(continentsList);
                         }else{
-                            continentsList.remove(Integer.valueOf(which));
+                            continentsList.remove(which);
                         }
                     }
                 });
@@ -100,19 +108,19 @@ public class CreateCourseActivity extends AppCompatActivity {
         SubmitDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                while (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
-                    Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
-                }
                 String courseName=CourseTitleInput.getText().toString();
-
-                while (CourseMainTopicsInput.getText().toString().isEmpty()||CourseMainTopicsInput.getText().toString().isBlank()){
-                    Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
-                }
                 ArrayList<String> courseTopics=convertStringToList(CourseMainTopicsInput.getText().toString());
                 Course course=new Course(courseName,courseTopics,continentsList,null);
-                if (dbHelper.insertCourse(course)){
+                if (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
+                    Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
+                }
+                else if(CourseMainTopicsInput.getText().toString().isEmpty()||CourseMainTopicsInput.getText().toString().isBlank()){
+                    Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
+                }else if (dbHelper.insertCourse(course)){
                     Toast.makeText(CreateCourseActivity.this, "This Courses Added successfully.", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(CreateCourseActivity.this, "This Courses Added Failed.", Toast.LENGTH_SHORT).show();
+
                 }
             }
         });
@@ -147,6 +155,14 @@ public class CreateCourseActivity extends AppCompatActivity {
             }
         }
     }
+    public static CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
+        CharSequence[] array = new CharSequence[list.size()];
+        int i = 0;
+        for (Map.Entry<String, String> entry : list) {
+            array[i++] = entry.getValue();
+        }
+        return array;
+    }
     public ArrayList<String> convertStringToList(String input) {
         if (input.isEmpty() || input.isBlank()) {
             Toast.makeText(CreateCourseActivity.this, "This Courses Topics not Valid!", Toast.LENGTH_SHORT).show();
@@ -162,5 +178,6 @@ public class CreateCourseActivity extends AppCompatActivity {
             ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(splitArray));
             return arrayList;
         }
+
     }
 }
