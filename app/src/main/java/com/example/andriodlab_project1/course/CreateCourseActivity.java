@@ -40,7 +40,9 @@ public class CreateCourseActivity extends DrawerBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_course);
+        activityCreateCourseBinding = ActivityCreateCourseBinding.inflate(getLayoutInflater());
+        setContentView(activityCreateCourseBinding.getRoot());
+        //setContentView(R.layout.activity_create_course);
         CourseTitleInput=findViewById(R.id.CourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
         TextView Prerequisites = findViewById(R.id.list);
