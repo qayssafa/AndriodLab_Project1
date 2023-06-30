@@ -12,17 +12,24 @@ import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
 import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
 import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
+import com.example.andriodlab_project1.DrawerBaseActivity;
+import com.example.andriodlab_project1.databinding.ActivityAdminMainBinding;
+import com.example.andriodlab_project1.databinding.ActivityDrawerBaseBinding;
 
-public class AdminMainActivity extends AppCompatActivity {
+
+public class AdminMainActivity extends DrawerBaseActivity {
     private Button CreateCourseButton;
     private Button courseForRegestration;
 
     private Button editOrRemoveCourse;
     private Button viewOffering;
+    ActivityAdminMainBinding activityAdminMainBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_main);
+        activityAdminMainBinding = ActivityAdminMainBinding.inflate(getLayoutInflater());
+        setContentView(activityAdminMainBinding.getRoot());
 
         CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);

@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
@@ -31,7 +32,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
          container.addView(view);
             super.setContentView(drawerLayout);
 
-        Toolbar toolbar = drawerLayout.findViewById(R.id.topAppBar);
+        Toolbar toolbar = drawerLayout.findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
         NavigationView navigationView = drawerLayout.findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -45,7 +46,8 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
-        int id = item.getItemId();
+
+
 
       return false;
     }
