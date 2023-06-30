@@ -5,10 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.admin.Admin;
@@ -20,6 +24,7 @@ import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class SignUPMainActivity extends AppCompatActivity {
 
@@ -145,69 +150,84 @@ public class SignUPMainActivity extends AppCompatActivity {
             }
         });
     }
-    public boolean checkUser(String firstName,String lastName,String email,String password,String confirmPassword,String phone,String address,boolean selection,int choice){
-        if (selection){
-            if (choice==0){
-                if (email.isEmpty() || email.isBlank() || dbHelperStudent.isRegistered(email)) {
-                    Toast.makeText(SignUPMainActivity.this, "This Email not Valid!", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            }else if (choice==1){
-                if (email.isEmpty() || email.isBlank() || dbHelperInstructor.isRegistered(email)) {
-                    Toast.makeText(SignUPMainActivity.this, "This Email not Valid!", Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-            }
-            if (firstName.isEmpty() || firstName.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This First Name not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (lastName.isEmpty() || lastName.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This last Name not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (password.isEmpty() || password.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This password not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (!confirmPassword.equals(password)) {
-                Toast.makeText(SignUPMainActivity.this, "Two password not match each other!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (phone.isEmpty() || phone.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This phone Number not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (address.isEmpty() || address.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This Address not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            return true;
-        }else {
-            if (email.isEmpty() || email.isBlank() || dbHelperAdmin.isRegistered(email)) {
-                Toast.makeText(SignUPMainActivity.this, "This Email not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (firstName.isEmpty() || firstName.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This First Name not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (lastName.isEmpty() || lastName.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This last Name not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (password.isEmpty() || password.isBlank()) {
-                Toast.makeText(SignUPMainActivity.this, "This password not Valid!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            if (!confirmPassword.equals(password)) {
-                Toast.makeText(SignUPMainActivity.this, "Two password not match each other!", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-            return true;
+    public boolean checkUser(String firstName, String lastName, String email, String password, String confirmPassword, String phone, String address, boolean selection, int choice) {
+        // Email address validation
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+        Pattern emailPattern = Pattern.compile(emailRegex);
+        if (email.isEmpty() || email.isBlank() || !emailPattern.matcher(email).matches()) {
+            showToastMessage("This Email not Valid!");
+            return false;
         }
 
+        // First name validation
+        if (firstName.isEmpty() || firstName.isBlank() || firstName.length() < 3 || firstName.length() > 20) {
+            showToastMessage("First name must be between 3 and 20 characters!");
+            return false;
+        }
+
+        // Last name validation
+        if (lastName.isEmpty() || lastName.isBlank() || lastName.length() < 3 || lastName.length() > 20) {
+            showToastMessage("Last name must be between 3 and 20 characters!");
+            return false;
+        }
+
+        // Password validation
+        if (password.isEmpty() || password.isBlank() || password.length() < 8 || password.length() > 15 ||
+                !password.matches(".*\\d.*") || !password.matches(".*[a-z].*") || !password.matches(".*[A-Z].*")) {
+            showToastMessage("Password must be between 8 and 15 characters and contain at least one number, one lowercase letter, and one uppercase letter!");
+            return false;
+        }
+
+        // Confirm password validation
+        if (!confirmPassword.equals(password)) {
+            showToastMessage("Two passwords do not match!");
+            return false;
+        }
+
+        // Additional validations based on selection and choice
+        if (selection) {
+            if (choice == 0) {
+                if (dbHelperStudent.isRegistered(email)) {
+                    showToastMessage("This Email already Registered!");
+                    return false;
+                }
+            } else if (choice == 1) {
+                if (dbHelperInstructor.isRegistered(email)) {
+                    showToastMessage("This Email already Registered!");
+                    return false;
+                }
+            }
+
+            // Phone validation
+            if (phone.isEmpty() || phone.isBlank()) {
+                showToastMessage("This Phone Number not Valid!");
+                return false;
+            }
+
+            // Address validation
+            if (address.isEmpty() || address.isBlank()) {
+                showToastMessage("This Address not Valid!");
+                return false;
+            }
+        } else {
+            if (dbHelperAdmin.isRegistered(email)) {
+                showToastMessage("This Email already Registered!");
+                return false;
+            }
+        }
+
+        return true;
     }
+
+    private void showToastMessage(String message) {
+        Toast toast = Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT);
+        View toastView = toast.getView();
+        TextView toastText = toastView.findViewById(android.R.id.message);
+        toastText.setTextColor(Color.RED); // Set text color here
+        toastView.setBackgroundColor(Color.TRANSPARENT); // Set background color here
+        toast.show();
+    }
+
     public String checkDegree(boolean bsc, boolean msc, boolean phd) {
         StringBuilder result = new StringBuilder();
         if (bsc && msc && phd) {
