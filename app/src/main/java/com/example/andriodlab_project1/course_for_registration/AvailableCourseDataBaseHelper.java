@@ -119,9 +119,7 @@ public class AvailableCourseDataBaseHelper {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT FIRSTNAME, LASTNAME FROM INSTRUCTOR WHERE email = ?";
         Cursor cursor = db.rawQuery(query, new String[]{instructorEmail});
-
         String instructorName = "";
-
         if (cursor.moveToFirst()) {
             int firstNameIndex = cursor.getColumnIndex("FIRSTNAME");
             int lastNameIndex = cursor.getColumnIndex("LASTNAME");
@@ -133,9 +131,9 @@ public class AvailableCourseDataBaseHelper {
             }
         }
         cursor.close();
-
         return instructorName;
     }
+
     public List<Map.Entry<String, String>> getAllCoursesForRegistration() {
         List<Map.Entry<String, String>> courses = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -167,10 +165,10 @@ public class AvailableCourseDataBaseHelper {
         String currentTimeString = dateFormat.format(new Date(currentTime));
         Cursor cursor=null;
         try {
-            cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse WHERE datetime(registration_deadline) > datetime('" + currentTimeString + "')", null);
+            cursor = db.rawQuery("SELECT COURSE_ID,registration_deadline FROM AvailableCourse WHERE datetime(registration_deadline) > datetime('" + currentTimeString + "')", null);
             if (cursor.moveToFirst()) {
                 do {
-                    courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),CourseDataBaseHelper.getCourseName(cursor.getInt(0))));
+                    courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),cursor.getString(1)));
                 } while (cursor.moveToNext());
             }
             cursor.close();

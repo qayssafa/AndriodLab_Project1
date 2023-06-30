@@ -111,7 +111,7 @@ public class EditPageActivity extends AppCompatActivity {
                     ArrayList<String> studentsAreTakenCourse=enrollmentDataBaseHelper.getStudentsByCourseId(EditOrDeleteAnExistingCourseActivity.id);
                     if (!studentsAreTakenCourse.isEmpty()){
                         for (String s:studentsAreTakenCourse) {
-                            notificationDataBaseHelper.insertNotification(s,"This Course "+CourseDataBaseHelper.getCourseName(EditOrDeleteAnExistingCourseActivity.id)+"its updated check Please.");
+                            notificationDataBaseHelper.insertNotification(s,"This Course "+CourseDataBaseHelper.getCourseName(EditOrDeleteAnExistingCourseActivity.id)+"\n its updated check Please.");
                         }
                     }
                     Toast.makeText(EditPageActivity.this, "This Courses Updated successfully.", Toast.LENGTH_SHORT).show();

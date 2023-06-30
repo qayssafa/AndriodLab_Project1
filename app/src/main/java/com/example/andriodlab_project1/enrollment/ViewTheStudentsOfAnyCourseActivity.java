@@ -24,7 +24,7 @@ public class ViewTheStudentsOfAnyCourseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_the_students_of_any_course);
 
-        studentTable = findViewById(R.id.student_table);
+        studentTable = findViewById(R.id.student_show_table);
 
 
 

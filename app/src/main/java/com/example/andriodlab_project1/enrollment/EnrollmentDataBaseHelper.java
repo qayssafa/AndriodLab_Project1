@@ -62,7 +62,7 @@ public class EnrollmentDataBaseHelper {
         List<Map.Entry<Integer, String>> coursesTaken = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Map.Entry<Integer, String> entry;
-        String selectQuery = "SELECT c.COURSE_ID,c.Course_Title FROM courses c INNER JOIN enrollments e ON c.course_id = e.course_id WHERE e.email = ?";
+        String selectQuery = "SELECT c.COURSE_ID,c.Course_Title FROM COURSE c INNER JOIN enrollments e ON c.course_id = e.course_id WHERE e.email = ?";
         String[] selectionArgs = { email };
         Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
         while (cursor.moveToNext()) {
