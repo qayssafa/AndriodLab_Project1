@@ -6,8 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
-import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 
 import com.example.andriodlab_project1.R;
@@ -15,24 +13,18 @@ import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourse;
 import com.example.andriodlab_project1.course.EditPage;
 import com.example.andriodlab_project1.course.ViewTheStudentsOfAnyCourse;
 import com.example.andriodlab_project1.course_for_registration.CourseForRegistrationActivity;
-import com.example.andriodlab_project1.databinding.ActivityAdminMainBinding;
-import com.example.andriodlab_project1.databinding.ActivityDrawerBaseBinding;
 
-public class AdminMainActivity extends AppCompatActivity  {
+public class AdminMainActivity extends AppCompatActivity {
     private Button CreateCourseButton;
     private Button courseForRegestration;
 
     private Button editOrRemoveCourse;
-
-    ActivityAdminMainBinding activityAdminMainBinding;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityAdminMainBinding = ActivityAdminMainBinding.inflate(getLayoutInflater());
-        setContentView(activityAdminMainBinding.getRoot());
+        setContentView(R.layout.activity_admin_main);
 
-        /*CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
+        CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
         editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);
         CreateCourseButton.setOnClickListener(new View.OnClickListener(){
@@ -57,6 +49,6 @@ public class AdminMainActivity extends AppCompatActivity  {
                 startActivity(intent);
             }
         });
-*/
+
     }
 }

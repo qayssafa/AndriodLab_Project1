@@ -7,10 +7,10 @@ public class Course {
     private int CorseID;
     private String CourseTitle;
     private ArrayList<String> CourseMainTopics;
-    private ArrayList<Integer> Prerequisites;
+    private ArrayList<String> Prerequisites;
     private Blob photo;
 
-    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<Integer> prerequisites, Blob photo) {
+    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<String> prerequisites, Blob photo) {
         CourseTitle = courseTitle;
         CourseMainTopics = courseMainTopics;
         Prerequisites = prerequisites;
@@ -32,7 +32,7 @@ public class Course {
         return CourseMainTopics;
     }
 
-    public ArrayList<Integer> getPrerequisites() {
+    public ArrayList<String> getPrerequisites() {
         return Prerequisites;
     }
 
@@ -52,7 +52,7 @@ public class Course {
         CourseMainTopics = courseMainTopics;
     }
 
-    public void setPrerequisites(ArrayList<Integer> prerequisites) {
+    public void setPrerequisites(ArrayList<String> prerequisites) {
         Prerequisites = prerequisites;
     }
 

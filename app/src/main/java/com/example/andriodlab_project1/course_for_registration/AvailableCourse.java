@@ -6,13 +6,13 @@ import java.util.Locale;
 
 public class AvailableCourse {
   private int courseId;
-  private Date registrationDeadline;
-  private Date courseStartDate;
+  private String registrationDeadline;
+  private String courseStartDate;
   private String courseSchedule;
   private String venue;
 
-  public AvailableCourse(int courseId, Date registrationDeadline,
-                         Date courseStartDate, String courseSchedule, String venue) {
+  public AvailableCourse(int courseId, String registrationDeadline,
+                         String courseStartDate, String courseSchedule, String venue) {
     this.courseId = courseId;
     this.registrationDeadline = registrationDeadline;
     this.courseStartDate = courseStartDate;
@@ -27,13 +27,13 @@ public class AvailableCourse {
 
 
   public String getRegistrationDeadline() {
-  return formatDate(registrationDeadline);
+  return registrationDeadline;
   }
 
 
   public String getCourseStartDate() {
 
-    return formatDate(courseStartDate);
+    return courseStartDate;
   }
 
   public String getCourseSchedule() {
@@ -49,10 +49,10 @@ public class AvailableCourse {
   }
 
 
-  public void setRegistrationDeadline(Date registrationDeadline) {
+  public void setRegistrationDeadline(String registrationDeadline) {
     this.registrationDeadline = registrationDeadline;
   }
-  public void setCourseStartDate(Date courseStartDate) {
+  public void setCourseStartDate(String courseStartDate) {
     this.courseStartDate = courseStartDate;
   }
 
@@ -63,8 +63,5 @@ public class AvailableCourse {
   public void setVenue(String venue) {
     this.venue = venue;
   }
-  public String formatDate(Date date) {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-    return sdf.format(date);
-  }
+
 }

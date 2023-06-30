@@ -4,12 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
 import com.example.andriodlab_project1.common.DataBaseHelper;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class CourseDataBaseHelper {
     private DataBaseHelper dbHelper;
@@ -56,7 +57,7 @@ public class CourseDataBaseHelper {
             contentValues.put("Course_Main_Topics", stringBuilder.toString());
 
             StringBuilder stringBuilderForPre = new StringBuilder();
-            for (Integer pre : course.getPrerequisites()) {
+            for (String pre : course.getPrerequisites()) {
                 stringBuilderForPre.append(pre).append(",");
             }
             if (stringBuilderForPre.length() > 0) {
@@ -102,7 +103,7 @@ public class CourseDataBaseHelper {
             }
             contentValues.put("Course_Main_Topics", stringBuilder.toString());
             StringBuilder stringBuilderForPre = new StringBuilder();
-            for (Integer pre : course.getPrerequisites()) {
+            for (String pre : course.getPrerequisites()) {
                 stringBuilderForPre.append(pre).append(",");
             }
             if (stringBuilderForPre.length() > 0) {
@@ -138,15 +139,15 @@ public class CourseDataBaseHelper {
         return isCourseExists;
     }
 
-    public List<String> getAllCourses() {
+    public List<Map.Entry<String, String>>  getAllCourses() {
+        List<Map.Entry<String, String>> courses = new ArrayList<>();
 
-        List<String> courses = new ArrayList<String>();
         SQLiteDatabase db  = dbHelper.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT c.COURSE_ID FROM COURSE c",null);
+        Cursor cursor = db.rawQuery("SELECT c.COURSE_ID,c.Course_Title FROM COURSE c",null);
 
         if (cursor.moveToFirst()) {
             do {
-                courses.add(cursor.getString(0));
+                courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), cursor.getString(1)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -169,7 +170,7 @@ public class CourseDataBaseHelper {
             course.setCourseTitle(title);
             course.setCourseID(id);
             course.setCourseMainTopics(convertStringToList(mainTopics));
-            course.setPrerequisites(convertFromIntegerToList(prerequisites));
+            course.setPrerequisites(convertStringToList(prerequisites));
             return course;
         }
         // If no course is found with the given ID, return null
@@ -183,20 +184,5 @@ public class CourseDataBaseHelper {
             String[] splitArray = trimmedInput.split(",");
             ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(splitArray));
             return arrayList;
-    }
-    public ArrayList<Integer> convertFromIntegerToList(String input){
-        String[] elementsArray = input.split(",");
-
-        ArrayList<Integer> elementsList = new ArrayList<>();
-        for (String element : elementsArray) {
-            if (!element.isEmpty()){
-                int value = Integer.parseInt(element);
-                elementsList.add(value);
-            }else {
-                 elementsList.add(0);
-                 return elementsList;
-            }
-        }
-        return elementsList;
     }
 }

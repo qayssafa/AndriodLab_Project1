@@ -5,7 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.common.DataBaseHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import kotlin.Triple;
 
 public class AvailableCourseDataBaseHelper{
 
@@ -18,9 +24,11 @@ public class AvailableCourseDataBaseHelper{
         if (isTableCreatedFirstTime("AvailableCourse")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             sqLiteDatabase.execSQL("CREATE TABLE AvailableCourse (" +
-                    "course_id INTEGER PRIMARY KEY, " +
+                            "registration_Number INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "course_id INTEGER, " +
                     "instructor_email TEXT, " + // Add instructor_name column
                     "registration_deadline TEXT, " +
+                    "number_of_student INTEGER,"+
                     "instructor_name TEXT, " +
                     "course_start_date TEXT, " +
                     "course_schedule TEXT, " +
@@ -44,29 +52,53 @@ public class AvailableCourseDataBaseHelper{
         db.close();
         return isFirstTime;
     }
-    public void insertAvailableCourse(AvailableCourse availableCourse,String instructorEmail) {
+    public boolean insertAvailableCourse(AvailableCourse availableCourse,String instructorEmail,int numberOfStudent) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
         // Get the instructor name based on the provided instructor email
         String instructorName = getInstructorName(instructorEmail);
-
         ContentValues values = new ContentValues();
         values.put("course_id",availableCourse.getCourseId());
         values.put("instructor_email", instructorEmail);
         values.put("registration_deadline", availableCourse.getRegistrationDeadline());
         values.put("instructor_name", instructorName);
+        values.put("number_of_student", numberOfStudent);
         values.put("course_start_date", availableCourse.getCourseStartDate());
         values.put("course_schedule", availableCourse.getCourseSchedule());
         values.put("venue", availableCourse.getVenue());
-
         long rowId = db.insert("AvailableCourse", null, values);
-
         if (rowId != -1) {
             // Successful insertion
+            return true;
         } else {
             // Failed insertion
+            return false;
         }
     }
+    public List<Triple<AvailableCourse, String, Integer>> getAvailableCourseByCourse_Id(int course_id){
+
+        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
+        List<Triple<AvailableCourse, String, Integer>> availableCourses = new ArrayList<>();
+        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM AvailableCourse WHERE course_id = \"" + course_id + "\";", null);
+        if (cursor.moveToFirst()) {
+            do {
+                int courseID = cursor.getInt(cursor.getInt(1));
+                String registrationDeadline = cursor.getString(3);
+                int numberOfStudents = cursor.getInt(4);
+                String instructorName = cursor.getString(5);
+                String courseStartDate = cursor.getString(6);
+                String courseSchedule = cursor.getString(7);
+                String venue = cursor.getString(8);
+                AvailableCourse availableCourse = new AvailableCourse(courseID,registrationDeadline,courseStartDate,courseSchedule,venue);
+                Triple<AvailableCourse, String, Integer> courseInfo = new Triple<>(availableCourse, instructorName, numberOfStudents);
+                availableCourses.add(courseInfo);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        dbHelper.close();
+        return availableCourses;
+    }
+
     private String getInstructorName(String instructorEmail) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT FIRSTNAME, LASTNAME FROM INSTRUCTOR WHERE email = ?";

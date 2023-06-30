@@ -16,16 +16,20 @@ import com.example.andriodlab_project1.R;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
-public class EditPage extends AppCompatActivity {
+public class EditPageActivity extends AppCompatActivity {
     private EditText CourseTitleInput;
     private EditText CourseMainTopicsInput;
-    private String[] continents;
+    private List<Map.Entry<String, String>> continents;
     private CourseDataBaseHelper dbHelper;
     private TextView Prerequisites;
     private Button SubmitDataButton;
     private boolean[] selectedContinents;
-    private ArrayList<Integer> continentsList;
+    private ArrayList<String> continentsList;
+    private Map.Entry<String, String> entry;
+    private String value;
     private int idF;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,24 +39,27 @@ public class EditPage extends AppCompatActivity {
         CourseTitleInput=findViewById(R.id.EditCourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.EditCourseMainTopicsInput);
         Prerequisites = findViewById(R.id.Editlist);
-        continents = dbHelper.getAllCourses().toArray(new String[0]);
-        selectedContinents = new boolean[continents.length];
+        continents = dbHelper.getAllCourses();
         SubmitDataButton = findViewById(R.id.EditUpdate);
         continentsList = new ArrayList<>();
+        CharSequence[] items = convertListToCharSequenceArray(continents);
+        selectedContinents = new boolean[continents.size()];
         Prerequisites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(EditPage.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(EditPageActivity.this);
                 builder.setTitle("Edit Prerequisites:");
                 builder.setCancelable(false);
-                builder.setMultiChoiceItems(continents, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
+                builder.setMultiChoiceItems(items, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if(isChecked){
-                            continentsList.add(which);
+                            entry = continents.get(which);
+                            value = entry.getValue();
+                            continentsList.add(value);
                             Collections.sort(continentsList);
                         }else{
-                            continentsList.remove(Integer.valueOf(which));
+                            continentsList.remove(which);
                         }
                     }
                 });
@@ -83,21 +90,21 @@ public class EditPage extends AppCompatActivity {
             public void onClick(View v) {
 
                 while (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
-                    Toast.makeText(EditPage.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPageActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }
                 String courseName=CourseTitleInput.getText().toString();
 
                 while (CourseMainTopicsInput.getText().toString().isEmpty()||CourseMainTopicsInput.getText().toString().isBlank()){
-                    Toast.makeText(EditPage.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPageActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }
                 ArrayList<String> courseTopics=convertStringToList(CourseMainTopicsInput.getText().toString());
                 Course course=new Course(courseName,courseTopics,continentsList,null);
-                EditOrDeleteAnExistingCourse editOrDeleteAnExistingCourse;
-                course.setCourseID(EditOrDeleteAnExistingCourse.id);
+                EditOrDeleteAnExistingCourseActivity editOrDeleteAnExistingCourse;
+                course.setCourseID(EditOrDeleteAnExistingCourseActivity.id);
                 if (dbHelper.updateCourse(course)){
-                    Toast.makeText(EditPage.this, "This Courses Updated successfully.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPageActivity.this, "This Courses Updated successfully.", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(EditPage.this, "This Courses Updated Failed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditPageActivity.this, "This Courses Updated Failed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -105,7 +112,7 @@ public class EditPage extends AppCompatActivity {
     }
     private ArrayList<String> convertStringToList(String input) {
         if (input.isEmpty() || input.isBlank()) {
-            Toast.makeText(EditPage.this, "This Courses Topics not Valid!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(EditPageActivity.this, "This Courses Topics not Valid!", Toast.LENGTH_SHORT).show();
             return null;
         }
         else {
@@ -118,5 +125,15 @@ public class EditPage extends AppCompatActivity {
             ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(splitArray));
             return arrayList;
         }
+    }
+    public static CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
+        CharSequence[] array = new CharSequence[list.size()-1];
+        int i = 0;
+        for (Map.Entry<String, String> entry : list) {
+           if (!entry.getKey().equals(EditOrDeleteAnExistingCourseActivity.id+"")){
+                array[i++] = entry.getValue();
+            }
+        }
+        return array;
     }
 }
