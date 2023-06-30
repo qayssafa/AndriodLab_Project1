@@ -64,13 +64,18 @@ public class CreateCourseActivity extends DrawerBaseActivity {
                 builder.setMultiChoiceItems(items, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if(isChecked){
+                        if (isChecked) {
                             entry = continents.get(which);
                             value = entry.getValue();
                             continentsList.add(value);
                             Collections.sort(continentsList);
-                        }else{
-                            continentsList.remove(which);
+                        } else {
+                            if (which >= 0 && which < continentsList.size()) {
+                                continentsList.remove(which);
+                            } else {
+                                // Handle boundary condition: index out of range
+                                // Display an error message or handle it as per your requirement
+                            }
                         }
                     }
                 });

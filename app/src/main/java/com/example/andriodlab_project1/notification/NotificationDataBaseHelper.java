@@ -50,11 +50,11 @@ public class NotificationDataBaseHelper {
         values.put("message", notificationMessage);
         db.insert("notifications", null, values);
     }
-    public List<Notification> getNotificationsForStudent(int studentId) {
+    public List<Notification> getNotificationsForStudent(String lEmail) {
         List<Notification> notifications = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String selectQuery = "SELECT EMAIL,message, timestamp FROM notifications WHERE student_id = ?";
-        String[] selectionArgs = {String.valueOf(studentId)};
+        String selectQuery = "SELECT EMAIL,message, timestamp FROM notifications WHERE EMAIL = ?";
+        String[] selectionArgs = {String.valueOf(lEmail)};
         Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
         while (cursor.moveToNext()) {
             String email = cursor.getString(0);

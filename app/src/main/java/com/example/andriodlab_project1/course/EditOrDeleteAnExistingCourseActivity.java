@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.databinding.ActivityEditOrDeleteAnExistingCourseBinding;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +23,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class EditOrDeleteAnExistingCourseActivity extends AppCompatActivity {
+public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
     private TextView listOfCourse;
     private TextView courseNumber;
     private TextView courseTitle;
@@ -37,11 +39,14 @@ public class EditOrDeleteAnExistingCourseActivity extends AppCompatActivity {
     CharSequence[] items;
     private Map.Entry<String, String> entry;
     private String value;
+    ActivityEditOrDeleteAnExistingCourseBinding activityEditOrDeleteAnExistingCourseBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_or_delete_an_existing_course);
+        activityEditOrDeleteAnExistingCourseBinding = ActivityEditOrDeleteAnExistingCourseBinding.inflate(getLayoutInflater());
+        setContentView(activityEditOrDeleteAnExistingCourseBinding.getRoot());
+        //setContentView(R.layout.activity_edit_or_delete_an_existing_course);
         listOfCourse = findViewById(R.id.list);
         delete = findViewById(R.id.Delete);
         edit = findViewById(R.id.Edit);

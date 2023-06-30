@@ -10,13 +10,15 @@ import com.example.andriodlab_project1.R;
 
 public class ApplicantDecide extends AppCompatActivity {
 
+    private CheckBox checkboxAccept;
+    private CheckBox checkboxReject;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_applicant_decide);
 
-        CheckBox checkboxAccept = findViewById(R.id.AcceptChcek);
-        CheckBox checkboxReject = findViewById(R.id.RejectCheck);
+        checkboxAccept = findViewById(R.id.AcceptChcek);
+        checkboxReject = findViewById(R.id.RejectCheck);
 
         checkboxAccept.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

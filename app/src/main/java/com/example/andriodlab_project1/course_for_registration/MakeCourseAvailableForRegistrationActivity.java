@@ -15,9 +15,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
+import com.example.andriodlab_project1.databinding.ActivityMakeCourseAvailabeForRegistrationBinding;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
@@ -28,7 +30,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-public class MakeCourseAvailableForRegistrationActivity extends AppCompatActivity {
+public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivity {
     private List<Map.Entry<String, String>> continents;
     private AvailableCourseDataBaseHelper dbHelper;
     private CourseDataBaseHelper courseDataBaseHelper;
@@ -41,10 +43,13 @@ public class MakeCourseAvailableForRegistrationActivity extends AppCompatActivit
     private String value;
     private CharSequence[] items;
 
+    ActivityMakeCourseAvailabeForRegistrationBinding activityMakeCourseAvailabeForRegistrationBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_course_availabe_for_registration);
+        activityMakeCourseAvailabeForRegistrationBinding = ActivityMakeCourseAvailabeForRegistrationBinding.inflate(getLayoutInflater());
+        setContentView(activityMakeCourseAvailabeForRegistrationBinding.getRoot());
+        //setContentView(R.layout.activity_make_course_availabe_for_registration);
         EditText Venue = (EditText) findViewById(R.id.VenueEditText);
         EditText CourseSchedule = (EditText) findViewById(R.id.CourseScheduleEditText);
         EditText InstructorName = (EditText) findViewById(R.id.InstructorNameEditText);
@@ -205,7 +210,7 @@ public class MakeCourseAvailableForRegistrationActivity extends AppCompatActivit
                    if (email!=null&&dbHelper.insertAvailableCourse(availableCourse,email,0)){
                        List<String> students=studentDataBaseHelper.getAllStudents();
                        for (String student:students) {
-                           String message="A new course '" + CourseDataBaseHelper.getCourseName(Integer.parseInt(value)) + "' has been created.";
+                           String message="A new course '" + CourseDataBaseHelper.getCourseName(Integer.parseInt(value)) + "' \nhas been created.";
                            notificationDataBaseHelper.insertNotification(student,message);
                        }
                        Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration successfully.", Toast.LENGTH_SHORT).show();

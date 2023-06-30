@@ -6,7 +6,7 @@
 
 
     <TextView
-        android:id="@+id/list"
+        android:id="@+id/showStudents"
         android:layout_width="224dp"
         android:layout_height="44dp"
         android:layout_alignParentTop="true"
@@ -24,7 +24,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/list"
+        android:layout_below="@+id/showStudents"
         android:layout_marginStart="20dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="20dp"
@@ -32,7 +32,7 @@
         android:padding="10dp">
 
         <TableLayout
-            android:id="@+id/student_table"
+            android:id="@+id/student_show_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stretchColumns="*">

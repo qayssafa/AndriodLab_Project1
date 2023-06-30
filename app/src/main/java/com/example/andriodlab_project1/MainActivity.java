@@ -32,10 +32,10 @@ public class MainActivity extends AppCompatActivity {
     private StudentDataBaseHelper studentDataBaseHelper;
     private AdminDataBaseHelper adminDataBaseHelper;
     private InstructorDataBaseHelper instructorDataBaseHelper;
+    public static String studentEmail;
 
 
     public static User user = new User();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,26 +49,26 @@ public class MainActivity extends AppCompatActivity {
         Admin newUser = new Admin();
         Student student=new Student();
         Instructor instructor=new Instructor();
-        newUser.setEmail("q@m.com");
+        newUser.setEmail("A");
         newUser.setFirstName("John");
         newUser.setLastName("Doe");
-        newUser.setPassword("123456789Qa");
+        newUser.setPassword("1");
         adminDataBaseHelper.insertAdmin(newUser);
-        student.setEmail("q13@m.com");
+        student.setEmail("S");
         student.setFirstName("Joh1n");
         student.setLastName("Do1e");
-        student.setPassword("124456789Qa");
+        student.setPassword("1");
         student.setMobileNumber("123131323141323123");
         student.setAddress("sadaad");
         studentDataBaseHelper.insertStudent(student);
         instructor.setDegree("@13");
         instructor.setSpecialization("@13");
         instructor.setMobileNumber("@13");
-        instructor.setPassword("@13");
+        instructor.setPassword("1");
         instructor.setAddress("@13");
         instructor.setLastName("@13");
         instructor.setFirstName("@13");
-        instructor.setEmail("a@13.com");
+        instructor.setEmail("I");
         instructorDataBaseHelper.insertInstructor(instructor);
 
         // buttons and text views
@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
                         user = adminDataBaseHelper.getAdminByEmail(email.getText().toString().trim());
                         startActivity(new Intent(MainActivity.this, AdminMainActivity.class));
                     } else if (studentDataBaseHelper.isRegistered(enteredEmail)) {
+                        studentEmail=enteredEmail;
                         user = studentDataBaseHelper.getStudentByEmail(email.getText().toString().trim());
                         startActivity(new Intent(MainActivity.this, StudentMainActivity.class));
                     } else if (instructorDataBaseHelper.isRegistered(enteredEmail)) {
