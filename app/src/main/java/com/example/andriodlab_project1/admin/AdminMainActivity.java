@@ -14,7 +14,6 @@ import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailab
 import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.databinding.ActivityAdminMainBinding;
-import com.example.andriodlab_project1.databinding.ActivityDrawerBaseBinding;
 
 
 public class AdminMainActivity extends DrawerBaseActivity {
