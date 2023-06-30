@@ -18,6 +18,9 @@ import android.widget.TextView;
 
 import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
+import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
+import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
+import com.example.andriodlab_project1.enrollment.ViewTheStudentsOfAnyCourseActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -50,21 +53,39 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
 
         if (id == R.id.home) {
             startActivity(new Intent(DrawerBaseActivity.this, AdminMainActivity.class));
+            overridePendingTransition(0, 0);
             finish();
-        } else if (id == R.id.all) {
+        } else if (id == R.id.CNC) {
             startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            overridePendingTransition(0, 0);
             finish();
-        } else if (id == R.id.favorite) {
-            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+        } else if (id == R.id.ED) {
+            startActivity(new Intent(DrawerBaseActivity.this, EditOrDeleteAnExistingCourseActivity.class));
+            overridePendingTransition(0, 0);
             finish();
-        } else if (id == R.id.sorted) {
-            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+        } else if (id == R.id.MCA) {
+            startActivity(new Intent(DrawerBaseActivity.this, MakeCourseAvailableForRegistrationActivity.class));
+            overridePendingTransition(0, 0);
             finish();
-        } else if (id == R.id.profile) {
+        } else if (id == R.id.VUP) {
             startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.CH) {
+            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.RD) {
+                startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+                overridePendingTransition(0, 0);
+                finish();
+        }else if (id == R.id.CS) {
+            startActivity(new Intent(DrawerBaseActivity.this, ViewTheStudentsOfAnyCourseActivity.class));
+            overridePendingTransition(0, 0);
             finish();
         } else if (id == R.id.logout) {
             startActivity(new Intent(DrawerBaseActivity.this, MainActivity.class));
+            overridePendingTransition(0, 0);
             finish();
         }
         return false;
@@ -76,51 +97,5 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
         }
     }
 
-    // public static TravelDestination travelDestination;
-    //@Override
-    /*protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_drawer_base);
-        MaterialToolbar toolbar = findViewById(R.id.topAppBar);
-        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigation_view);
-        startActivity(new Intent(DrawerBaseActivity.this, AdminMainActivity.class));
-        finish();
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                int id = item.getItemId();
-                drawerLayout.closeDrawer(GravityCompat.START);
-               /* switch (id){
-                    case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new HomeFragment()).commit();
-                        break;
-                    case R.id.all:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new AllFragment()).commit();
-                        break;
-                    case R.id.favorite:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new FavFragment()).commit();
-                        break;
-                    case R.id.sorted:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new SortedFragment()).commit();
-                        break;
-                    case R.id.profile:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.frameLayout, new ProfileFragment()).commit();
-                        break;
-                    case R.id.logout:
-                        startActivity(new Intent(DrawerBaseActivity.this, MainActivity.class));
-                        break;
-                    default:
-                        return true;
-                }
-                return false;
-            }
-        });
-    }*/
+
 }

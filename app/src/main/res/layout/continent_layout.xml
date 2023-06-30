@@ -16,7 +16,7 @@
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="#C4C7CA"
             app:navigationIcon="@drawable/baseline_menu_24"
             app:title="Menu" />
 

@@ -11,9 +11,14 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_all">All</string>
-    <string name="menu_favorite">Favorite</string>
-    <string name="menu_sorted">Sorted</string>
+    <string name="Create_new_course">Create a new course</string>
+    <string name="Edit_delete">Edit or delete courses</string>
+    <string name="Make_course_available">Make course available </string>
+    <string name="view_users_profile">view users profile</string>
+    <string name="Course_history">Course history</string>
+    <string name="Registration_decisions">Registration decisions</string>
+    <string name="Course_students">Course students</string>
+
     <string name="menu_profile">Profile</string>
     <string name="menu_logout">Logout</string>
     <string name="Admin">Admin</string>
