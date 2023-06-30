@@ -15,7 +15,7 @@
         android:theme="@style/Theme.AndriodLab_Project1"
         tools:targetApi="31">
         <activity
-            android:name=".course.ViewTheStudentsOfAnyCourse"
+            android:name=".Student2Course.ViewTheStudentsOfAnyCourseActivity"
             android:exported="false" />
         <activity
             android:name=".common.AdminSlideScreen"
@@ -25,6 +25,9 @@
             android:exported="false" />
         <activity
             android:name=".course.EditOrDeleteAnExistingCourseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".course_for_registration.ViewPreviousOfferings"
             android:exported="false" />
         <activity
             android:name=".admin.AdminMainActivity"
