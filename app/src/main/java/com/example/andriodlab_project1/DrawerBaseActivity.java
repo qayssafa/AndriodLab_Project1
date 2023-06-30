@@ -16,8 +16,8 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.admin.AdminMainActivity;
+import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -46,10 +46,28 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
+        int id = item.getItemId();
 
-
-
-      return false;
+        if (id == R.id.home) {
+            startActivity(new Intent(DrawerBaseActivity.this, AdminMainActivity.class));
+            finish();
+        } else if (id == R.id.all) {
+            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            finish();
+        } else if (id == R.id.favorite) {
+            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            finish();
+        } else if (id == R.id.sorted) {
+            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            finish();
+        } else if (id == R.id.profile) {
+            startActivity(new Intent(DrawerBaseActivity.this, CreateCourseActivity.class));
+            finish();
+        } else if (id == R.id.logout) {
+            startActivity(new Intent(DrawerBaseActivity.this, MainActivity.class));
+            finish();
+        }
+        return false;
     }
 
     protected void allocateActivityTitle(String title){
