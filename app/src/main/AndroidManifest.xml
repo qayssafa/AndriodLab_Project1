@@ -24,7 +24,13 @@
             android:name=".course.EditOrDeleteAnExistingCourseActivity"
             android:exported="false" />
         <activity
+            android:name=".course_for_registration.ViewPreviousOfferings"
+            android:exported="false" />
+        <activity
             android:name=".admin.AdminMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".course_for_registration.MakeCourseAvailableForRegistrationActivity"
             android:exported="false" />
         <activity
             android:name=".course.CreateCourseActivity"
