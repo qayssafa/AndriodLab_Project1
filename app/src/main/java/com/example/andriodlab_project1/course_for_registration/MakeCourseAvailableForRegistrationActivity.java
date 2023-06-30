@@ -53,6 +53,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         EditText Venue = (EditText) findViewById(R.id.VenueEditText);
         EditText CourseSchedule = (EditText) findViewById(R.id.CourseScheduleEditText);
         EditText InstructorName = (EditText) findViewById(R.id.InstructorNameEditText);
+        EditText CourseEndDate = (EditText) findViewById(R.id.CourseEndDate);
         TextView numberOfCourse = (TextView) findViewById(R.id.CourseNumberTextView);
         TextView listOfCourses = findViewById(R.id.listOfCourses);
         submit = findViewById(R.id.submit);

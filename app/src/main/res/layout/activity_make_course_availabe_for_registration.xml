@@ -10,11 +10,7 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/make_a_course_available_for_registration" />
+        app:srcCompat="@drawable/regis" />
 
     <TextView
         android:id="@+id/listOfCourses"
@@ -44,7 +40,7 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.857" />
+        app:layout_constraintVertical_bias="0.868" />
 
     <EditText
         android:id="@+id/CourseScheduleEditText"
@@ -58,13 +54,15 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785" />
+        app:layout_constraintVertical_bias="0.795" />
 
     <EditText
         android:id="@+id/StartDateEditText"
         android:layout_width="173dp"
         android:layout_height="41dp"
+        android:clickable="true"
         android:ems="10"
+        android:focusable="false"
         android:hint="Course Start Date"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -72,9 +70,7 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintVertical_bias="0.708" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/CourseNumberTextView"
@@ -86,7 +82,7 @@
         app:layout_constraintHorizontal_bias="0.764"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.478" />
+        app:layout_constraintVertical_bias="0.473" />
 
     <EditText
         android:id="@+id/InstructorNameEditText"
@@ -97,16 +93,32 @@
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.937"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.529" />
+
+    <EditText
+        android:id="@+id/CourseEndDate"
+        android:layout_width="170dp"
+        android:layout_height="44dp"
+        android:ems="10"
+        android:hint="Course end date"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.933"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.547" />
+        app:layout_constraintVertical_bias="0.665" />
 
     <EditText
         android:id="@+id/RegistrationDeadLineEditText"
         android:layout_width="173dp"
         android:layout_height="41dp"
+        android:clickable="true"
         android:ems="10"
+        android:focusable="false"
         android:hint="Registration deadline"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -114,9 +126,7 @@
         app:layout_constraintHorizontal_bias="0.949"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:focusable="false"
-        android:clickable="true"
-        app:layout_constraintVertical_bias="0.631" />
+        app:layout_constraintVertical_bias="0.726" />
 
     <Button
         android:id="@+id/submit"
