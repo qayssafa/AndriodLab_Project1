@@ -6,19 +6,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.andriodlab_project1.Student2Course.ViewTheStudentsOfAnyCourseActivity;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 
 import com.example.andriodlab_project1.R;
-import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
 import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
-import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 
 public class AdminMainActivity extends AppCompatActivity {
     private Button CreateCourseButton;
     private Button courseForRegestration;
 
     private Button editOrRemoveCourse;
-    private Button viewOffering;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +26,6 @@ public class AdminMainActivity extends AppCompatActivity {
         CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
         editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);
-        viewOffering = (Button)findViewById(R.id.viewOffering);
         CreateCourseButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -46,14 +44,7 @@ public class AdminMainActivity extends AppCompatActivity {
         editOrRemoveCourse.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, EditOrDeleteAnExistingCourseActivity.class);
-                startActivity(intent);
-            }
-        });
-        viewOffering.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, ViewPreviousOfferings.class);
+                Intent intent = new Intent(AdminMainActivity.this, ViewTheStudentsOfAnyCourseActivity.class);
                 startActivity(intent);
             }
         });
