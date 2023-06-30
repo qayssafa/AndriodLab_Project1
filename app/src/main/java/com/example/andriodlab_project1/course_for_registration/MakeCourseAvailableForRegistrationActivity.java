@@ -210,7 +210,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                    if (email!=null&&dbHelper.insertAvailableCourse(availableCourse,email,0)){
                        List<String> students=studentDataBaseHelper.getAllStudents();
                        for (String student:students) {
-                           String message="A new course '" + CourseDataBaseHelper.getCourseName(Integer.parseInt(value)) + "' has been created.";
+                           String message="A new course '" + CourseDataBaseHelper.getCourseName(Integer.parseInt(value)) + "' \nhas been created.";
                            notificationDataBaseHelper.insertNotification(student,message);
                        }
                        Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration successfully.", Toast.LENGTH_SHORT).show();

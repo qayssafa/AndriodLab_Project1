@@ -47,6 +47,14 @@
         <activity
             android:name=".student.SearchAndViewCourseAreAvailable"
             android:exported="false" />
+
+
+
+
+
+        <activity
+            android:name=".student.messages"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
