@@ -8,15 +8,25 @@ public class AvailableCourse {
   private int courseId;
   private String registrationDeadline;
   private String courseStartDate;
+  private String courseEndDate;
   private String courseSchedule;
   private String venue;
 
-  public AvailableCourse(int courseId, String registrationDeadline, String courseStartDate, String courseSchedule, String venue) {
+  public AvailableCourse(int courseId, String registrationDeadline, String courseStartDate, String courseSchedule, String venue, String courseEndDate) {
     this.courseId = courseId;
     this.registrationDeadline = registrationDeadline;
     this.courseStartDate = courseStartDate;
     this.courseSchedule = courseSchedule;
+    this.courseEndDate = courseEndDate;
     this.venue = venue;
+  }
+
+  public String getCourseEndDate() {
+    return courseEndDate;
+  }
+
+  public void setCourseEndDate(String courseEndDate) {
+    this.courseEndDate = courseEndDate;
   }
 
   public int getCourseId() {

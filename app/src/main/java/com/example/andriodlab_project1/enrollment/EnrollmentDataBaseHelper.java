@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.course.Course;
 
+import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class EnrollmentDataBaseHelper {
@@ -48,7 +51,7 @@ public class EnrollmentDataBaseHelper {
     public boolean insertStudent2Course(Enrollment s2c) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM enrollments", null);
-        if (!cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("EMAIL", s2c.getStudentEmail());
@@ -57,22 +60,6 @@ public class EnrollmentDataBaseHelper {
             return true;
         }
         return false;
-    }
-    public List<Map.Entry<Integer, String>> getCoursesTakenByStudent(String email) {
-        List<Map.Entry<Integer, String>> coursesTaken = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Map.Entry<Integer, String> entry;
-        String selectQuery = "SELECT c.COURSE_ID,c.Course_Title FROM COURSE c INNER JOIN enrollments e ON c.course_id = e.course_id WHERE e.email = ?";
-        String[] selectionArgs = { email };
-        Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
-        while (cursor.moveToNext()) {
-            int  COURSE_ID = cursor.getInt(0);
-            String  courseTitle = cursor.getString(1);
-            entry = new AbstractMap.SimpleEntry<>(COURSE_ID, courseTitle);
-            coursesTaken.add(entry);
-        }
-        cursor.close();
-        return coursesTaken;
     }
     public ArrayList<String> getStudentsByCourseId(int courseId) {
         ArrayList<String> students = new ArrayList<>();

@@ -9,21 +9,27 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.R;
-import com.example.andriodlab_project1.admin.AdminMainActivity;
-import com.example.andriodlab_project1.course.CreateCourseActivity;
-import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 
 public class StudentMainActivity extends AppCompatActivity {
-    private Button notfiy;
+    private Button enroll;
+    private Button messages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_main);
-        notfiy=findViewById(R.id.notfiy);
-        notfiy.setOnClickListener(new View.OnClickListener(){
+        enroll=findViewById(R.id.enrollButtonAndSee);
+        messages=findViewById(R.id.messages);
+        enroll.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 Intent intent = new Intent(StudentMainActivity.this, SearchAndViewCourseAreAvailable.class);
+                startActivity(intent);
+            }
+        });
+        messages.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(StudentMainActivity.this, messages.class);
                 startActivity(intent);
             }
         });

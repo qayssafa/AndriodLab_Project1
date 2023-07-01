@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/appstatus" />
 
     <TextView
-        android:id="@+id/listOfCourses"
+        android:id="@+id/listOfApplicant"
         android:layout_width="224dp"
         android:layout_height="44dp"
         android:background="@android:drawable/editbox_background"
@@ -58,7 +58,7 @@
         app:layout_constraintVertical_bias="0.254">
 
         <TableLayout
-            android:id="@+id/table"
+            android:id="@+id/tableApplicant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -80,14 +80,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Course id"
+                    android:text="Course  Name"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Student id"
+                    android:text="Student Email"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>

@@ -41,6 +41,7 @@ public class AvailableCourseDataBaseHelper {
                     "number_of_student INTEGER," +
                     "instructor_name TEXT, " +
                     "course_start_date TEXT, " +
+                    "course_end_date TEXT, " +
                     "course_schedule TEXT, " +
                     "venue TEXT, " +
                     "FOREIGN KEY (COURSE_ID) REFERENCES COURSE(COURSE_ID) ON DELETE CASCADE, " +
@@ -76,6 +77,7 @@ public class AvailableCourseDataBaseHelper {
         values.put("instructor_name", instructorName);
         values.put("number_of_student", numberOfStudent);
         values.put("course_start_date", availableCourse.getCourseStartDate());
+        values.put("course_end_date", availableCourse.getCourseStartDate());
         values.put("course_schedule", availableCourse.getCourseSchedule());
         values.put("venue", availableCourse.getVenue());
         long rowId = db.insert("AvailableCourse", null, values);
@@ -103,9 +105,10 @@ public class AvailableCourseDataBaseHelper {
                 int numberOfStudents = cursor.getInt(4);
                 String instructorName = cursor.getString(5);
                 String courseStartDate = cursor.getString(6);
-                String courseSchedule = cursor.getString(7);
-                String venue = cursor.getString(8);
-                AvailableCourse availableCourse = new AvailableCourse(courseID, registrationDeadline, courseStartDate, courseSchedule, venue);
+                String courseEndDate = cursor.getString(7);
+                String courseSchedule = cursor.getString(8);
+                String venue = cursor.getString(9);
+                AvailableCourse availableCourse = new AvailableCourse(courseID, registrationDeadline, courseStartDate, courseSchedule, venue,courseEndDate);
                 Triple<AvailableCourse, String, Integer> courseInfo = new Triple<>(availableCourse, instructorName, numberOfStudents);
                 availableCourses.add(courseInfo);
             } while (cursor.moveToNext());
@@ -165,7 +168,11 @@ public class AvailableCourseDataBaseHelper {
         String currentTimeString = dateFormat.format(new Date(currentTime));
         Cursor cursor=null;
         try {
-            cursor = db.rawQuery("SELECT COURSE_ID,registration_deadline FROM AvailableCourse WHERE datetime(registration_deadline) > datetime('" + currentTimeString + "')", null);
+            cursor = db.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
+                    "FROM AvailableCourse ac " +
+                    "LEFT JOIN enrollments e ON ac.COURSE_ID = e.COURSE_ID " +
+                    "WHERE datetime(ac.registration_deadline) > datetime('" + currentTimeString + "') " +
+                    "AND e.COURSE_ID IS NULL", null);
             if (cursor.moveToFirst()) {
                 do {
                     courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),cursor.getString(1)));
@@ -181,6 +188,34 @@ public class AvailableCourseDataBaseHelper {
             db.close();
         }
     }
+    public List<Map.Entry<Integer, String>> getCoursesTakenByStudent(String email) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        long currentTime = new Date().getTime();
+        String currentTimeString = dateFormat.format(new Date(currentTime));
+        List<Map.Entry<Integer, String>> coursesTaken = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT c.COURSE_ID,c.Course_Title " +
+                "FROM COURSE c " +
+                "INNER JOIN AvailableCourse ac ON c.COURSE_ID = ac.COURSE_ID " +
+                "INNER JOIN STUDENT s ON ac.instructor_email = s.EMAIL " +
+                "WHERE s.EMAIL = ? AND ac.course_end_date <= ?";
+
+        // Execute the query
+        Cursor cursor = db.rawQuery(query, new String[]{email, currentTimeString});
+
+        // Iterate over the cursor and add finished courses to the list
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                coursesTaken.add(new AbstractMap.SimpleEntry<>(cursor.getInt(0), cursor.getString(1)));
+            } while (cursor.moveToNext());
+        }
+
+        // Close the cursor
+        if (cursor != null) {
+            cursor.close();
+        }
+        return coursesTaken;
+    }
     public List<Map.Entry<String, String>> getAllCoursesAreFinished() {
         List<Map.Entry<String, String>> courses = new ArrayList<>();
         long currentTime = new Date().getTime();
@@ -189,7 +224,7 @@ public class AvailableCourseDataBaseHelper {
         String currentTimeString = dateFormat.format(new Date(currentTime));
         Cursor cursor=null;
         try {
-            cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse WHERE datetime(registration_deadline) < datetime('" + currentTimeString + "')", null);
+            cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse WHERE datetime(courseEndDate) < datetime('" + currentTimeString + "')", null);
             if (cursor.moveToFirst()) {
                 do {
                     courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),CourseDataBaseHelper.getCourseName(cursor.getInt(0))));

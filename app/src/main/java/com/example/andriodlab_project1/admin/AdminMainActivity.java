@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.common.User;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 
@@ -39,7 +40,7 @@ public class AdminMainActivity extends DrawerBaseActivity {
         setContentView(activityAdminMainBinding.getRoot());
         AdminName = (TextView)findViewById(R.id.AdminName);
         adminDataBaseHelper = new AdminDataBaseHelper(this);
-
+        AdminName.setText(adminDataBaseHelper.getAdminByEmail(MainActivity.AdminEmail).getFirstName()+" "+adminDataBaseHelper.getAdminByEmail(MainActivity.AdminEmail).getLastName());
         /*CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
         editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);
