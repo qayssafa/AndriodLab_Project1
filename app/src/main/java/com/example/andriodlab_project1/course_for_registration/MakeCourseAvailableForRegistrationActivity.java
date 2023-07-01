@@ -102,36 +102,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 builder.show();
             }
         });
-        editStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                // Launch Date Picker Dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        // Display Selected date in EditText
-                        if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
-                            editStartDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        } else if (((monthOfYear + 1) <= 9) && (dayOfMonth > 9))
-                            editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
-                            editStartDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                        } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
-                            editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                        }
-                    }
-                }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
-            deadLine.setOnClickListener(new View.OnClickListener() {
+            editStartDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // Get Current Date
@@ -141,22 +112,20 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     int mDay = c.get(Calendar.DAY_OF_MONTH);
 
                     // Launch Date Picker Dialog
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this,new DatePickerDialog.OnDateSetListener() {
-
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year,
                                               int monthOfYear, int dayOfMonth) {
                             // Display Selected date in EditText
                             if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
-                                deadLine.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                editStartDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
                             } else if (((monthOfYear + 1) <= 9) && (dayOfMonth > 9))
-                                deadLine.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                                editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                             else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
-                                deadLine.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                                editStartDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
                             } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
-                                deadLine.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                                editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
                             }
-
                         }
                     }, mYear, mMonth, mDay);
                     datePickerDialog.show();
@@ -188,6 +157,35 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                                 editEndDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
                             }
 
+                        }
+                    }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            });
+        deadLine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Get Current Date
+                    final Calendar c = Calendar.getInstance();
+                    int mYear = c.get(Calendar.YEAR);
+                    int mMonth = c.get(Calendar.MONTH);
+                    int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                    // Launch Date Picker Dialog
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            // Display Selected date in EditText
+                            if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
+                                deadLine.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            } else if (((monthOfYear + 1) <= 9) && (dayOfMonth > 9))
+                                deadLine.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
+                                deadLine.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                                deadLine.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            }
                         }
                     }, mYear, mMonth, mDay);
                     datePickerDialog.show();

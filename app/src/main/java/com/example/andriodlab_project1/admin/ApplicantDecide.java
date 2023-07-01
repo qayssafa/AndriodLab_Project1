@@ -168,23 +168,29 @@ public class ApplicantDecide extends AppCompatActivity {
                 boolean Accept = checkAccepted.isEnabled();
                 CheckBox checkReject = (CheckBox) findViewById(R.id.RejectCheck);
                 boolean Reject = checkReject.isEnabled();
+                Applicant applicant1 = applicantDataBaseHelper.getApplicantById(key);
+                Enrollment enrollment = new Enrollment(applicant1.getCourseId(), applicant1.getEmail());
+                availableCourses = dbHelper.getAvailableCourseByCourse_Id(applicant1.getCourseId());
                 if (Accept) {
                     if (applicantDataBaseHelper.updateApplicantStatus(key, "YES")) {
-
-                        Applicant applicant1 = applicantDataBaseHelper.getApplicantById(key);
-                        Enrollment enrollment = new Enrollment(applicant1.getCourseId(), applicant1.getEmail());
                         enrollmentDataBaseHelper.insertStudent2Course(enrollment);
-                        availableCourses = dbHelper.getAvailableCourseByCourse_Id(applicant1.getCourseId());
                         for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
                             AvailableCourse availableCourse = courseInfo.getFirst();
                             String message = "This Course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\nWill be Starting in \n" + availableCourse.getCourseStartDate();
+                            String message1 = "Your Request to Registered this course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\n its Accepted!!";
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message);
+                            notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message1);
                             Toast.makeText(ApplicantDecide.this, "This Course its Enrolled Successfully.", Toast.LENGTH_SHORT).show();
                         }
                         applicantDataBaseHelper.deleteApplicantById(key);
                     }
                 } else if (Reject) {
-                    applicantDataBaseHelper.updateApplicantStatus(key, "NO");
+                    for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
+                        AvailableCourse availableCourse = courseInfo.getFirst();
+                        String message1 = "Your Request to Registered this course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\n its Rejected!!";
+                        notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message1);
+                        applicantDataBaseHelper.updateApplicantStatus(key, "NO");
+                    }
                 }
             }
         });
