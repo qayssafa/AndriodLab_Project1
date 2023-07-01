@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.andriodlab_project1.common.User;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 
 import com.example.andriodlab_project1.R;
@@ -22,6 +25,11 @@ public class AdminMainActivity extends DrawerBaseActivity {
 
     private Button editOrRemoveCourse;
     private Button viewOffering;
+    private TextView AdminName;
+    private AdminDataBaseHelper adminDataBaseHelper;
+    public static User user = new User();
+
+
     ActivityAdminMainBinding activityAdminMainBinding;
 
     @Override
@@ -29,6 +37,8 @@ public class AdminMainActivity extends DrawerBaseActivity {
         super.onCreate(savedInstanceState);
         activityAdminMainBinding = ActivityAdminMainBinding.inflate(getLayoutInflater());
         setContentView(activityAdminMainBinding.getRoot());
+        AdminName = (TextView)findViewById(R.id.AdminName);
+        adminDataBaseHelper = new AdminDataBaseHelper(this);
 
         /*CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
