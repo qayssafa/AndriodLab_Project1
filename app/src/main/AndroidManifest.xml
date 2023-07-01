@@ -50,7 +50,9 @@
         <activity
             android:name=".student.messages"
             android:exported="false" />
-
+        <activity
+            android:name=".admin.ViewProfilesOfStudentAndInstructor"
+            android:exported="false" />
 
 
 

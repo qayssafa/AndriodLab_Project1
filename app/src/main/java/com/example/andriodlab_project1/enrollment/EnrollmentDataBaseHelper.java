@@ -68,8 +68,8 @@ public class EnrollmentDataBaseHelper {
         String[] selectionArgs = {String.valueOf(courseId)};
         Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
         while (cursor.moveToNext()) {
-            String  courseTitle = cursor.getString(0);
-            students.add(courseTitle);
+            String  EMAIL = cursor.getString(0);
+            students.add(EMAIL);
         }
         cursor.close();
         return students;

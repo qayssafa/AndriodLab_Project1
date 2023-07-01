@@ -17,11 +17,15 @@ import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.common.User;
 import com.example.andriodlab_project1.databinding.ActivityViewProfilesOfStudentAndInstructorBinding;
+import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
+import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 
 public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity {
     EditText UserEmail;
     EditText UserFname;
     EditText UserLname;
+    private StudentDataBaseHelper studentDataBaseHelper;
+    private InstructorDataBaseHelper instructorDataBaseHelper;
 
     TextView UserFnameText;
     TextView UserLnameText;
@@ -37,7 +41,8 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity {
         activityViewProfilesOfStudentAndInstructorBinding = ActivityViewProfilesOfStudentAndInstructorBinding.inflate(getLayoutInflater());
         setContentView(activityViewProfilesOfStudentAndInstructorBinding.getRoot());
         //setContentView(R.layout.activity_view_profiles_of_student_and_instructor);
-
+        studentDataBaseHelper=new StudentDataBaseHelper(this);
+        instructorDataBaseHelper=new InstructorDataBaseHelper(this);
         LinearLayout linearLayout = findViewById(R.id.linearLayout);
         linearLayout.setVisibility(View.INVISIBLE);
 
@@ -89,10 +94,20 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if(!(UserEmail.getText().toString().isEmpty())){
+
+            //for student
+                if(!(UserEmail.getText().toString().isEmpty())&&studentDataBaseHelper.isRegistered(UserEmail.getText().toString())){
+
                     linearLayout.setVisibility(View.VISIBLE);
 
-                }            }
+                }
+                //for instructor
+                if(!(UserEmail.getText().toString().isEmpty())&&instructorDataBaseHelper.isRegistered(UserEmail.getText().toString())){
+
+                    linearLayout.setVisibility(View.VISIBLE);
+
+                }
+            }
         });
 
     }
