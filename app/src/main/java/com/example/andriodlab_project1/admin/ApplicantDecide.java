@@ -17,6 +17,7 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.Course;
@@ -24,6 +25,7 @@ import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
+import com.example.andriodlab_project1.databinding.ActivityApplicantDecideBinding;
 import com.example.andriodlab_project1.enrollment.Enrollment;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
@@ -35,7 +37,7 @@ import java.util.Map;
 
 import kotlin.Triple;
 
-public class ApplicantDecide extends AppCompatActivity {
+public class ApplicantDecide extends DrawerBaseActivity {
 
     private CheckBox checkboxAccept;
     private CheckBox checkboxReject;
@@ -56,10 +58,14 @@ public class ApplicantDecide extends AppCompatActivity {
     private CourseDataBaseHelper courseDataBaseHelper;
     private Button sumbit;
 
+    ActivityApplicantDecideBinding activityApplicantDecideBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_applicant_decide);
+        activityApplicantDecideBinding = ActivityApplicantDecideBinding.inflate(getLayoutInflater());
+        setContentView(activityApplicantDecideBinding.getRoot());
+//        setContentView(R.layout.activity_applicant_decide);
 
 
 

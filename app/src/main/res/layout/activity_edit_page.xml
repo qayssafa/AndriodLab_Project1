@@ -103,5 +103,15 @@
         app:layout_constraintTop_toTopOf="@+id/imageView2"
         app:layout_constraintVertical_bias="0.318" />
 
+    <ImageButton
+        android:id="@+id/BackButton"
+        android:layout_width="46dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/baseline_arrow_circle_left_24" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
