@@ -19,7 +19,7 @@
         app:srcCompat="@drawable/appstatus" />
 
     <TextView
-        android:id="@+id/listOfCourses"
+        android:id="@+id/listOfApplicant"
         android:layout_width="224dp"
         android:layout_height="44dp"
         android:background="@android:drawable/editbox_background"
@@ -58,7 +58,7 @@
         app:layout_constraintVertical_bias="0.254">
 
         <TableLayout
-            android:id="@+id/table"
+            android:id="@+id/tableApplicant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -80,14 +80,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Course id"
+                    android:text="Course  Name"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Student id"
+                    android:text="Student Email"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
@@ -114,6 +114,37 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.893" />
+
+    <TextView
+        android:layout_width="453dp"
+        android:layout_height="51dp"
+        android:background="#C4C7CA"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="37dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6"
+        app:srcCompat="@drawable/baseline_menu_24" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="50dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="288dp"
+        android:text="Menu"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -53,12 +53,12 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         EditText Venue = (EditText) findViewById(R.id.VenueEditText);
         EditText CourseSchedule = (EditText) findViewById(R.id.CourseScheduleEditText);
         EditText InstructorName = (EditText) findViewById(R.id.InstructorNameEditText);
-        EditText CourseEndDate = (EditText) findViewById(R.id.CourseEndDate);
         TextView numberOfCourse = (TextView) findViewById(R.id.CourseNumberTextView);
         TextView listOfCourses = findViewById(R.id.listOfCourses);
         submit = findViewById(R.id.submit);
         //start date edit text
         EditText editStartDate = findViewById(R.id.StartDateEditText);
+        EditText editEndDate = findViewById(R.id.CourseEndDate);
         EditText deadLine = findViewById(R.id.RegistrationDeadLineEditText);
         dbHelper = new AvailableCourseDataBaseHelper(this);
         courseDataBaseHelper = new CourseDataBaseHelper(this);
@@ -102,73 +102,101 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 builder.show();
             }
         });
-        editStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
+            editStartDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Get Current Date
+                    final Calendar c = Calendar.getInstance();
+                    int mYear = c.get(Calendar.YEAR);
+                    int mMonth = c.get(Calendar.MONTH);
+                    int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-                // Launch Date Picker Dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        // Display Selected date in EditText
-                        if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
-                            editStartDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        } else if (((monthOfYear + 1) < 9) && (dayOfMonth > 9))
-                            editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        else if (((monthOfYear + 1) > 9) && (dayOfMonth < 9)) {
-                            editStartDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                        } else {
-                            editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                    // Launch Date Picker Dialog
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            // Display Selected date in EditText
+                            if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
+                                editStartDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            } else if (((monthOfYear + 1) <= 9) && (dayOfMonth > 9))
+                                editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
+                                editStartDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                                editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            }
                         }
-                    }
-                }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
-    } else {
+                    }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            });
+            editEndDate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Get Current Date
+                    final Calendar c = Calendar.getInstance();
+                    int mYear = c.get(Calendar.YEAR);
+                    int mMonth = c.get(Calendar.MONTH);
+                    int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                    // Launch Date Picker Dialog
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this,new DatePickerDialog.OnDateSetListener() {
+
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            // Display Selected date in EditText
+                            if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
+                                editEndDate.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            } else if (((monthOfYear + 1) <= 9) && (dayOfMonth > 9))
+                                editEndDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
+                                editEndDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                                editEndDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            }
+
+                        }
+                    }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            });
+        deadLine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // Get Current Date
+                    final Calendar c = Calendar.getInstance();
+                    int mYear = c.get(Calendar.YEAR);
+                    int mMonth = c.get(Calendar.MONTH);
+                    int mDay = c.get(Calendar.DAY_OF_MONTH);
+
+                    // Launch Date Picker Dialog
+                    DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year,
+                                              int monthOfYear, int dayOfMonth) {
+                            // Display Selected date in EditText
+                            if (((monthOfYear + 1) > 9) && (dayOfMonth > 9)) {
+                                deadLine.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            } else if (((monthOfYear + 1) <= 9) && (dayOfMonth > 9))
+                                deadLine.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
+                            else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
+                                deadLine.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                                deadLine.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
+                            }
+                        }
+                    }, mYear, mMonth, mDay);
+                    datePickerDialog.show();
+                }
+            });
+        } else {
             Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
         }
 
+
         //Registration deadline
-
-
-        deadLine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Get Current Date
-                final Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
-
-                // Launch Date Picker Dialog
-                DatePickerDialog datePickerDialog = new DatePickerDialog(MakeCourseAvailableForRegistrationActivity.this,new DatePickerDialog.OnDateSetListener() {
-
-                    @Override
-                    public void onDateSet(DatePicker view, int year,
-                                          int monthOfYear, int dayOfMonth) {
-                        // Display Selected date in EditText
-                        if (((monthOfYear+1)>9)&&(dayOfMonth>9)){
-                            deadLine.setText(year + "-" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        }else if (((monthOfYear+1)<9)&&(dayOfMonth>9))
-                            deadLine.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
-                        else if (((monthOfYear+1)>9)&&(dayOfMonth<9)){
-                            deadLine.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                        }else {
-                            deadLine.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                        }
-
-                    }
-                }, mYear, mMonth, mDay);
-                datePickerDialog.show();
-            }
-        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,6 +205,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 String instructorName=InstructorName.getText().toString();
                 String lDeadLine=deadLine.getText().toString();
                 String lEditStartDate=editStartDate.getText().toString();
+                String lEditEndDate=editEndDate.getText().toString();
                 String[] nameParts = instructorName.split(" ");
                 String email=null;
                 if (instructorName.isEmpty()||instructorName.isBlank()){
@@ -192,11 +221,16 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                         Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Instructor not Valid!", Toast.LENGTH_SHORT).show();
                     }
                 }
-                if (lDeadLine.isEmpty()||lDeadLine.isBlank()){
-                    Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This DeadLine Date not Valid!", Toast.LENGTH_SHORT).show();
-                }
-                else if (lEditStartDate.isEmpty()||lEditStartDate.isBlank()){
+                if (lEditStartDate.isEmpty()||lEditStartDate.isBlank()){
                     Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Start Date not Valid!", Toast.LENGTH_SHORT).show();
+                }
+                else if (lEditEndDate.isEmpty()||lEditEndDate.isBlank()){
+                    Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This END Date not Valid!", Toast.LENGTH_SHORT).show();
+                }else if (isEndDateAfterStartDate(lEditStartDate,lEditEndDate)){
+                    Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This END Date And Start Date not Valid!", Toast.LENGTH_SHORT).show();
+                }
+                else if (lDeadLine.isEmpty()||lDeadLine.isBlank()){
+                    Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This DeadLine Date not Valid!", Toast.LENGTH_SHORT).show();
                 }
                 else if (!isEndDateAfterStartDate(lEditStartDate,lDeadLine)){
                     Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Start Date And DeadLine Date  not Valid!", Toast.LENGTH_SHORT).show();
@@ -207,7 +241,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 else if (venue.isEmpty()||venue.isBlank()){
                     Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Venue not Valid!", Toast.LENGTH_SHORT).show();
                 } else{
-                    AvailableCourse availableCourse=new AvailableCourse(Integer.parseInt(value),lDeadLine,lEditStartDate,courseSchedule,venue);
+                    AvailableCourse availableCourse=new AvailableCourse(Integer.parseInt(value),lDeadLine,lEditStartDate,courseSchedule,venue,lEditEndDate);
                    if (email!=null&&dbHelper.insertAvailableCourse(availableCourse,email,0)){
                        List<String> students=studentDataBaseHelper.getAllStudents();
                        for (String student:students) {
@@ -227,6 +261,6 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         LocalDate startDate = LocalDate.parse(startDateString,formatter);
         LocalDate endDate = LocalDate.parse(endDateString,formatter);
 
-        return endDate.isAfter(startDate);
+        return startDate.isAfter(endDate);
     }
 }

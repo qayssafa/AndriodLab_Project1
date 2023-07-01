@@ -18,10 +18,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.admin.Applicant;
+import com.example.andriodlab_project1.admin.ApplicantDataBaseHelper;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.enrollment.Enrollment;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
@@ -39,10 +42,11 @@ public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
 
     private List<Map.Entry<String, String>> continents;
     private AvailableCourseDataBaseHelper dbHelper;
+    private ApplicantDataBaseHelper applicantDataBaseHelper;
     private EnrollmentDataBaseHelper enrollmentDataBaseHelper;
     private NotificationDataBaseHelper notificationDataBaseHelper;
     private CourseDataBaseHelper courseDataBaseHelper;
-    private int selected=0;
+    private int selected;
     private Map.Entry<String, String> entry;
     private String key;
     private TextView listOfCourses;
@@ -59,6 +63,7 @@ public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_course);
         dbHelper=new AvailableCourseDataBaseHelper(this);
+        applicantDataBaseHelper=new ApplicantDataBaseHelper(this);
         courseDataBaseHelper=new CourseDataBaseHelper(this);
         enrollmentDataBaseHelper=new EnrollmentDataBaseHelper(this);
         notificationDataBaseHelper=new NotificationDataBaseHelper(this);
@@ -67,6 +72,7 @@ public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
         CharSequence[] items = convertListToCharSequenceArray(continents);
         enroll = findViewById(R.id.ENrollButton);
 
+        if (!continents.isEmpty()) {
         listOfCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,91 +80,100 @@ public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
                 builder.setTitle("Courses Are Available For Registration :");
                 builder.setCancelable(false);
                 tableLayout = findViewById(R.id.student_message_table);
-                builder.setSingleChoiceItems(items,selected, new DialogInterface.OnClickListener() {
+                builder.setSingleChoiceItems(items, selected, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         selected = which;  // Update the selected continent index
                     }
                 });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        if (selected <0) {
-                            Toast.makeText(SearchAndViewCourseAreAvailable.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
-                        } else {
-                            entry = continents.get(selected);
-                            key = entry.getKey();
-                            course = courseDataBaseHelper.getCourseByID(Integer.parseInt(key));
 
-                            TableRow row = new TableRow(tableLayout.getContext());
-                            row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                            TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-                            layoutParams.setMargins(1, 1, 1, 1);
-                            courseNumber = new TextView(row.getContext());
-                            courseTitle = new TextView(row.getContext());
-                            time = new TextView(row.getContext());
-                            courseMainTopic = new TextView(row.getContext());
+                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            if (selected < 0) {
+                                Toast.makeText(SearchAndViewCourseAreAvailable.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
+                            } else {
+                                entry = continents.get(selected);
+                                key = entry.getKey();
+                                course = courseDataBaseHelper.getCourseByID(Integer.parseInt(key));
 
-                            courseNumber.setText(course.getCourseID()+"");
-                            courseNumber.setBackgroundColor(Color.WHITE);
-                            courseNumber.setLayoutParams(layoutParams);
-                            courseNumber.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                            row.addView(courseNumber);
+                                TableRow row = new TableRow(tableLayout.getContext());
+                                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+                                layoutParams.setMargins(1, 1, 1, 1);
+                                courseNumber = new TextView(row.getContext());
+                                courseTitle = new TextView(row.getContext());
+                                time = new TextView(row.getContext());
+                                courseMainTopic = new TextView(row.getContext());
 
-                            courseTitle.setText(course.getCourseTitle());
-                            courseTitle.setBackgroundColor(Color.WHITE);
-                            courseTitle.setLayoutParams(layoutParams);
-                            courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                            row.addView(courseTitle);
+                                courseNumber.setText(course.getCourseID() + "");
+                                courseNumber.setBackgroundColor(Color.WHITE);
+                                courseNumber.setLayoutParams(layoutParams);
+                                courseNumber.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(courseNumber);
 
-                            time.setText(entry.getValue());
-                            time.setBackgroundColor(Color.WHITE);
-                            time.setLayoutParams(layoutParams);
-                            time.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                            row.addView(time);
+                                courseTitle.setText(course.getCourseTitle());
+                                courseTitle.setBackgroundColor(Color.WHITE);
+                                courseTitle.setLayoutParams(layoutParams);
+                                courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(courseTitle);
 
-                            courseMainTopic.setText(convertArrayListToString(course.getCourseMainTopics()));
-                            courseMainTopic.setBackgroundColor(Color.WHITE);
-                            courseMainTopic.setLayoutParams(layoutParams);
-                            courseMainTopic.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                            row.addView(courseMainTopic);
+                                time.setText(entry.getValue());
+                                time.setBackgroundColor(Color.WHITE);
+                                time.setLayoutParams(layoutParams);
+                                time.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(time);
 
-                            tableLayout.addView(row);
-                    }
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
+                                courseMainTopic.setText(convertArrayListToString(course.getCourseMainTopics()));
+                                courseMainTopic.setBackgroundColor(Color.WHITE);
+                                courseMainTopic.setLayoutParams(layoutParams);
+                                courseMainTopic.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(courseMainTopic);
 
-                builder.show();
+                                tableLayout.addView(row);
+                            }
+                        }
+                    });
+                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    });
+
+                    builder.show();
             }
         });
+        }
+        else {
+            Toast.makeText(SearchAndViewCourseAreAvailable.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
+
+        }
         enroll.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 ArrayList<String> prerequisites = course.getPrerequisites();
-                List<Map.Entry<Integer, String>> getCoursesTakenByStudent=enrollmentDataBaseHelper.getCoursesTakenByStudent(MainActivity.studentEmail);
-                availableCourses=dbHelper.getAvailableCourseByCourse_Id(course.getCourseID());
+                List<Map.Entry<Integer, String>> getCoursesTakenByStudent=dbHelper.getCoursesTakenByStudent(MainActivity.studentEmail);
                 if (arePrerequisitesMet(prerequisites,getCoursesTakenByStudent)){
-                    //SEND NOTIFY TO ADMIN
-                    //wait untill recive respones
+                    Applicant applicant=new Applicant(course.getCourseID(),MainActivity.studentEmail,"NO");
+                    applicantDataBaseHelper.insertApplicant(applicant);
+                    Toast.makeText(SearchAndViewCourseAreAvailable.this,"Wait Until Admin Accept Your Request.", Toast.LENGTH_SHORT).show();
                     //no conflict in time
-                    Enrollment enrollment=new Enrollment(course.getCourseID(),MainActivity.studentEmail);
-                    enrollmentDataBaseHelper.insertStudent2Course(enrollment);
-                    for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
-                        AvailableCourse availableCourse = courseInfo.getFirst();
-                        String message="This Course "+CourseDataBaseHelper.getCourseName(availableCourse.getCourseId())+"\nWill be Starting in \n"+availableCourse.getCourseStartDate();
-                        notificationDataBaseHelper.insertNotification(MainActivity.studentEmail,message);
-                        Toast.makeText(SearchAndViewCourseAreAvailable.this,"This Course its Enrolled Successfully.", Toast.LENGTH_SHORT).show();
-                    }
                 }
             }
         });
+    }
+    public static String convertArrayListToString(ArrayList<String> arrayList) {
+        return String.join("\n", arrayList);
+    }
+    public CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
+        CharSequence[] array = new CharSequence[list.size()];
+        int i = 0;
+        for (Map.Entry<String, String> entry : list) {
+            array[i++] = CourseDataBaseHelper.getCourseName(Integer.parseInt(entry.getKey()));
+        }
+        return array;
     }
     public boolean arePrerequisitesMet(List<String> prerequisites, List<Map.Entry<Integer, String>> getCoursesTakenByStudent) {
         if (prerequisites.isEmpty()|| prerequisites.get(0).isBlank()){
@@ -182,16 +197,5 @@ public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
             }
         }
         return true;
-    }
-    public static String convertArrayListToString(ArrayList<String> arrayList) {
-        return String.join("\n", arrayList);
-    }
-    public CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
-        CharSequence[] array = new CharSequence[list.size()];
-        int i = 0;
-        for (Map.Entry<String, String> entry : list) {
-            array[i++] = CourseDataBaseHelper.getCourseName(Integer.parseInt(entry.getKey()));
-        }
-        return array;
     }
 }

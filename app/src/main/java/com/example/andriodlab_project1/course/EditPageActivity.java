@@ -4,14 +4,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
 
@@ -30,10 +34,14 @@ public class EditPageActivity extends AppCompatActivity {
     private EnrollmentDataBaseHelper enrollmentDataBaseHelper;
     private TextView Prerequisites;
     private Button SubmitDataButton;
+
+    private ImageButton GoBackButton;
     private boolean[] selectedContinents;
     private ArrayList<String> continentsList;
     private Map.Entry<String, String> entry;
     private String value;
+
+
     private int idF;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,11 +53,21 @@ public class EditPageActivity extends AppCompatActivity {
         CourseTitleInput=findViewById(R.id.EditCourseTitleInput);
         CourseMainTopicsInput=findViewById(R.id.EditCourseMainTopicsInput);
         Prerequisites = findViewById(R.id.Editlist);
+        GoBackButton = findViewById(R.id.BackButton);
+
         continents = dbHelper.getAllCourses();
         SubmitDataButton = findViewById(R.id.EditUpdate);
         continentsList = new ArrayList<>();
         CharSequence[] items = convertListToCharSequenceArray(continents);
         selectedContinents = new boolean[continents.size()];
+
+        GoBackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(EditPageActivity.this, EditOrDeleteAnExistingCourseActivity.class));
+
+            }
+        });
         Prerequisites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

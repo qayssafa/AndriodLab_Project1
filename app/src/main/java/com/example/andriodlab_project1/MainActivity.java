@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private AdminDataBaseHelper adminDataBaseHelper;
     private InstructorDataBaseHelper instructorDataBaseHelper;
     public static String studentEmail;
+    public static String AdminEmail;
 
 
     public static User user = new User();
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                         sharedPrefManager.writeString("email", "noValue");
                     }
                     if (adminDataBaseHelper.isRegistered(enteredEmail)) {
+                        AdminEmail=enteredEmail;
                         user = adminDataBaseHelper.getAdminByEmail(email.getText().toString().trim());
                         startActivity(new Intent(MainActivity.this, AdminMainActivity.class));
                     } else if (studentDataBaseHelper.isRegistered(enteredEmail)) {

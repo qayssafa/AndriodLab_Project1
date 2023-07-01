@@ -128,6 +128,9 @@ public class CreateCourseActivity extends DrawerBaseActivity {
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }else if (dbHelper.insertCourse(course)){
                     Toast.makeText(CreateCourseActivity.this, "This Courses Added successfully.", Toast.LENGTH_SHORT).show();
+                    CourseTitleInput.setText("");
+                    CourseMainTopicsInput.setText("");
+
                 }else {
                     Toast.makeText(CreateCourseActivity.this, "This Courses Added Failed.", Toast.LENGTH_SHORT).show();
 

@@ -47,13 +47,19 @@
         <activity
             android:name=".student.SearchAndViewCourseAreAvailable"
             android:exported="false" />
+        <activity
+            android:name=".student.messages"
+            android:exported="false" />
+        <activity
+            android:name=".admin.ViewProfilesOfStudentAndInstructor"
+            android:exported="false" />
 
 
 
 
 
         <activity
-            android:name=".student.messages"
+            android:name=".admin.ApplicantDecide"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

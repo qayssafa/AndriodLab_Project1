@@ -105,6 +105,11 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
                     if (dbHelper.deleteCourse(Integer.parseInt(value))) {
                         Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Successfully.", Toast.LENGTH_SHORT).show();
                         continents.remove(selected);
+                        courseTitle.setText("");
+                        courseNumber.setText("");
+                        courseMainTobic.setText("");
+                        preRequest.setText("");
+
                     } else {
                         Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Failed.", Toast.LENGTH_SHORT).show();
                     }

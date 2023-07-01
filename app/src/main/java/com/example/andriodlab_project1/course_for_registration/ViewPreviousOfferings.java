@@ -14,10 +14,12 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
+import com.example.andriodlab_project1.databinding.ActivityViewPreviousOfferingsBinding;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -27,7 +29,7 @@ import java.util.Set;
 
 import kotlin.Triple;
 
-public class ViewPreviousOfferings extends AppCompatActivity {
+public class ViewPreviousOfferings extends DrawerBaseActivity {
     private CourseDataBaseHelper dbHelper;
     private AvailableCourseDataBaseHelper availableCourseDataBaseHelper;
     private List<Map.Entry<String, String>> continents;
@@ -46,10 +48,14 @@ public class ViewPreviousOfferings extends AppCompatActivity {
     private TextView numberOfStudents;
     private TextView venue;
     private TextView instructorName;
+
+    ActivityViewPreviousOfferingsBinding activityViewPreviousOfferingsBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_previous_offerings);
+        activityViewPreviousOfferingsBinding = ActivityViewPreviousOfferingsBinding.inflate(getLayoutInflater());
+        setContentView(activityViewPreviousOfferingsBinding.getRoot());
+//        setContentView(R.layout.activity_view_previous_offerings);
         listOfCourses=findViewById(R.id.newlist);
         dbHelper = new CourseDataBaseHelper(this);
         availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
