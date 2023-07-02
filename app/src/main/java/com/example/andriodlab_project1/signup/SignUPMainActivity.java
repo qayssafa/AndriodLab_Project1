@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,7 +58,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.remove(student);
-                fragmentTransaction.add(R.id.root_layout, instructor, "instructor");
+                fragmentTransaction.add(R.id.mm, instructor, "instructor");
                 fragmentTransaction.commit();
                 signUpInstructor.setEnabled(false);
                 signUpStudent.setEnabled(true);
@@ -83,7 +82,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.remove(instructor);
-                fragmentTransaction.add(R.id.root_layout, student, "student");
+                fragmentTransaction.add(R.id.mm, student, "student");
                 fragmentTransaction.commit();
                 signUpInstructor.setEnabled(true);
                 signUpStudent.setEnabled(false);
