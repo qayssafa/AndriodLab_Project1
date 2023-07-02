@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.StudentDrawerBaseActivity;
 import com.example.andriodlab_project1.admin.Applicant;
 import com.example.andriodlab_project1.admin.ApplicantDataBaseHelper;
 import com.example.andriodlab_project1.course.Course;
@@ -25,6 +26,8 @@ import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
+import com.example.andriodlab_project1.databinding.ActivityRegisterCourseBinding;
+import com.example.andriodlab_project1.databinding.ActivityStudentMainBinding;
 import com.example.andriodlab_project1.enrollment.Enrollment;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
@@ -35,7 +38,7 @@ import java.util.Map;
 
 import kotlin.Triple;
 
-public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
+public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
 
     private  Course course;
     private TableLayout tableLayout;
@@ -58,10 +61,13 @@ public class SearchAndViewCourseAreAvailable extends AppCompatActivity {
     private Button enroll;
     private List<Triple<AvailableCourse, String, Integer>> availableCourses;
 
+    ActivityRegisterCourseBinding activityRegisterCourseBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register_course);
+        activityRegisterCourseBinding = ActivityRegisterCourseBinding.inflate(getLayoutInflater());
+        setContentView(activityRegisterCourseBinding.getRoot());
+//        setContentView(R.layout.activity_register_course);
         dbHelper=new AvailableCourseDataBaseHelper(this);
         applicantDataBaseHelper=new ApplicantDataBaseHelper(this);
         courseDataBaseHelper=new CourseDataBaseHelper(this);
