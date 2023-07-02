@@ -14,8 +14,8 @@ import com.example.andriodlab_project1.R;
 
 
 public class StudentFragment extends Fragment {
-    private EditText phoneStudent ;
-    private EditText addressStudent;
+     EditText phoneStudent ;
+     EditText addressStudent;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

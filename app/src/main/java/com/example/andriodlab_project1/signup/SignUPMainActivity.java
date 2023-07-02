@@ -117,6 +117,14 @@ public class SignUPMainActivity extends AppCompatActivity {
                         student1=new Student(lEmail,lFirstName,lLastName,lPassword,lPhone,lAddress);
                         dbHelperStudent.insertStudent(student1);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
+                        firstName.setText("");
+                        lastName.setText("");
+                        email.setText("");
+                        password.setText("");
+                        confirmPassword.setText("");
+                        student.phoneStudent.setText("");
+                        student.addressStudent.setText("");
+
                     }
                 } else if (!signUpInstructor.isEnabled()) {
                     lAddress=instructor.getAddressInstructorValue();
@@ -133,6 +141,11 @@ public class SignUPMainActivity extends AppCompatActivity {
                         instructor1=new Instructor(lEmail,lFirstName,lLastName,lPassword,lPhone,lAddress,lSpecialization,checkDegree,coursesList);
                         dbHelperInstructor.insertInstructor(instructor1);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
+                        firstName.setText("");
+                        lastName.setText("");
+                        email.setText("");
+                        password.setText("");
+                        confirmPassword.setText("");
                     }
                 } else if (!signUpAdmin.isEnabled()) {
                     boolean isChecked=checkUser(lFirstName, lLastName,lEmail,lPassword,lConfirmPassword,null,null,false,2);
@@ -140,6 +153,15 @@ public class SignUPMainActivity extends AppCompatActivity {
                         admin=new Admin(lEmail,lFirstName,lLastName,lPassword);
                         dbHelperAdmin.insertAdmin(admin);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
+                        firstName.setText("");
+                        lastName.setText("");
+                        email.setText("");
+                        password.setText("");
+                        confirmPassword.setText("");
+                        instructor.phoneInstructor.setText("");
+                        instructor.addressInstructor.setText("");
+                        instructor.specialization.setText("");
+                        instructor.courses.setText("");
                     }
                 }
             }
