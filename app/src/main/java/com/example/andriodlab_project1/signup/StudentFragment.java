@@ -42,4 +42,8 @@ public class StudentFragment extends Fragment {
         }
         return null;
     }
+    public void setEmpty(){
+        phoneStudent.setText("");
+        addressStudent.setText("");
+    }
 }

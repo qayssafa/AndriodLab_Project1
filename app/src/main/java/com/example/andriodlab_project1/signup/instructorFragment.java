@@ -39,6 +39,12 @@ public class instructorFragment extends Fragment {
         checkBoxMSc=(CheckBox) getActivity().findViewById(R.id.checkBoxMSc);
         checkBoxPhD=(CheckBox) getActivity().findViewById(R.id.checkBoxPhD);
     }
+    public void setEmpty(){
+        phoneInstructor.setText("");
+        addressInstructor.setText("");
+        specialization.setText("");
+        courses.setText("");
+    }
     public String getPhoneInstructorValue() {
 
         if (phoneInstructor != null) {

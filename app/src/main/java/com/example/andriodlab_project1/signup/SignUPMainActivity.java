@@ -122,8 +122,7 @@ public class SignUPMainActivity extends AppCompatActivity {
                         email.setText("");
                         password.setText("");
                         confirmPassword.setText("");
-                        student.phoneStudent.setText("");
-                        student.addressStudent.setText("");
+                        student.setEmpty();
 
                     }
                 } else if (!signUpInstructor.isEnabled()) {
@@ -158,10 +157,7 @@ public class SignUPMainActivity extends AppCompatActivity {
                         email.setText("");
                         password.setText("");
                         confirmPassword.setText("");
-                        instructor.phoneInstructor.setText("");
-                        instructor.addressInstructor.setText("");
-                        instructor.specialization.setText("");
-                        instructor.courses.setText("");
+                        instructor.setEmpty();
                     }
                 }
             }
@@ -272,7 +268,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             String[] splitArray = input.split(","); // Split the string by space
             for (String s:splitArray) {
                 if (dbHelperCourse.isCourseExists(Integer.parseInt(s))){
-                    listOfCourses.add(s);
+                    listOfCourses.add(CourseDataBaseHelper.getCourseName(Integer.parseInt(s)));
                 } else {
                     Toast.makeText(SignUPMainActivity.this, "This Course : "+s+" Not Found", Toast.LENGTH_SHORT).show();
                 }
