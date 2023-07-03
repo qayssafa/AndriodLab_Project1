@@ -15,10 +15,10 @@ import com.example.andriodlab_project1.R;
 
 public class instructorFragment extends Fragment {
 
-    private EditText phoneInstructor;
-    private EditText addressInstructor;
-    private EditText specialization ;
-    private EditText courses;
+     EditText phoneInstructor;
+     EditText addressInstructor;
+     EditText specialization ;
+     EditText courses;
     private CheckBox checkBoxBSc;
     private CheckBox checkBoxMSc;
     private CheckBox checkBoxPhD;
@@ -38,6 +38,12 @@ public class instructorFragment extends Fragment {
         checkBoxBSc=(CheckBox) getActivity().findViewById(R.id.checkBoxBSc);
         checkBoxMSc=(CheckBox) getActivity().findViewById(R.id.checkBoxMSc);
         checkBoxPhD=(CheckBox) getActivity().findViewById(R.id.checkBoxPhD);
+    }
+    public void setEmpty(){
+        phoneInstructor.setText("");
+        addressInstructor.setText("");
+        specialization.setText("");
+        courses.setText("");
     }
     public String getPhoneInstructorValue() {
 

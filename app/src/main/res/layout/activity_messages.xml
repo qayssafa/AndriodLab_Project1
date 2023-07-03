@@ -46,10 +46,11 @@
                 android:background="#CCC">
 
                 <TextView
+                    android:id="@+id/textView12"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Message"
+                    android:text="Number"
                     android:textStyle="bold" />
 
                 <TextView
@@ -58,6 +59,14 @@
                     android:layout_weight="1"
                     android:text="Time"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Message"
+                    android:textStyle="bold" />
+
             </TableRow>
         </TableLayout>
     </ScrollView>

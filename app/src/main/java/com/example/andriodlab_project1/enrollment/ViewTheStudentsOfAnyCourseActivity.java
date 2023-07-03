@@ -32,7 +32,6 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
 
     private TableLayout studentTable;
 
-    private List<Student> students = new ArrayList<>();
 
     ActivityViewTheStudentsOfAnyCourseBinding activityViewTheStudentsOfAnyCourseBinding;
     private TextView showStudents;
@@ -84,10 +83,11 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
                                 value = entry.getKey();
                                 course = dbHelper.getCourseByID(Integer.parseInt(value));
                                 ArrayList<String> listOfEmail=enrollmentDataBaseHelper.getStudentsByCourseId(course.getCourseID());
+                                List<Student> students=new ArrayList<>();
                                 for (String s:listOfEmail) {
                                    students.add(studentDataBaseHelper.getStudentByEmail(s));
                                 }
-                                populateStudentTable();
+                                populateStudentTable(students);
                             }
                         }
                     });
@@ -105,8 +105,9 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
             Toast.makeText(ViewTheStudentsOfAnyCourseActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
         }
     }
-    private void populateStudentTable() {
+    private void populateStudentTable(List<Student> students) {
         int rowCount = studentTable.getChildCount();
+
         for (int i = rowCount - 1; i > 0; i--) {
             View childView = studentTable.getChildAt(i);
             if (childView instanceof TableRow) {
@@ -121,17 +122,14 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
             TextView email = new TextView(this);
             TextView firstName = new TextView(this);
             TextView lastName = new TextView(this);
-
             number.setText(count+"");
             email.setText(student.getEmail());
             firstName.setText(student.getFirstName());
             lastName.setText(student.getLastName());
-
             row.addView(number);
             row.addView(email);
             row.addView(firstName);
             row.addView(lastName);
-
             studentTable.addView(row);
         }
     }

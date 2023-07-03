@@ -8,7 +8,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -59,7 +58,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.remove(student);
-                fragmentTransaction.add(R.id.root_layout, instructor, "instructor");
+                fragmentTransaction.add(R.id.mm, instructor, "instructor");
                 fragmentTransaction.commit();
                 signUpInstructor.setEnabled(false);
                 signUpStudent.setEnabled(true);
@@ -83,7 +82,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 fragmentTransaction.remove(instructor);
-                fragmentTransaction.add(R.id.root_layout, student, "student");
+                fragmentTransaction.add(R.id.mm, student, "student");
                 fragmentTransaction.commit();
                 signUpInstructor.setEnabled(true);
                 signUpStudent.setEnabled(false);
@@ -118,6 +117,13 @@ public class SignUPMainActivity extends AppCompatActivity {
                         student1=new Student(lEmail,lFirstName,lLastName,lPassword,lPhone,lAddress);
                         dbHelperStudent.insertStudent(student1);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
+                        firstName.setText("");
+                        lastName.setText("");
+                        email.setText("");
+                        password.setText("");
+                        confirmPassword.setText("");
+                        student.setEmpty();
+
                     }
                 } else if (!signUpInstructor.isEnabled()) {
                     lAddress=instructor.getAddressInstructorValue();
@@ -134,6 +140,11 @@ public class SignUPMainActivity extends AppCompatActivity {
                         instructor1=new Instructor(lEmail,lFirstName,lLastName,lPassword,lPhone,lAddress,lSpecialization,checkDegree,coursesList);
                         dbHelperInstructor.insertInstructor(instructor1);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
+                        firstName.setText("");
+                        lastName.setText("");
+                        email.setText("");
+                        password.setText("");
+                        confirmPassword.setText("");
                     }
                 } else if (!signUpAdmin.isEnabled()) {
                     boolean isChecked=checkUser(lFirstName, lLastName,lEmail,lPassword,lConfirmPassword,null,null,false,2);
@@ -141,6 +152,12 @@ public class SignUPMainActivity extends AppCompatActivity {
                         admin=new Admin(lEmail,lFirstName,lLastName,lPassword);
                         dbHelperAdmin.insertAdmin(admin);
                         Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
+                        firstName.setText("");
+                        lastName.setText("");
+                        email.setText("");
+                        password.setText("");
+                        confirmPassword.setText("");
+                        instructor.setEmpty();
                     }
                 }
             }
@@ -251,7 +268,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             String[] splitArray = input.split(","); // Split the string by space
             for (String s:splitArray) {
                 if (dbHelperCourse.isCourseExists(Integer.parseInt(s))){
-                    listOfCourses.add(s);
+                    listOfCourses.add(CourseDataBaseHelper.getCourseName(Integer.parseInt(s)));
                 } else {
                     Toast.makeText(SignUPMainActivity.this, "This Course : "+s+" Not Found", Toast.LENGTH_SHORT).show();
                 }
