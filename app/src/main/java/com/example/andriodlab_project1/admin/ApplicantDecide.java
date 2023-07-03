@@ -182,6 +182,7 @@ public class ApplicantDecide extends DrawerBaseActivity {
                         enrollmentDataBaseHelper.insertStudent2Course(enrollment);
                         for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
                             AvailableCourse availableCourse = courseInfo.getFirst();
+                            dbHelper.updateNumberOfStudent(availableCourse.getReg());
                             String message = "This Course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\nWill be Starting in \n" + availableCourse.getCourseStartDate();
                             String message1 = "Your Request to Registered this course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\n its Accepted!!";
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message);

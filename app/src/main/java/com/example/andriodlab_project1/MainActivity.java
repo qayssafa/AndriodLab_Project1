@@ -67,8 +67,8 @@ public class MainActivity extends AppCompatActivity {
         instructor.setMobileNumber("@13");
         instructor.setPassword("1");
         instructor.setAddress("@13");
-        instructor.setLastName("@13");
-        instructor.setFirstName("@13");
+        instructor.setLastName("AAA");
+        instructor.setFirstName("AAA");
         instructor.setEmail("I");
         instructorDataBaseHelper.insertInstructor(instructor);
 

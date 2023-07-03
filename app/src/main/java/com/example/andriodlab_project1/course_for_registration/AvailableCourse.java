@@ -6,6 +6,8 @@ import java.util.Locale;
 
 public class AvailableCourse {
   private int courseId;
+  private int reg;
+
   private String registrationDeadline;
   private String courseStartDate;
   private String courseEndDate;
@@ -53,6 +55,13 @@ public class AvailableCourse {
 
   public String getVenue() {
     return venue;
+  }
+  public int getReg() {
+    return reg;
+  }
+
+  public void setReg(int reg) {
+    this.reg = reg;
   }
 
   public void setRegistrationDeadline(String registrationDeadline) {

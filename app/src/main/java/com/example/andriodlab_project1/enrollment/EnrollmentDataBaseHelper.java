@@ -49,17 +49,12 @@ public class EnrollmentDataBaseHelper {
     }
 
     public boolean insertStudent2Course(Enrollment s2c) {
-        SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM enrollments", null);
-        if (cursor.moveToFirst()) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             ContentValues contentValues = new ContentValues();
             contentValues.put("EMAIL", s2c.getStudentEmail());
             contentValues.put("COURSE_ID",s2c.getCourseID());
             sqLiteDatabase.insert("enrollments", null, contentValues);
             return true;
-        }
-        return false;
     }
     public ArrayList<String> getStudentsByCourseId(int courseId) {
         ArrayList<String> students = new ArrayList<>();

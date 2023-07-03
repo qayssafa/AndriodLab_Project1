@@ -9,6 +9,7 @@ import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
+import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.AbstractMap;
@@ -89,7 +90,32 @@ public class AvailableCourseDataBaseHelper {
             return false;
         }
     }
+    public boolean updateNumberOfStudent(int registration_Number) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        int number=getNumberOfStudent(registration_Number);
+        number++;
+        values.put("number_of_student",number);
+        int rowsAffected = db.update("AvailableCourse", values, "registration_Number=?", new String[]{String.valueOf(registration_Number)});
+        return rowsAffected > 0;
+    }
+    public int getNumberOfStudent(int registration_Number) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
 
+        String[] projection = {"number_of_student"};
+        String selection = "registration_Number=?";
+        String[] selectionArgs = {String.valueOf(registration_Number)};
+
+        Cursor cursor = db.query("AvailableCourse", projection, selection, selectionArgs, null, null, null);
+
+        int numberOfStudent = 0;
+        if (cursor.moveToFirst()) {
+            numberOfStudent = cursor.getInt(0);
+        }
+
+        cursor.close();
+        return numberOfStudent;
+    }
     public List<Triple<AvailableCourse, String, Integer>> getAvailableCourseByCourse_Id(int course_id) {
 
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
@@ -100,6 +126,7 @@ public class AvailableCourseDataBaseHelper {
 
         if (cursor.moveToFirst()) {
             do {
+                int reg= cursor.getInt(0);
                 int courseID = cursor.getInt(1);
                 String registrationDeadline = cursor.getString(3);
                 int numberOfStudents = cursor.getInt(4);
@@ -109,6 +136,7 @@ public class AvailableCourseDataBaseHelper {
                 String courseSchedule = cursor.getString(8);
                 String venue = cursor.getString(9);
                 AvailableCourse availableCourse = new AvailableCourse(courseID, registrationDeadline, courseStartDate, courseSchedule, venue,courseEndDate);
+                availableCourse.setReg(reg);
                 Triple<AvailableCourse, String, Integer> courseInfo = new Triple<>(availableCourse, instructorName, numberOfStudents);
                 availableCourses.add(courseInfo);
             } while (cursor.moveToNext());
@@ -163,29 +191,35 @@ public class AvailableCourseDataBaseHelper {
     public List<Map.Entry<String, String>> getAllCoursesAreAvailableForRegistration() {
         List<Map.Entry<String, String>> courses = new ArrayList<>();
         long currentTime = new Date().getTime();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String currentTimeString = dateFormat.format(new Date(currentTime));
         Cursor cursor=null;
         try {
-            cursor = db.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
-                    "FROM AvailableCourse ac " +
-                    "LEFT JOIN enrollments e ON ac.COURSE_ID = e.COURSE_ID " +
-                    "WHERE datetime(ac.registration_deadline) > datetime('" + currentTimeString + "') " +
-                    "AND e.COURSE_ID IS NULL", null);
+            if (isTableCreatedFirstTime("enrollments")){
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                cursor = db.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
+                        "FROM AvailableCourse ac " +
+                        "LEFT JOIN COURSE c ON ac.COURSE_ID = c.COURSE_ID " +
+                        "WHERE datetime(ac.registration_deadline) > datetime('" + currentTimeString + "') ", null);
+            }else {
+                SQLiteDatabase db1 = dbHelper.getReadableDatabase();
+                cursor = db1.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
+                        "FROM AvailableCourse ac " +
+                        "LEFT JOIN enrollments e ON ac.COURSE_ID = e.COURSE_ID " +
+                        "WHERE datetime(ac.registration_deadline) > datetime('" + currentTimeString + "') " +
+                        "AND e.COURSE_ID IS NULL", null);
+            }
             if (cursor.moveToFirst()) {
                 do {
                     courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),cursor.getString(1)));
                 } while (cursor.moveToNext());
             }
             cursor.close();
-            db.close();
             return courses;
         }finally {
             if (cursor != null) {
                 cursor.close();
             }
-            db.close();
         }
     }
     public List<Map.Entry<Integer, String>> getCoursesTakenByStudent(String email) {
@@ -193,26 +227,63 @@ public class AvailableCourseDataBaseHelper {
         long currentTime = new Date().getTime();
         String currentTimeString = dateFormat.format(new Date(currentTime));
         List<Map.Entry<Integer, String>> coursesTaken = new ArrayList<>();
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "SELECT c.COURSE_ID,c.Course_Title " +
-                "FROM COURSE c " +
-                "INNER JOIN AvailableCourse ac ON c.COURSE_ID = ac.COURSE_ID " +
-                "INNER JOIN STUDENT s ON ac.instructor_email = s.EMAIL " +
-                "WHERE s.EMAIL = ? AND ac.course_end_date <= ?";
+        if (!isTableCreatedFirstTime("enrollments")) {
 
-        // Execute the query
-        Cursor cursor = db.rawQuery(query, new String[]{email, currentTimeString});
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            String query = "SELECT c.COURSE_ID,c.Course_Title " +
+                    "FROM COURSE c " +
+                    "INNER JOIN AvailableCourse ac ON c.COURSE_ID = ac.COURSE_ID " +
+                    "INNER JOIN enrollments e ON e.COURSE_ID = ac.COURSE_ID " +
+                    "WHERE e.EMAIL = ? AND ac.course_end_date <= ?";
 
-        // Iterate over the cursor and add finished courses to the list
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                coursesTaken.add(new AbstractMap.SimpleEntry<>(cursor.getInt(0), cursor.getString(1)));
-            } while (cursor.moveToNext());
+            // Execute the query
+            Cursor cursor = db.rawQuery(query, new String[]{email, currentTimeString});
+
+            // Iterate over the cursor and add finished courses to the list
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    coursesTaken.add(new AbstractMap.SimpleEntry<>(cursor.getInt(0), cursor.getString(1)));
+                } while (cursor.moveToNext());
+            }
+
+            // Close the cursor
+            if (cursor != null) {
+                cursor.close();
+            }
+            return coursesTaken;
         }
+        return coursesTaken;
 
-        // Close the cursor
-        if (cursor != null) {
-            cursor.close();
+    }
+    public List<Map.Entry<Integer, String>> getCoursesAreRegisteredByStudent(String email) {
+        List<Map.Entry<Integer, String>> coursesTaken = new ArrayList<>();
+        if (!isTableCreatedFirstTime("enrollments")){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            long currentTime = new Date().getTime();
+            String currentTimeString = dateFormat.format(new Date(currentTime));
+            SQLiteDatabase db = dbHelper.getReadableDatabase();
+            String query = "SELECT c.COURSE_ID,c.Course_Title " +
+                    "FROM COURSE c " +
+                    "INNER JOIN AvailableCourse ac ON c.COURSE_ID = ac.COURSE_ID " +
+                    "INNER JOIN enrollments e ON e.COURSE_ID = ac.COURSE_ID " +
+                    "WHERE e.EMAIL = ? AND ac.course_end_date >= ?";
+
+            // Execute the query
+            Cursor cursor = db.rawQuery(query, new String[]{email,currentTimeString});
+
+            // Iterate over the cursor and add finished courses to the list
+            if (cursor != null && cursor.moveToFirst()) {
+                do {
+                    coursesTaken.add(new AbstractMap.SimpleEntry<>(cursor.getInt(0), cursor.getString(1)));
+                } while (cursor.moveToNext());
+            }
+
+            // Close the cursor
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+            return coursesTaken;
         }
         return coursesTaken;
     }
