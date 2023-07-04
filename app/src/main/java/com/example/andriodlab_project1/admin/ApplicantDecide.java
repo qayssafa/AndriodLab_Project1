@@ -1,39 +1,45 @@
 package com.example.andriodlab_project1.admin;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+import androidx.core.content.ContextCompat;
+import android.Manifest;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ListAdapter;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.andriodlab_project1.DrawerBaseActivity;
-import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
-import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
-import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.databinding.ActivityApplicantDecideBinding;
 import com.example.andriodlab_project1.enrollment.Enrollment;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
-import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailable;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
+import java.util.Locale;
 
 import kotlin.Triple;
 
@@ -54,6 +60,7 @@ public class ApplicantDecide extends DrawerBaseActivity {
     private  List<Integer>  items;
     private AvailableCourseDataBaseHelper dbHelper;
     private NotificationDataBaseHelper notificationDataBaseHelper;
+    private static final int PERMISSION_REQUEST_CODE = 1;
 
     private CourseDataBaseHelper courseDataBaseHelper;
     private Button sumbit;
@@ -185,6 +192,57 @@ public class ApplicantDecide extends DrawerBaseActivity {
                             dbHelper.updateNumberOfStudent(availableCourse.getReg());
                             String message = "This Course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\nWill be Starting in \n" + availableCourse.getCourseStartDate();
                             String message1 = "Your Request to Registered this course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + "\n its Accepted!!";
+
+                            // Get the course start date as a string
+                            String courseStartDateString = availableCourse.getCourseStartDate();
+
+                            // Create a date formatter
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+
+                                        Date courseStartDate = null;
+                                        try {
+                                            courseStartDate = dateFormat.parse(courseStartDateString);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        }
+
+                            if (courseStartDate != null) {
+                                // Get the current date
+                                Calendar currentDate = Calendar.getInstance();
+                                currentDate.setTime(new Date());
+
+                                // Create a calendar for the course start date
+                                Calendar courseStartDateCalendar = Calendar.getInstance();
+                                courseStartDateCalendar.setTime(courseStartDate);
+
+                                // Adjust the course start date calendar to ignore the time
+                                courseStartDateCalendar.set(Calendar.HOUR_OF_DAY, 0);
+                                courseStartDateCalendar.set(Calendar.MINUTE, 0);
+                                courseStartDateCalendar.set(Calendar.SECOND, 0);
+                                courseStartDateCalendar.set(Calendar.MILLISECOND, 0);
+                                // Calculate the reminder date by subtracting one day from the course start date
+                                Calendar reminderDate = (Calendar) courseStartDateCalendar.clone();
+                                reminderDate.add(Calendar.DAY_OF_YEAR, -1);
+
+                                // Compare the day and month of the current date with the day and month of the reminder date
+                                int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+                                int currentMonth = currentDate.get(Calendar.MONTH);
+                                int reminderDay = reminderDate.get(Calendar.DAY_OF_MONTH);
+                                int reminderMonth = reminderDate.get(Calendar.MONTH);
+
+                                if (currentDay == reminderDay && currentMonth == reminderMonth) {
+                                    // Call the showNotification method with the reminder date
+                                    if (ContextCompat.checkSelfPermission(v.getContext(), Manifest.permission.VIBRATE)
+                                            != PackageManager.PERMISSION_GRANTED) {
+                                        // Request the VIBRATE permission
+                                        ActivityCompat.requestPermissions(ApplicantDecide.this,
+                                                new String[]{Manifest.permission.VIBRATE},
+                                                PERMISSION_REQUEST_CODE);
+                                    } else {
+                                        showNotification(v.getContext(), "Course Reminder", "Your course "+CourseDataBaseHelper.getCourseName(availableCourse.getCourseId())+ " starts tomorrow!", reminderDate.getTime());
+                                    }
+                                }
+                            }
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message);
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message1);
                             Toast.makeText(ApplicantDecide.this, "This Course its Enrolled Successfully.", Toast.LENGTH_SHORT).show();
@@ -202,5 +260,43 @@ public class ApplicantDecide extends DrawerBaseActivity {
             }
         });
     }
+    private void showNotification(Context context, String title, String message, Date reminderDate) {
+        // Check if the VIBRATE permission is granted
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.VIBRATE)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Handle the case where the permission is not granted
+            // You can request the permission from the user or show an error message
+            // Here, we are simply returning without showing the notification
+            return;
+        }
+
+        // Create a notification channel for Android 8.0 and above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            String channelId = "course_reminder_channel";
+            CharSequence channelName = "Course Reminder Channel";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(channelId, channelName, importance);
+
+            // Register the channel with the system
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        // Create a notification builder
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "course_reminder_channel")
+                .setSmallIcon(R.drawable.admin)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true); // Auto cancel the notification when clicked
+
+        // Create a notification manager
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
+
+        // Show the notification
+        notificationManager.notify(0, builder.build());
+    }
+
+
 
 }
