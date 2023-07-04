@@ -17,6 +17,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.databinding.ActivityViewProfilesOfStudentAndInstructorBinding;
+import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
@@ -39,7 +40,7 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity imple
         instructorDataBaseHelper=new InstructorDataBaseHelper(this);
         LinearLayout linearLayout = findViewById(R.id.root_layoutt);
         UserEmail = (EditText) findViewById(R.id.UserEmailInput);
-        final ViewInstructorProfileFragment instructor = new ViewInstructorProfileFragment();
+        //final ViewInstructorProfileFragment instructor = new ViewInstructorProfileFragment();
         final ViewStudentProfileFragment student = new ViewStudentProfileFragment();
         final FragmentManager fragmentManager = getSupportFragmentManager();
 
@@ -68,18 +69,24 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity imple
 
             //for student
                 if(!(UserEmail.getText().toString().isEmpty())&&studentDataBaseHelper.isRegistered(UserEmail.getText().toString())){
-                   FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                  /* FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.remove(instructor);
                     fragmentTransaction.add(R.id.flayout, student, "student");
-                    fragmentTransaction.commit();
-                    Student student1=studentDataBaseHelper.getStudentByEmail(UserEmail.getText().toString());
-                    student.changeDataForStudent(student1.getEmail(),student1.getFirstName(),student1.getLastName(),student1.getMobileNumber(),student1.getAddress());
+                    fragmentTransaction.commit();*/
+                   /* Student student1=studentDataBaseHelper.getStudentByEmail(UserEmail.getText().toString());*/
+                   // student.changeDataForStudent(student1.getEmail(),student1.getFirstName(),student1.getLastName(),student1.getMobileNumber(),student1.getAddress());
                 }else if(!(UserEmail.getText().toString().isEmpty())&&instructorDataBaseHelper.isRegistered(UserEmail.getText().toString())){
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                   /* FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.remove(student);
                     fragmentTransaction.add(R.id.flayout, instructor, "instructor");
                     fragmentTransaction.commit();
                     //instructor.changeDataForInstructor();
+                    Instructor instructor1=instructorDataBaseHelper.getInstructorByEmail(UserEmail.getText().toString());
+                    if(instructor.UserDegreeText != null){
+                        instructor.UserDegreeText.setText(String.valueOf(instructor1.getLastName()));
+                    } else {
+                        Toast.makeText(ViewProfilesOfStudentAndInstructor.this, "This ZEFT PROJECT", Toast.LENGTH_SHORT).show();
+                    }*/
                 }else {
                     Toast.makeText(ViewProfilesOfStudentAndInstructor.this, "This Email its not Valid.", Toast.LENGTH_SHORT).show();
 

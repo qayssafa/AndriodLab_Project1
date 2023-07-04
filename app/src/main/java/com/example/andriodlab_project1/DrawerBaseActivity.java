@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.example.andriodlab_project1.admin.ApplicantDecide;
+import com.example.andriodlab_project1.admin.ViewInstructorProfileActivity;
 import com.example.andriodlab_project1.admin.ViewProfilesOfStudentAndInstructor;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
@@ -71,7 +72,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
             overridePendingTransition(0, 0);
             finish();
         } else if (id == R.id.VUP) {
-            startActivity(new Intent(DrawerBaseActivity.this, ViewProfilesOfStudentAndInstructor.class));
+            startActivity(new Intent(DrawerBaseActivity.this, ViewInstructorProfileActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CH) {
