@@ -123,7 +123,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                                 editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                             else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
                                 editStartDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                            } else if ((((monthOfYear + 1) <= 9) && (dayOfMonth <= 9))) {
                                 editStartDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
                             }
                         }
@@ -153,7 +153,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                                 editEndDate.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                             else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
                                 editEndDate.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                            } else if ((((monthOfYear + 1) <= 9) && (dayOfMonth <= 9))) {
                                 editEndDate.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
                             }
 
@@ -183,7 +183,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                                 deadLine.setText(year + "-0" + (monthOfYear + 1) + "-" + dayOfMonth);
                             else if (((monthOfYear + 1) > 9) && (dayOfMonth <= 9)) {
                                 deadLine.setText(year + "-" + (monthOfYear + 1) + "-0" + dayOfMonth);
-                            } else if ((((monthOfYear + 1) >= 9) && (dayOfMonth >= 9))) {
+                            } else if ((((monthOfYear + 1) <= 9) && (dayOfMonth <= 9))) {
                                 deadLine.setText(year + "-0" + (monthOfYear + 1) + "-0" + dayOfMonth);
                             }
                         }

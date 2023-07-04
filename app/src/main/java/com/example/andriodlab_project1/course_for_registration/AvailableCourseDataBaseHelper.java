@@ -200,13 +200,13 @@ public class AvailableCourseDataBaseHelper {
                 cursor = db.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
                         "FROM AvailableCourse ac " +
                         "LEFT JOIN COURSE c ON ac.COURSE_ID = c.COURSE_ID " +
-                        "WHERE datetime(ac.registration_deadline) > datetime('" + currentTimeString + "') ", null);
+                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') ", null);
             }else {
                 SQLiteDatabase db1 = dbHelper.getReadableDatabase();
                 cursor = db1.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
                         "FROM AvailableCourse ac " +
                         "LEFT JOIN enrollments e ON ac.COURSE_ID = e.COURSE_ID " +
-                        "WHERE datetime(ac.registration_deadline) > datetime('" + currentTimeString + "') " +
+                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') " +
                         "AND e.COURSE_ID IS NULL", null);
             }
             if (cursor.moveToFirst()) {
