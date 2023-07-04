@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +55,10 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
         courseTitle = findViewById(R.id.courseTitle);
         courseMainTobic = findViewById(R.id.courseMainTobic);
         preRequest = findViewById(R.id.preRequest);
+
+        ImageView backgroundImageView = findViewById(R.id.imageView3);
+        ImageView overlayImageView = findViewById(R.id.imageView4);
+
         dbHelper = new CourseDataBaseHelper(this);
         continents = dbHelper.getAllCourses();
         if (!(continents.isEmpty())) {

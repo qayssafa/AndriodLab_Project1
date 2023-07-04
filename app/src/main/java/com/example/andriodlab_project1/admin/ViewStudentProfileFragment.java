@@ -26,6 +26,7 @@ public class ViewStudentProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_view_student_profile, container, false);
+
     }
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
