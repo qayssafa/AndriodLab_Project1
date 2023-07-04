@@ -116,7 +116,9 @@ public class ApplicantDataBaseHelper {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
         String[] projection = {"applicantId"};
-        Cursor cursor = db.query("APPLICANT", projection, null, null, null, null, null);
+        String selection = "status = ?";
+        String[] selectionArgs = {" "}; // Filter for empty status
+        Cursor cursor = db.query("APPLICANT", projection, selection, selectionArgs, null, null, null);
 
         while (cursor.moveToNext()) {
             int applicantId = cursor.getInt(0);
@@ -128,6 +130,7 @@ public class ApplicantDataBaseHelper {
 
         return applicationIds;
     }
+
     public List<Integer> getApplicantIdsByEmail(String email) {
         List<Integer> applicantIds = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();

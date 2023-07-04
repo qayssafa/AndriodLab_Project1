@@ -69,5 +69,23 @@ public class EnrollmentDataBaseHelper {
         cursor.close();
         return students;
     }
+    public List<Integer> getCoursesByStudentEmail(String email) {
+        List<Integer> courseIds = new ArrayList<>();
+
+        if (!isTableCreatedFirstTime("enrollments")){
+            SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+            String query = "SELECT COURSE_ID FROM enrollments WHERE EMAIL = ?";
+            Cursor cursor = sqLiteDatabase.rawQuery(query, new String[]{email});
+            if (cursor.moveToFirst()) {
+                do {
+                    int courseId = cursor.getInt(0);
+                    courseIds.add(courseId);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            return courseIds;
+        }
+        return courseIds;
+    }
 
 }
