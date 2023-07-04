@@ -21,6 +21,7 @@ import com.example.andriodlab_project1.databinding.ActivityCreateCourseBinding;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,6 +37,7 @@ public class CreateCourseActivity extends DrawerBaseActivity {
     private String value;
 
     byte[] blob;
+    Blob photo;
     ActivityCreateCourseBinding activityCreateCourseBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,7 +122,7 @@ public class CreateCourseActivity extends DrawerBaseActivity {
             public void onClick(View v) {
                 String courseName=CourseTitleInput.getText().toString();
                 ArrayList<String> courseTopics=convertStringToList(CourseMainTopicsInput.getText().toString());
-                Course course=new Course(courseName,courseTopics,continentsList,null);
+                Course course=new Course(courseName,courseTopics,continentsList,blob);
                 if (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }
@@ -163,6 +165,7 @@ public class CreateCourseActivity extends DrawerBaseActivity {
                 FileInputStream fileInputStream = new FileInputStream(file);
                 fileInputStream.read(blob);
                 fileInputStream.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

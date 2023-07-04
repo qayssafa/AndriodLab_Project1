@@ -8,9 +8,9 @@ public class Course {
     private String CourseTitle;
     private ArrayList<String> CourseMainTopics;
     private ArrayList<String> Prerequisites;
-    private Blob photo;
+    private byte[] photo;
 
-    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<String> prerequisites, Blob photo) {
+    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<String> prerequisites, byte[] photo) {
         CourseTitle = courseTitle;
         CourseMainTopics = courseMainTopics;
         Prerequisites = prerequisites;
@@ -36,7 +36,7 @@ public class Course {
         return Prerequisites;
     }
 
-    public Blob getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
@@ -56,7 +56,7 @@ public class Course {
         Prerequisites = prerequisites;
     }
 
-    public void setPhoto(Blob photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 }
