@@ -35,7 +35,6 @@ import java.util.Map;
 
 public class CreateCourseActivity extends DrawerBaseActivity {
     private CourseDataBaseHelper dbHelper;
-    private static int RESULT_LOAD_IMAGE = 1;
     private EditText CourseTitleInput;
     private EditText CourseMainTopicsInput;
     private Map.Entry<String, String> entry;
@@ -47,14 +46,15 @@ public class CreateCourseActivity extends DrawerBaseActivity {
 
     byte[] blob;
     ActivityCreateCourseBinding activityCreateCourseBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityCreateCourseBinding = ActivityCreateCourseBinding.inflate(getLayoutInflater());
         setContentView(activityCreateCourseBinding.getRoot());
         //setContentView(R.layout.activity_create_course);
-        CourseTitleInput=findViewById(R.id.CourseTitleInput);
-        CourseMainTopicsInput=findViewById(R.id.CourseMainTopicsInput);
+        CourseTitleInput = findViewById(R.id.CourseTitleInput);
+        CourseMainTopicsInput = findViewById(R.id.CourseMainTopicsInput);
         TextView Prerequisites = findViewById(R.id.list);
         dbHelper = new CourseDataBaseHelper(this);
 
@@ -116,54 +116,30 @@ public class CreateCourseActivity extends DrawerBaseActivity {
         //////////////////
 
         Button loadImage = findViewById(R.id.InsertPhotoButton);
-        loadImage.setOnClickListener(new View.OnClickListener(){
+        loadImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
+            public void onClick(View view) {
                 chooseImage();
             }
         });
-
-//        Button buttonLoadImage = findViewById(R.id.InsertPhotoButton);
-//        ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-//            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-//                Intent data = result.getData();
-//                Uri selectedImage = data.getData();
-//                String picturePath = getRealPathFromUri(selectedImage);
-//                if (picturePath != null) {
-//                    try {
-//                        File file = new File(picturePath);
-//                        int fileLength = (int) file.length();
-//                        blob = new byte[fileLength];
-//                        FileInputStream fileInputStream = new FileInputStream(file);
-//                        fileInputStream.read(blob);
-//                        fileInputStream.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        });
-
-
 
         Button SubmitDataButton = findViewById(R.id.Update);
         SubmitDataButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String courseName=CourseTitleInput.getText().toString();
-                ArrayList<String> courseTopics=convertStringToList(CourseMainTopicsInput.getText().toString());
-                Course course=new Course(courseName,courseTopics,continentsList,imageToStore);
-                if (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
+                String courseName = CourseTitleInput.getText().toString();
+                ArrayList<String> courseTopics = convertStringToList(CourseMainTopicsInput.getText().toString());
+                Course course = new Course(courseName, courseTopics, continentsList, imageToStore);
+                if (CourseTitleInput.getText().toString().isEmpty() || CourseTitleInput.getText().toString().isBlank()) {
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
-                }
-                else if(CourseMainTopicsInput.getText().toString().isEmpty()||CourseMainTopicsInput.getText().toString().isBlank()){
+                } else if (CourseMainTopicsInput.getText().toString().isEmpty() || CourseMainTopicsInput.getText().toString().isBlank()) {
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
-                }else if (dbHelper.insertCourse(course)){
+                } else if (dbHelper.insertCourse(course)) {
                     Toast.makeText(CreateCourseActivity.this, "This Courses Added successfully.", Toast.LENGTH_SHORT).show();
                     CourseTitleInput.setText("");
                     CourseMainTopicsInput.setText("");
 
-                }else {
+                } else {
                     Toast.makeText(CreateCourseActivity.this, "This Courses Added Failed.", Toast.LENGTH_SHORT).show();
 
                 }
@@ -172,15 +148,14 @@ public class CreateCourseActivity extends DrawerBaseActivity {
 
     }
 
-    public void chooseImage(){
+    public void chooseImage() {
         try {
             Intent intent = new Intent();
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
-            startActivityForResult(intent,PICK_IMAGE_REQUEST);
-        }
-        catch (Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -188,14 +163,13 @@ public class CreateCourseActivity extends DrawerBaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         try {
             super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
                 imageFilePath = data.getData();
-                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(),imageFilePath);
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
 
             }
-        }
-        catch (Exception e){
-            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -207,12 +181,12 @@ public class CreateCourseActivity extends DrawerBaseActivity {
         }
         return array;
     }
+
     public ArrayList<String> convertStringToList(String input) {
         if (input.isEmpty() || input.isBlank()) {
             Toast.makeText(CreateCourseActivity.this, "This Courses Topics not Valid!", Toast.LENGTH_SHORT).show();
             return null;
-        }
-        else {
+        } else {
             String trimmedInput = input.trim();
             if (trimmedInput.endsWith(",")) {
                 trimmedInput = trimmedInput.substring(0, trimmedInput.length() - 1);

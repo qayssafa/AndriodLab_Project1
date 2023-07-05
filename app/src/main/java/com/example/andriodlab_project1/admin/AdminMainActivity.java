@@ -13,16 +13,9 @@ import com.example.andriodlab_project1.databinding.ActivityAdminMainBinding;
 
 
 public class AdminMainActivity extends DrawerBaseActivity {
-    private Button CreateCourseButton;
-    private Button courseForRegestration;
 
-    private Button editOrRemoveCourse;
-    private Button viewOffering;
     private TextView AdminName;
     private AdminDataBaseHelper adminDataBaseHelper;
-    public static User user = new User();
-
-
     ActivityAdminMainBinding activityAdminMainBinding;
 
     @Override
@@ -30,42 +23,8 @@ public class AdminMainActivity extends DrawerBaseActivity {
         super.onCreate(savedInstanceState);
         activityAdminMainBinding = ActivityAdminMainBinding.inflate(getLayoutInflater());
         setContentView(activityAdminMainBinding.getRoot());
-        AdminName = (TextView)findViewById(R.id.AdminName);
+        AdminName = findViewById(R.id.AdminName);
         adminDataBaseHelper = new AdminDataBaseHelper(this);
-        AdminName.setText(adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getFirstName()+" "+adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getLastName());
-        /*CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
-        courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
-        editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);
-        viewOffering = (Button)findViewById(R.id.viewOffering);
-        CreateCourseButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, CreateCourseActivity.class);
-                startActivity(intent);
-            }
-        });
-        courseForRegestration.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, MakeCourseAvailableForRegistrationActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        editOrRemoveCourse.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, EditOrDeleteAnExistingCourseActivity.class);
-                startActivity(intent);
-            }
-        });
-        viewOffering.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                Intent intent = new Intent(AdminMainActivity.this, ViewPreviousOfferings.class);
-                startActivity(intent);
-            }
-        });*/
-
+        AdminName.setText(adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getFirstName() + " " + adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getLastName());
     }
 }

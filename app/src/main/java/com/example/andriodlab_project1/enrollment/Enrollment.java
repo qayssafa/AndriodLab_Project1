@@ -10,9 +10,6 @@ public class Enrollment {
         StudentEmail = studentEmail;
     }
 
-    public Enrollment() {
-    }
-
     public int getCourseID() {
         return CourseID;
     }

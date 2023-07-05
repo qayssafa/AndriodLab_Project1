@@ -21,6 +21,7 @@ public class ViewStudentProfileFragment extends Fragment {
     private TextView numberMobile;
     private TextView address;
     private TextView emailAd;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -34,11 +35,11 @@ public class ViewStudentProfileFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-    };
+    }
 
-    public void changeDataForStudent(String lEmail,String lFirstName,String lLastName,String lNumber,String lAddress){
-        firstName = (TextView) getActivity().findViewById(R.id.StuFirstName);
-        lastName = (TextView) getActivity().findViewById(R.id.LastName);
+    public void changeDataForStudent(String lEmail, String lFirstName, String lLastName, String lNumber, String lAddress) {
+        firstName = getActivity().findViewById(R.id.StuFirstName);
+        lastName = getActivity().findViewById(R.id.LastName);
         numberMobile = (TextView) getActivity().findViewById(R.id.mobile);
         address = (TextView) getActivity().findViewById(R.id.addressS);
         emailAd = (TextView) getActivity().findViewById(R.id.emailAd);

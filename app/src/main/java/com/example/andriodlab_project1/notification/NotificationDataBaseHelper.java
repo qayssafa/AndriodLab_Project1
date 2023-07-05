@@ -14,11 +14,13 @@ import java.util.List;
 import java.util.Map;
 
 public class NotificationDataBaseHelper {
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
+
     public NotificationDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
     }
+
     private void createTableIfNotExists() {
         if (isTableCreatedFirstTime("notifications")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -27,6 +29,7 @@ public class NotificationDataBaseHelper {
                     " FOREIGN KEY (EMAIL) REFERENCES STUDENT (EMAIL) ON DELETE CASCADE)");
         }
     }
+
     public boolean isTableCreatedFirstTime(String tableName) {
         boolean isFirstTime = false;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -42,6 +45,7 @@ public class NotificationDataBaseHelper {
         db.close();
         return isFirstTime;
     }
+
     public void insertNotification(String studentEmail, String message) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         String notificationMessage = message;
@@ -50,6 +54,7 @@ public class NotificationDataBaseHelper {
         values.put("message", notificationMessage);
         db.insert("notifications", null, values);
     }
+
     public List<Notification> getNotificationsForStudent(String lEmail) {
         List<Notification> notifications = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -60,13 +65,12 @@ public class NotificationDataBaseHelper {
             String email = cursor.getString(0);
             String message = cursor.getString(1);
             String timestamp = cursor.getString(2);
-            Notification notification = new Notification(email,message, timestamp);
+            Notification notification = new Notification(email, message, timestamp);
             notifications.add(notification);
         }
         cursor.close();
         return notifications;
     }
-
 
 
 }

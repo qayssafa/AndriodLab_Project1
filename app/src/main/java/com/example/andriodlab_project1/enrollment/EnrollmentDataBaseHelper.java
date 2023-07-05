@@ -17,11 +17,13 @@ import java.util.Locale;
 import java.util.Map;
 
 public class EnrollmentDataBaseHelper {
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
+
     public EnrollmentDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
     }
+
     private void createTableIfNotExists() {
         if (isTableCreatedFirstTime("enrollments")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -49,13 +51,14 @@ public class EnrollmentDataBaseHelper {
     }
 
     public boolean insertStudent2Course(Enrollment s2c) {
-            SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-            ContentValues contentValues = new ContentValues();
-            contentValues.put("EMAIL", s2c.getStudentEmail());
-            contentValues.put("COURSE_ID",s2c.getCourseID());
-            sqLiteDatabase.insert("enrollments", null, contentValues);
-            return true;
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("EMAIL", s2c.getStudentEmail());
+        contentValues.put("COURSE_ID", s2c.getCourseID());
+        sqLiteDatabase.insert("enrollments", null, contentValues);
+        return true;
     }
+
     public ArrayList<String> getStudentsByCourseId(int courseId) {
         ArrayList<String> students = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -63,16 +66,17 @@ public class EnrollmentDataBaseHelper {
         String[] selectionArgs = {String.valueOf(courseId)};
         Cursor cursor = db.rawQuery(selectQuery, selectionArgs);
         while (cursor.moveToNext()) {
-            String  EMAIL = cursor.getString(0);
+            String EMAIL = cursor.getString(0);
             students.add(EMAIL);
         }
         cursor.close();
         return students;
     }
+
     public List<Integer> getCoursesByStudentEmail(String email) {
         List<Integer> courseIds = new ArrayList<>();
 
-        if (!isTableCreatedFirstTime("enrollments")){
+        if (!isTableCreatedFirstTime("enrollments")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
             String query = "SELECT COURSE_ID FROM enrollments WHERE EMAIL = ?";
             Cursor cursor = sqLiteDatabase.rawQuery(query, new String[]{email});

@@ -16,7 +16,7 @@ import com.example.andriodlab_project1.common.DataBaseHelper;
  */
 public class AdminDataBaseHelper {
 
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
     public AdminDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();

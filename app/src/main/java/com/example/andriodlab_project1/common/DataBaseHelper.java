@@ -13,6 +13,7 @@ import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 public class DataBaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "my_database10";
     private static final int DATABASE_VERSION = 1;
+
     public DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }

@@ -10,6 +10,7 @@ public class Notification {
         this.message = message;
         this.timestamp = timestamp;
     }
+
     public Notification() {
     }
 

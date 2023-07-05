@@ -16,9 +16,9 @@ public class InstructorMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_main);
-        Button button=findViewById(R.id.button4);
-        Button button1=findViewById(R.id.button5);
-        Button button2=findViewById(R.id.button6);
+        Button button = findViewById(R.id.button4);
+        Button button1 = findViewById(R.id.button5);
+        Button button2 = findViewById(R.id.button6);
         button.setOnClickListener(v -> {
             Intent intent = new Intent(InstructorMainActivity.this, CoursesPreviouslyTaughtActivity.class);
             startActivity(intent);

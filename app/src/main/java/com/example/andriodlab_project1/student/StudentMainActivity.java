@@ -1,6 +1,7 @@
 package com.example.andriodlab_project1.student;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -9,7 +10,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -39,51 +39,42 @@ import java.util.Locale;
 import kotlin.Triple;
 
 public class StudentMainActivity extends StudentDrawerBaseActivity {
-    private Button enroll;
-    private Button messages;
     private static final int PERMISSION_REQUEST_CODE = 1;
     private AvailableCourseDataBaseHelper dbHelper;
     private CourseDataBaseHelper dataBaseHelper;
     private List<Triple<AvailableCourse, String, Integer>> availableCourse;
-    private TextView StudntName;
     int notificationId = 0;
     StudentDataBaseHelper studentDataBaseHelper;
     EnrollmentDataBaseHelper enrollmentDataBaseHelper;
-    public static User user = new User();
     com.example.andriodlab_project1.databinding.ActivityStudentMainBinding activityStudentMainBinding;
     private NotificationDataBaseHelper notificationDataBaseHelper;
 
+    @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityStudentMainBinding = com.example.andriodlab_project1.databinding.ActivityStudentMainBinding.inflate(getLayoutInflater());
         setContentView(activityStudentMainBinding.getRoot());
-        enroll = findViewById(R.id.enrollButtonAndSee);
-        messages = findViewById(R.id.messages);
+        Button enroll = findViewById(R.id.enrollButtonAndSee);
+        Button messages = findViewById(R.id.messages);
         notificationDataBaseHelper=new NotificationDataBaseHelper(this);
         dataBaseHelper = new CourseDataBaseHelper(this);
-        StudntName = (TextView) findViewById(R.id.StudentName);
+        TextView studentName = (TextView) findViewById(R.id.StudentName);
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         dbHelper = new AvailableCourseDataBaseHelper(this);
         enrollmentDataBaseHelper = new EnrollmentDataBaseHelper(this);
-        StudntName.setText(studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getFirstName() + " " + studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getLastName());
+        studentName.setText(studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getFirstName() + " " + studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getLastName());
 
         sendCourseReminderNotification();
 
-        enroll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StudentMainActivity.this, SearchAndViewCourseAreAvailableActivity.class);
-                startActivity(intent);
-            }
+        enroll.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentMainActivity.this, SearchAndViewCourseAreAvailableActivity.class);
+            startActivity(intent);
         });
 
-        messages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(StudentMainActivity.this, SearchCoursesActivity.class);
-                startActivity(intent);
-            }
+        messages.setOnClickListener(v -> {
+            Intent intent = new Intent(StudentMainActivity.this, SearchCoursesActivity.class);
+            startActivity(intent);
         });
     }
     private void sendCourseReminderNotification() {

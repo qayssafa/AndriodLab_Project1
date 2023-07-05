@@ -20,7 +20,6 @@ import java.util.Map;
 
 public class CourseDataBaseHelper {
     private static DataBaseHelper dbHelper;
-    private static int databaseVersion = 1;
     private byte[] imageBytes;
     private ByteArrayOutputStream objectByteArrayOutputStream;
 

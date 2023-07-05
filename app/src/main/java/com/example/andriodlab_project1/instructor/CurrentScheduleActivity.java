@@ -22,13 +22,6 @@ import kotlin.Triple;
 
 public class CurrentScheduleActivity extends AppCompatActivity {
 
-    private List<Integer> allCourses;
-    private TableLayout tableLayout;
-
-    private AvailableCourseDataBaseHelper availableCourseDataBaseHelper;
-    private CourseDataBaseHelper dbHelper;
-    private List<Triple<AvailableCourse, String, Integer>> availableCourses;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,12 +29,12 @@ public class CurrentScheduleActivity extends AppCompatActivity {
         TextView courseNumber;
         TextView courseTitle;
         TextView schedule;
-        tableLayout = findViewById(R.id.tableViewSchedule);
-        availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
-        dbHelper = new CourseDataBaseHelper(this);
-        allCourses = availableCourseDataBaseHelper.getAllCoursesAreCurrentTaughtByInstructor(MainActivity.instructorEmail);
+        TableLayout tableLayout = findViewById(R.id.tableViewSchedule);
+        AvailableCourseDataBaseHelper availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
+        CourseDataBaseHelper dbHelper = new CourseDataBaseHelper(this);
+        List<Integer> allCourses = availableCourseDataBaseHelper.getAllCoursesAreCurrentTaughtByInstructor(MainActivity.instructorEmail);
         for (Integer courseId : allCourses) {
-            availableCourses = availableCourseDataBaseHelper.getAvailableCourseByCourse_Id(courseId);
+            List<Triple<AvailableCourse, String, Integer>> availableCourses = availableCourseDataBaseHelper.getAvailableCourseByCourse_Id(courseId);
             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                 AvailableCourse availableCourse = lCourseInfo.getFirst();
                 TableRow row = new TableRow(tableLayout.getContext());

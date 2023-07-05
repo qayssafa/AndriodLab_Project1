@@ -16,11 +16,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class InstructorDataBaseHelper {
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
+
     public InstructorDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
     }
+
     private void createTableIfNotExists() {
         if (isTableCreatedFirstTime("INSTRUCTOR")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
@@ -28,6 +30,7 @@ public class InstructorDataBaseHelper {
                     "MOBILE_NUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL,COURSES_TAUGHT TEXT NOT NULL)");
         }
     }
+
     public boolean isTableCreatedFirstTime(String tableName) {
         boolean isFirstTime = false;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -66,8 +69,7 @@ public class InstructorDataBaseHelper {
     }
 
 
-
-    public Instructor getInstructorByEmail(String email){
+    public Instructor getInstructorByEmail(String email) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Instructor instructor = new Instructor();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\";", null);
@@ -86,17 +88,18 @@ public class InstructorDataBaseHelper {
     }
 
 
-    public boolean isRegistered(String email){
+    public boolean isRegistered(String email) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\";", null);
         return cursor.moveToFirst();
     }
 
-    public boolean correctSignIn(String email, String password){
+    public boolean correctSignIn(String email, String password) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM INSTRUCTOR WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }
+
     public String getEmailByFullName(String firstName, String lastName) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT EMAIL FROM INSTRUCTOR WHERE FIRSTNAME = ? AND LASTNAME = ?", new String[]{firstName, lastName});

@@ -14,20 +14,23 @@ import com.example.andriodlab_project1.R;
 
 
 public class StudentFragment extends Fragment {
-     EditText phoneStudent ;
-     EditText addressStudent;
+    EditText phoneStudent;
+    EditText addressStudent;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_student, container, false);
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         phoneStudent = (EditText) getActivity().findViewById(R.id.editPhoneNumberStudent);
         addressStudent = (EditText) getActivity().findViewById(R.id.editAddressStudent);
     }
+
     public String getPhoneStudentValue() {
 
         if (phoneStudent != null) {
@@ -35,6 +38,7 @@ public class StudentFragment extends Fragment {
         }
         return null;
     }
+
     public String getAddressStudentValue() {
 
         if (addressStudent != null) {
@@ -42,7 +46,8 @@ public class StudentFragment extends Fragment {
         }
         return null;
     }
-    public void setEmpty(){
+
+    public void setEmpty() {
         phoneStudent.setText("");
         addressStudent.setText("");
     }

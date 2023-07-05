@@ -30,20 +30,18 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity imple
 
 
     ActivityViewProfilesOfStudentAndInstructorBinding activityViewProfilesOfStudentAndInstructorBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityViewProfilesOfStudentAndInstructorBinding = ActivityViewProfilesOfStudentAndInstructorBinding.inflate(getLayoutInflater());
         setContentView(activityViewProfilesOfStudentAndInstructorBinding.getRoot());
-        //setContentView(R.layout.activity_view_profiles_of_student_and_instructor);
-        studentDataBaseHelper=new StudentDataBaseHelper(this);
-        instructorDataBaseHelper=new InstructorDataBaseHelper(this);
-        LinearLayout linearLayout = findViewById(R.id.root_layoutt);
-        UserEmail = (EditText) findViewById(R.id.UserEmailInput);
-        //final ViewInstructorProfileFragment instructor = new ViewInstructorProfileFragment();
+        studentDataBaseHelper = new StudentDataBaseHelper(this);
+        instructorDataBaseHelper = new InstructorDataBaseHelper(this);
+        UserEmail = findViewById(R.id.UserEmailInput);
+
         final ViewStudentProfileFragment student = new ViewStudentProfileFragment();
         final FragmentManager fragmentManager = getSupportFragmentManager();
-
 
 
         UserEmail.addTextChangedListener(new TextWatcher() {
@@ -67,27 +65,12 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity imple
             @Override
             public void afterTextChanged(Editable s) {
 
-            //for student
-                if(!(UserEmail.getText().toString().isEmpty())&&studentDataBaseHelper.isRegistered(UserEmail.getText().toString())){
-                  /* FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.remove(instructor);
-                    fragmentTransaction.add(R.id.flayout, student, "student");
-                    fragmentTransaction.commit();*/
-                   /* Student student1=studentDataBaseHelper.getStudentByEmail(UserEmail.getText().toString());*/
-                   // student.changeDataForStudent(student1.getEmail(),student1.getFirstName(),student1.getLastName(),student1.getMobileNumber(),student1.getAddress());
-                }else if(!(UserEmail.getText().toString().isEmpty())&&instructorDataBaseHelper.isRegistered(UserEmail.getText().toString())){
-                   /* FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.remove(student);
-                    fragmentTransaction.add(R.id.flayout, instructor, "instructor");
-                    fragmentTransaction.commit();
-                    //instructor.changeDataForInstructor();
-                    Instructor instructor1=instructorDataBaseHelper.getInstructorByEmail(UserEmail.getText().toString());
-                    if(instructor.UserDegreeText != null){
-                        instructor.UserDegreeText.setText(String.valueOf(instructor1.getLastName()));
-                    } else {
-                        Toast.makeText(ViewProfilesOfStudentAndInstructor.this, "This ZEFT PROJECT", Toast.LENGTH_SHORT).show();
-                    }*/
-                }else {
+                //for student
+                if (!(UserEmail.getText().toString().isEmpty()) && studentDataBaseHelper.isRegistered(UserEmail.getText().toString())) {
+
+                } else if (!(UserEmail.getText().toString().isEmpty()) && instructorDataBaseHelper.isRegistered(UserEmail.getText().toString())) {
+
+                } else {
                     Toast.makeText(ViewProfilesOfStudentAndInstructor.this, "This Email its not Valid.", Toast.LENGTH_SHORT).show();
 
                 }
@@ -95,6 +78,7 @@ public class ViewProfilesOfStudentAndInstructor extends DrawerBaseActivity imple
         });
 
     }
+
     @Override
     public void respond(Student lStudent) {
 

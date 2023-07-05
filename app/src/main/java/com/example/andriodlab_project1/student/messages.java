@@ -23,35 +23,30 @@ import java.util.List;
 import kotlin.Triple;
 
 public class messages extends AppCompatActivity {
-    private TableLayout tableLayout;
-    private TextView message;
-    private TextView NumberOfMessage;
-    private TextView time;
-    private NotificationDataBaseHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages);
         int conunt=0;
-        dbHelper = new NotificationDataBaseHelper(this);
+        NotificationDataBaseHelper dbHelper = new NotificationDataBaseHelper(this);
         List<Notification> notifications= dbHelper.getNotificationsForStudent(MainActivity.studentEmail);
-        tableLayout = findViewById(R.id.student_message_table);
+        TableLayout tableLayout = findViewById(R.id.student_message_table);
         for (Notification notification : notifications) {
             conunt++;
             TableRow row = new TableRow(tableLayout.getContext());
             row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
             TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
             layoutParams.setMargins(1, 1, 1, 1);
-            NumberOfMessage= new TextView(row.getContext());
-            message= new TextView(row.getContext());
-            time = new TextView(row.getContext());
+            TextView numberOfMessage = new TextView(row.getContext());
+            TextView message = new TextView(row.getContext());
+            TextView time = new TextView(row.getContext());
 
-            NumberOfMessage.setText(conunt+"");
-            NumberOfMessage.setBackgroundColor(Color.WHITE);
-            NumberOfMessage.setLayoutParams(layoutParams);
-            NumberOfMessage.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-            row.addView(NumberOfMessage);
+            numberOfMessage.setText(conunt+"");
+            numberOfMessage.setBackgroundColor(Color.WHITE);
+            numberOfMessage.setLayoutParams(layoutParams);
+            numberOfMessage.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            row.addView(numberOfMessage);
 
             time.setText(notification.getTimestamp());
             time.setBackgroundColor(Color.WHITE);

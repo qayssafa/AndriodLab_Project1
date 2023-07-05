@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class StudentDataBaseHelper {
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
 
     public StudentDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -28,6 +28,7 @@ public class StudentDataBaseHelper {
             sqLiteDatabase.execSQL("CREATE TABLE STUDENT(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL,MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL)");
         }
     }
+
     public boolean isTableCreatedFirstTime(String tableName) {
         boolean isFirstTime = false;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -43,6 +44,7 @@ public class StudentDataBaseHelper {
         db.close();
         return isFirstTime;
     }
+
     public boolean insertStudent(Student student) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM STUDENT WHERE EMAIL = \"" + student.getEmail() + "\";", null);
@@ -62,10 +64,9 @@ public class StudentDataBaseHelper {
     }
 
 
-
-    public Student getStudentByEmail(String email){
+    public Student getStudentByEmail(String email) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
-        Student student  = new Student();
+        Student student = new Student();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM STUDENT  WHERE EMAIL = \"" + email + "\";", null);
         if (cursor.moveToFirst()) {
             student.setEmail(cursor.getString(0));
@@ -79,17 +80,18 @@ public class StudentDataBaseHelper {
     }
 
 
-    public boolean isRegistered(String email){
+    public boolean isRegistered(String email) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM STUDENT WHERE EMAIL = \"" + email + "\";", null);
         return cursor.moveToFirst();
     }
 
-    public boolean correctSignIn(String email, String password){
+    public boolean correctSignIn(String email, String password) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM STUDENT WHERE EMAIL = \"" + email + "\" AND PASSWORD = \"" + password + "\";", null);
         return cursor.moveToFirst();
     }
+
     public List<String> getAllStudents() {
         List<String> students = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();

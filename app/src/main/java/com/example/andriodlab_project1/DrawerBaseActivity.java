@@ -9,23 +9,18 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.andriodlab_project1.admin.AdminMainActivity;
-import com.example.andriodlab_project1.admin.ApplicantDecide;
+import com.example.andriodlab_project1.admin.ApplicantDecideActivity;
 import com.example.andriodlab_project1.admin.ViewInstructorProfileActivity;
-import com.example.andriodlab_project1.admin.ViewProfilesOfStudentAndInstructor;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
 import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
 import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.enrollment.ViewTheStudentsOfAnyCourseActivity;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.navigation.NavigationView;
 
 public class DrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,7 +75,7 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.RD) {
-                startActivity(new Intent(DrawerBaseActivity.this, ApplicantDecide.class));
+                startActivity(new Intent(DrawerBaseActivity.this, ApplicantDecideActivity.class));
                 overridePendingTransition(0, 0);
                 finish();
         }else if (id == R.id.CS) {

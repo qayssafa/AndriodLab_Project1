@@ -31,10 +31,7 @@ import java.util.Map;
 public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
 
     private TableLayout studentTable;
-
-
     ActivityViewTheStudentsOfAnyCourseBinding activityViewTheStudentsOfAnyCourseBinding;
-    private TextView showStudents;
     private Course course;
     private CourseDataBaseHelper dbHelper;
     private EnrollmentDataBaseHelper enrollmentDataBaseHelper;
@@ -45,66 +42,53 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
 
     private Map.Entry<String, String> entry;
     private String value;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityViewTheStudentsOfAnyCourseBinding = ActivityViewTheStudentsOfAnyCourseBinding.inflate(getLayoutInflater());
         setContentView(activityViewTheStudentsOfAnyCourseBinding.getRoot());
-        //setContentView(R.layout.activity_view_the_students_of_any_course);
-        showStudents = findViewById(R.id.showStudents);
+        TextView showStudents = findViewById(R.id.showStudents);
         dbHelper = new CourseDataBaseHelper(this);
         enrollmentDataBaseHelper = new EnrollmentDataBaseHelper(this);
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         continents = dbHelper.getAllCourses();
         studentTable = findViewById(R.id.student_show_table);
         if (!(continents.isEmpty())) {
-            showStudents.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ViewTheStudentsOfAnyCourseActivity.this);
-                    builder.setTitle("Courses :");
-                    builder.setCancelable(false);
+            showStudents.setOnClickListener(v -> {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ViewTheStudentsOfAnyCourseActivity.this);
+                builder.setTitle("Courses :");
+                builder.setCancelable(false);
 
-                    items = convertListToCharSequenceArray(continents);
-                    builder.setSingleChoiceItems(items, selected, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            selected = which;  // Update the selected continent index
+                items = convertListToCharSequenceArray(continents);
+                builder.setSingleChoiceItems(items, selected, (dialog, which) -> {
+                    selected = which;  // Update the selected continent index
+                });
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                    if (selected < 0) {
+                        Toast.makeText(ViewTheStudentsOfAnyCourseActivity.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        entry = continents.get(selected);
+                        value = entry.getKey();
+                        course = dbHelper.getCourseByID(Integer.parseInt(value));
+                        ArrayList<String> listOfEmail = enrollmentDataBaseHelper.getStudentsByCourseId(course.getCourseID());
+                        List<Student> students = new ArrayList<>();
+                        for (String s : listOfEmail) {
+                            students.add(studentDataBaseHelper.getStudentByEmail(s));
                         }
-                    });
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            if (selected < 0) {
-                                Toast.makeText(ViewTheStudentsOfAnyCourseActivity.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                entry = continents.get(selected);
-                                value = entry.getKey();
-                                course = dbHelper.getCourseByID(Integer.parseInt(value));
-                                ArrayList<String> listOfEmail=enrollmentDataBaseHelper.getStudentsByCourseId(course.getCourseID());
-                                List<Student> students=new ArrayList<>();
-                                for (String s:listOfEmail) {
-                                   students.add(studentDataBaseHelper.getStudentByEmail(s));
-                                }
-                                populateStudentTable(students);
-                            }
-                        }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                        populateStudentTable(students);
+                    }
+                });
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
-                    builder.show();
-                }
+                builder.show();
             });
         } else {
             Toast.makeText(ViewTheStudentsOfAnyCourseActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
         }
     }
+
     private void populateStudentTable(List<Student> students) {
         int rowCount = studentTable.getChildCount();
 
@@ -114,7 +98,7 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
                 studentTable.removeView(childView);
             }
         }
-        int count=0;
+        int count = 0;
         for (Student student : students) {
             count++;
             TableRow row = new TableRow(this);
@@ -122,7 +106,7 @@ public class ViewTheStudentsOfAnyCourseActivity extends DrawerBaseActivity {
             TextView email = new TextView(this);
             TextView firstName = new TextView(this);
             TextView lastName = new TextView(this);
-            number.setText(count+"");
+            number.setText(count + "");
             email.setText(student.getEmail());
             firstName.setText(student.getFirstName());
             lastName.setText(student.getLastName());

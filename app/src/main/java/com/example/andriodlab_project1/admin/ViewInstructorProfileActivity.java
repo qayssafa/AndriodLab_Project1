@@ -3,9 +3,6 @@ package com.example.andriodlab_project1.admin;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -30,9 +27,6 @@ public class ViewInstructorProfileActivity extends AppCompatActivity {
     private InstructorDataBaseHelper instructorDataBaseHelper;
     private StudentDataBaseHelper studentDataBaseHelper;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,36 +39,29 @@ public class ViewInstructorProfileActivity extends AppCompatActivity {
         instructorSpecialization = findViewById(R.id.InsSpecialization);
         instructorDegree = findViewById(R.id.InsDegree);
         searchInstructor = findViewById(R.id.searchInstructor);
-        instructorDataBaseHelper=new InstructorDataBaseHelper(this);
-        studentDataBaseHelper=new StudentDataBaseHelper(this);
+        instructorDataBaseHelper = new InstructorDataBaseHelper(this);
+        studentDataBaseHelper = new StudentDataBaseHelper(this);
 
 
+        searchInstructor.setOnClickListener(v -> {
+            if (!(instructorEmail.getText().toString().isEmpty()) && studentDataBaseHelper.isRegistered(instructorEmail.getText().toString())) {
+                Student student1 = studentDataBaseHelper.getStudentByEmail(instructorEmail.getText().toString());
+            } else if (!(instructorEmail.getText().toString().isEmpty()) && instructorDataBaseHelper.isRegistered(instructorEmail.getText().toString())) {
 
+                Instructor instructor1 = instructorDataBaseHelper.getInstructorByEmail(instructorEmail.getText().toString());
 
-        searchInstructor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!(instructorEmail.getText().toString().isEmpty())&&studentDataBaseHelper.isRegistered(instructorEmail.getText().toString())){
-                     Student student1=studentDataBaseHelper.getStudentByEmail(instructorEmail.getText().toString());
-                    // student.changeDataForStudent(student1.getEmail(),student1.getFirstName(),student1.getLastName(),student1.getMobileNumber(),student1.getAddress());
-                }else if(!(instructorEmail.getText().toString().isEmpty())&&instructorDataBaseHelper.isRegistered(instructorEmail.getText().toString())){
+                instructorLName.setText(String.valueOf(instructor1.getLastName()));
+                instructorFName.setText(String.valueOf(instructor1.getFirstName()));
+                instructorPhone.setText(String.valueOf(instructor1.getMobileNumber()));
+                instructorAddress.setText(String.valueOf(instructor1.getAddress()));
+                instructorSpecialization.setText(String.valueOf(instructor1.getSpecialization()));
+                instructorDegree.setText(String.valueOf(instructor1.getDegree()));
 
-                    Instructor instructor1=instructorDataBaseHelper.getInstructorByEmail(instructorEmail.getText().toString());
+            } else {
+                Toast.makeText(ViewInstructorProfileActivity.this, "This Email its not Valid.", Toast.LENGTH_SHORT).show();
 
-                    instructorLName.setText(String.valueOf(instructor1.getLastName()));
-                    instructorFName.setText(String.valueOf(instructor1.getFirstName()));
-                    instructorPhone.setText(String.valueOf(instructor1.getMobileNumber()));
-                    instructorAddress.setText(String.valueOf(instructor1.getAddress()));
-                    instructorSpecialization.setText(String.valueOf(instructor1.getSpecialization()));
-                    instructorDegree.setText(String.valueOf(instructor1.getDegree()));
-
-                }else {
-                    Toast.makeText(ViewInstructorProfileActivity.this, "This Email its not Valid.", Toast.LENGTH_SHORT).show();
-
-                }
             }
         });
-
 
 
     }

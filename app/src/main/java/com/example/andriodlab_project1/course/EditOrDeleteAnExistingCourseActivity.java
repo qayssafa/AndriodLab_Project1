@@ -29,7 +29,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
-    private TextView listOfCourse;
     private TextView courseNumber;
     private TextView courseTitle;
     private TextView courseMainTobic;
@@ -37,8 +36,6 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
     private CourseDataBaseHelper dbHelper;
     private Course course;
     private List<Map.Entry<String, String>> continents;
-    private Button delete;
-    private Button edit;
     private int selected;
     public static int id;
     CharSequence[] items;
@@ -55,9 +52,9 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
         activityEditOrDeleteAnExistingCourseBinding = ActivityEditOrDeleteAnExistingCourseBinding.inflate(getLayoutInflater());
         setContentView(activityEditOrDeleteAnExistingCourseBinding.getRoot());
         //setContentView(R.layout.activity_edit_or_delete_an_existing_course);
-        listOfCourse = findViewById(R.id.list);
-        delete = findViewById(R.id.Delete);
-        edit = findViewById(R.id.Edit);
+        TextView listOfCourse = findViewById(R.id.list);
+        Button delete = findViewById(R.id.Delete);
+        Button edit = findViewById(R.id.Edit);
         courseNumber = findViewById(R.id.courseID);
         courseTitle = findViewById(R.id.courseTitle);
         courseMainTobic = findViewById(R.id.courseMainTobic);

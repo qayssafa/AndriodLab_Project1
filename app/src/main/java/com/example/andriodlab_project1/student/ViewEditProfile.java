@@ -15,17 +15,18 @@ public class ViewEditProfile extends AppCompatActivity {
     EditText UserPassword;
     EditText UserConfirmPassword;
     Button photoUpload;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_edit_profile);
 
-        UserEmail = (EditText)findViewById(R.id.UserEmail);
-        UserFirstName = (EditText)findViewById(R.id.UserFirstName);
-        UserLastName = (EditText)findViewById(R.id.userLastName);
-        UserPassword = (EditText)findViewById(R.id.password);
-        UserConfirmPassword = (EditText)findViewById(R.id.ConfirmPassword);
+        UserEmail = findViewById(R.id.UserEmail);
+        UserFirstName = findViewById(R.id.UserFirstName);
+        UserLastName = findViewById(R.id.userLastName);
+        UserPassword = findViewById(R.id.password);
+        UserConfirmPassword = findViewById(R.id.ConfirmPassword);
 
-        photoUpload = (Button)findViewById(R.id.UploadButton);
+        photoUpload = findViewById(R.id.UploadButton);
     }
 }

@@ -42,8 +42,6 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
     private int selected;
     private Map.Entry<String, String> entry;
     private String key;
-
-    private CharSequence[] items;
     private TextView startDate;
     private TextView courseTitle;
     private TextView schedule;
@@ -51,7 +49,7 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
     private TextView venue;
     private TextView endDate;
     private List<Triple<AvailableCourse, String, Integer>> availableCourses;
-    private         List<Triple<AvailableCourse, String, Integer>> courseSelectedAv;
+    private List<Triple<AvailableCourse, String, Integer>> courseSelectedAv;
 
     ActivityRegisterCourseBinding activityRegisterCourseBinding;
     @Override
@@ -68,156 +66,137 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
         CharSequence[] items = convertListToCharSequenceArray(continents);
         Button enroll = findViewById(R.id.ENrollButton);
         if (!continents.isEmpty()) {
-        listOfCourses.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SearchAndViewCourseAreAvailableActivity.this);
-                builder.setTitle("Courses Are Available For Registration :");
-                builder.setCancelable(false);
-                tableLayout = findViewById(R.id.student_message_table);
-                builder.setSingleChoiceItems(items, selected, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        selected = which;  // Update the selected continent index
-                    }
-                });
+        listOfCourses.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SearchAndViewCourseAreAvailableActivity.this);
+            builder.setTitle("Courses Are Available For Registration :");
+            builder.setCancelable(false);
+            tableLayout = findViewById(R.id.student_message_table);
+            builder.setSingleChoiceItems(items, selected, (dialog, which) -> {
+                selected = which;  // Update the selected continent index
+            });
 
-                    builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            if (selected < 0) {
-                                Toast.makeText(SearchAndViewCourseAreAvailableActivity.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                entry = continents.get(selected);
-                                key = entry.getKey();
-                                course = courseDataBaseHelper.getCourseByID(Integer.parseInt(key));
-                               courseSelectedAv=dbHelper.getAvailableCourseByCourse_Id(Integer.parseInt(key));
-                               AvailableCourse availableCourse1=courseSelectedAv.get(0).getFirst();
-                                int rowCount = tableLayout.getChildCount();
-                                for (int i = rowCount - 1; i > 0; i--) {
-                                    View childView = tableLayout.getChildAt(i);
-                                    if (childView instanceof TableRow) {
-                                        tableLayout.removeView(childView);
-                                    }
-                                }
-                                TableRow row = new TableRow(tableLayout.getContext());
-                                row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                                TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
-                                layoutParams.setMargins(1, 1, 1, 1);
-                                startDate = new TextView(row.getContext());
-                                courseTitle = new TextView(row.getContext());
-                                endDate = new TextView(row.getContext());
-                                schedule = new TextView(row.getContext());
-                                instructor = new TextView(row.getContext());
-                                venue = new TextView(row.getContext());
-
-
-                                courseTitle.setText(course.getCourseTitle());
-                                courseTitle.setBackgroundColor(Color.WHITE);
-                                courseTitle.setLayoutParams(layoutParams);
-                                courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(courseTitle);
-
-                                startDate.setText(availableCourse1.getCourseStartDate());
-                                startDate.setBackgroundColor(Color.WHITE);
-                                startDate.setLayoutParams(layoutParams);
-                                startDate.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(startDate);
-
-                                endDate.setText(availableCourse1.getCourseEndDate());
-                                endDate.setBackgroundColor(Color.WHITE);
-                                endDate.setLayoutParams(layoutParams);
-                                endDate.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(endDate);
-
-                                schedule.setText(availableCourse1.getCourseSchedule());
-                                schedule.setBackgroundColor(Color.WHITE);
-                                schedule.setLayoutParams(layoutParams);
-                                schedule.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(schedule);
-
-                                instructor.setText(courseSelectedAv.get(0).getSecond());
-                                instructor.setBackgroundColor(Color.WHITE);
-                                instructor.setLayoutParams(layoutParams);
-                                instructor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(instructor);
-
-                                venue.setText(availableCourse1.getVenue());
-                                venue.setBackgroundColor(Color.WHITE);
-                                venue.setLayoutParams(layoutParams);
-                                venue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(venue);
-
-                                tableLayout.addView(row);
+                builder.setPositiveButton("OK", (dialog, which) -> {
+                    dialog.dismiss();
+                    if (selected < 0) {
+                        Toast.makeText(SearchAndViewCourseAreAvailableActivity.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        entry = continents.get(selected);
+                        key = entry.getKey();
+                        course = courseDataBaseHelper.getCourseByID(Integer.parseInt(key));
+                        courseSelectedAv=dbHelper.getAvailableCourseByCourse_Id(Integer.parseInt(key));
+                        AvailableCourse availableCourse1=courseSelectedAv.get(0).getFirst();
+                        int rowCount = tableLayout.getChildCount();
+                        for (int i = rowCount - 1; i > 0; i--) {
+                            View childView = tableLayout.getChildAt(i);
+                            if (childView instanceof TableRow) {
+                                tableLayout.removeView(childView);
                             }
                         }
-                    });
-                    builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
+                        TableRow row = new TableRow(tableLayout.getContext());
+                        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+                        TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
+                        layoutParams.setMargins(1, 1, 1, 1);
+                        startDate = new TextView(row.getContext());
+                        courseTitle = new TextView(row.getContext());
+                        endDate = new TextView(row.getContext());
+                        schedule = new TextView(row.getContext());
+                        instructor = new TextView(row.getContext());
+                        venue = new TextView(row.getContext());
 
-                    builder.show();
-            }
+
+                        courseTitle.setText(course.getCourseTitle());
+                        courseTitle.setBackgroundColor(Color.WHITE);
+                        courseTitle.setLayoutParams(layoutParams);
+                        courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        row.addView(courseTitle);
+
+                        startDate.setText(availableCourse1.getCourseStartDate());
+                        startDate.setBackgroundColor(Color.WHITE);
+                        startDate.setLayoutParams(layoutParams);
+                        startDate.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        row.addView(startDate);
+
+                        endDate.setText(availableCourse1.getCourseEndDate());
+                        endDate.setBackgroundColor(Color.WHITE);
+                        endDate.setLayoutParams(layoutParams);
+                        endDate.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        row.addView(endDate);
+
+                        schedule.setText(availableCourse1.getCourseSchedule());
+                        schedule.setBackgroundColor(Color.WHITE);
+                        schedule.setLayoutParams(layoutParams);
+                        schedule.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        row.addView(schedule);
+
+                        instructor.setText(courseSelectedAv.get(0).getSecond());
+                        instructor.setBackgroundColor(Color.WHITE);
+                        instructor.setLayoutParams(layoutParams);
+                        instructor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        row.addView(instructor);
+
+                        venue.setText(availableCourse1.getVenue());
+                        venue.setBackgroundColor(Color.WHITE);
+                        venue.setLayoutParams(layoutParams);
+                        venue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        row.addView(venue);
+
+                        tableLayout.addView(row);
+                    }
+                });
+                builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+                builder.show();
         });
         }
         else {
             Toast.makeText(SearchAndViewCourseAreAvailableActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
 
         }
-        enroll.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                ArrayList<String> prerequisites = course.getPrerequisites();
-                List<Map.Entry<Integer, String>> getCoursesTakenByStudent=dbHelper.getCoursesTakenByStudent(MainActivity.studentEmail);
-                availableCourses = dbHelper.getAvailableCourseByCourse_Id(course.getCourseID());
-                String selectedCourseSchedule = null;
-                String registeredCourseSchedule= null;;
-                String selectedCourseScheduleName= null;;
-                String registeredCourseScheduleName= null;;
-                boolean check=false;
-                if (!availableCourses.isEmpty()){
-                    AvailableCourse availableCourse = availableCourses.get(0).getFirst();
-                    AvailableCourse courseAreRegisteredByStudent;
-                    selectedCourseSchedule=availableCourse.getCourseSchedule();
-                    selectedCourseScheduleName=courseDataBaseHelper.getCourseName(availableCourse.getCourseId());
-                    List<Map.Entry<Integer, String>> getCoursesAreRegisteredByStudent=dbHelper.getCoursesAreRegisteredByStudent(MainActivity.studentEmail);
-                    List<Triple<AvailableCourse, String, Integer>> availableCoursesAreRegisteredByStudent;
-                    for (Map.Entry<Integer, String> entry : getCoursesAreRegisteredByStudent) {
-                        availableCoursesAreRegisteredByStudent = dbHelper.getAvailableCourseByCourse_Id(entry.getKey());
-                        if (!availableCourses.isEmpty()) {
-                            courseAreRegisteredByStudent=availableCoursesAreRegisteredByStudent.get(0).getFirst();
-                            registeredCourseSchedule=courseAreRegisteredByStudent.getCourseSchedule();
-                            if (isTimeConflict(selectedCourseSchedule,registeredCourseSchedule)){
-                                check=true;
-                                registeredCourseScheduleName=courseDataBaseHelper.getCourseName(courseAreRegisteredByStudent.getCourseId());
-                                break;
-                            }
+        enroll.setOnClickListener(v -> {
+            ArrayList<String> prerequisites = course.getPrerequisites();
+            List<Map.Entry<Integer, String>> getCoursesTakenByStudent=dbHelper.getCoursesTakenByStudent(MainActivity.studentEmail);
+            availableCourses = dbHelper.getAvailableCourseByCourse_Id(course.getCourseID());
+            String selectedCourseSchedule = null;
+            String registeredCourseSchedule= null;;
+            String selectedCourseScheduleName= null;;
+            String registeredCourseScheduleName= null;;
+            boolean check=false;
+            if (!availableCourses.isEmpty()){
+                AvailableCourse availableCourse = availableCourses.get(0).getFirst();
+                AvailableCourse courseAreRegisteredByStudent;
+                selectedCourseSchedule=availableCourse.getCourseSchedule();
+                selectedCourseScheduleName=courseDataBaseHelper.getCourseName(availableCourse.getCourseId());
+                List<Map.Entry<Integer, String>> getCoursesAreRegisteredByStudent=dbHelper.getCoursesAreRegisteredByStudent(MainActivity.studentEmail);
+                List<Triple<AvailableCourse, String, Integer>> availableCoursesAreRegisteredByStudent;
+                for (Map.Entry<Integer, String> entry : getCoursesAreRegisteredByStudent) {
+                    availableCoursesAreRegisteredByStudent = dbHelper.getAvailableCourseByCourse_Id(entry.getKey());
+                    if (!availableCourses.isEmpty()) {
+                        courseAreRegisteredByStudent=availableCoursesAreRegisteredByStudent.get(0).getFirst();
+                        registeredCourseSchedule=courseAreRegisteredByStudent.getCourseSchedule();
+                        if (isTimeConflict(selectedCourseSchedule,registeredCourseSchedule)){
+                            check=true;
+                            registeredCourseScheduleName=courseDataBaseHelper.getCourseName(courseAreRegisteredByStudent.getCourseId());
+                            break;
                         }
                     }
-                    }
-                if (!check){
-                    if (arePrerequisitesMet(prerequisites,getCoursesTakenByStudent)){
-                        Applicant applicant=new Applicant(course.getCourseID(),MainActivity.studentEmail," ");
-                        applicantDataBaseHelper.insertApplicant(applicant);
-                        Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Wait Until Admin Accept Your Request.", Toast.LENGTH_SHORT).show();
-                        //no conflict in time
-                    }else {
-                        Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Cannot Registered this course "+ courseDataBaseHelper.getCourseName(course.getCourseID())
-                                +"\n because your not completed Prerequisites Courses for this course "+courseDataBaseHelper.getCourseName(course.getCourseID())+".", Toast.LENGTH_SHORT).show();
-                    }
-                }else {
-                    Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Cannot Registered this course "+ selectedCourseScheduleName +"\n because its Conflict in time with your course "+registeredCourseScheduleName+".", Toast.LENGTH_SHORT).show();
                 }
+                }
+            if (!check){
+                if (arePrerequisitesMet(prerequisites,getCoursesTakenByStudent)){
+                    Applicant applicant=new Applicant(course.getCourseID(),MainActivity.studentEmail," ");
+                    applicantDataBaseHelper.insertApplicant(applicant);
+                    Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Wait Until Admin Accept Your Request.", Toast.LENGTH_SHORT).show();
+                    //no conflict in time
+                }else {
+                    Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Cannot Registered this course "+ courseDataBaseHelper.getCourseName(course.getCourseID())
+                            +"\n because your not completed Prerequisites Courses for this course "+courseDataBaseHelper.getCourseName(course.getCourseID())+".", Toast.LENGTH_SHORT).show();
+                }
+            }else {
+                Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Cannot Registered this course "+ selectedCourseScheduleName +"\n because its Conflict in time with your course "+registeredCourseScheduleName+".", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    public static String convertArrayListToString(ArrayList<String> arrayList) {
-        return String.join("\n", arrayList);
-    }
+
     public CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
         CharSequence[] array = new CharSequence[list.size()];
         int i = 0;
@@ -296,15 +275,11 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
         int endMinutes2 = convertToMinutes(endTime2);
 
         // Check for time conflict
-        if ((startMinutes1 <= startMinutes2 && startMinutes2 <= endMinutes1) || // Case 1
+        // Case 4
+        return (startMinutes1 <= startMinutes2 && startMinutes2 <= endMinutes1) || // Case 1
                 (startMinutes1 <= endMinutes2 && endMinutes2 <= endMinutes1) ||     // Case 2
                 (startMinutes2 <= startMinutes1 && startMinutes1 <= endMinutes2) || // Case 3
-                (startMinutes2 <= endMinutes1 && endMinutes1 <= endMinutes2)) {     // Case 4
-            return true; // There is a time conflict
-        }
-
-
-        return false; // No time conflict
+                (startMinutes2 <= endMinutes1 && endMinutes1 <= endMinutes2); // There is a time conflict
     }
 
 

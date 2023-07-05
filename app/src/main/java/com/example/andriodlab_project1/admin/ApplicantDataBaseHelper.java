@@ -11,7 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ApplicantDataBaseHelper {
-    private DataBaseHelper dbHelper;
+    private final DataBaseHelper dbHelper;
+
     public ApplicantDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
@@ -31,6 +32,7 @@ public class ApplicantDataBaseHelper {
                     ")");
         }
     }
+
     public boolean isTableCreatedFirstTime(String tableName) {
         boolean isFirstTime = false;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -44,6 +46,7 @@ public class ApplicantDataBaseHelper {
         db.close();
         return isFirstTime;
     }
+
     public boolean insertApplicant(Applicant applicant) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -60,6 +63,7 @@ public class ApplicantDataBaseHelper {
             return true;
         }
     }
+
     public List<Applicant> getAllApplicants() {
         List<Applicant> applicants = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -80,6 +84,7 @@ public class ApplicantDataBaseHelper {
         db.close();
         return applicants;
     }
+
     public boolean updateApplicantStatus(int applicantId, String newStatus) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
@@ -92,6 +97,7 @@ public class ApplicantDataBaseHelper {
 
         return rowsAffected > 0;
     }
+
     public String getApplicantStatus(int applicantId) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
 
@@ -111,6 +117,7 @@ public class ApplicantDataBaseHelper {
 
         return status;
     }
+
     public List<Integer> getAllApplicationIds() {
         List<Integer> applicationIds = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -151,6 +158,7 @@ public class ApplicantDataBaseHelper {
 
         return applicantIds;
     }
+
     public Applicant getApplicantById(int applicantId) {
         Applicant applicant = null;
         SQLiteDatabase db = dbHelper.getReadableDatabase();
@@ -173,13 +181,4 @@ public class ApplicantDataBaseHelper {
 
         return applicant;
     }
-    public boolean deleteApplicantById(int applicantId) {
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
-        int rowsAffected = db.delete("APPLICANT", "applicantId = ?", new String[]{String.valueOf(applicantId)});
-        db.close();
-
-        return rowsAffected > 0;
-    }
-
-
 }

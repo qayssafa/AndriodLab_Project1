@@ -20,7 +20,7 @@ public class SharedPrefManager {
         if (ourInstance != null) {
             return ourInstance;
         }
-        ourInstance=new SharedPrefManager(context);
+        ourInstance = new SharedPrefManager(context);
         return ourInstance;
     }
 

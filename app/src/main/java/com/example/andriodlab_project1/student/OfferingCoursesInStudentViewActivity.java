@@ -23,12 +23,6 @@ import java.util.Map;
 import kotlin.Triple;
 
 public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
-    private List<Map.Entry<String, String>> allCourses;
-    private TableLayout tableLayout;
-
-    private AvailableCourseDataBaseHelper availableCourseDataBaseHelper;
-    private CourseDataBaseHelper dbHelper;
-    private List<Triple<AvailableCourse, String, Integer>> availableCourses;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +34,13 @@ public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
         TextView preRequest;
         TextView startTime;
         TextView instructorName;
-        tableLayout=findViewById(R.id.tableToSearchCourses);
-        availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
-        dbHelper = new CourseDataBaseHelper(this);
-        allCourses = availableCourseDataBaseHelper.getAllCoursesForRegistration();
+        TableLayout tableLayout = findViewById(R.id.tableToSearchCourses);
+        AvailableCourseDataBaseHelper availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
+        CourseDataBaseHelper dbHelper = new CourseDataBaseHelper(this);
+        List<Map.Entry<String, String>> allCourses = availableCourseDataBaseHelper.getAllCoursesForRegistration();
         for (Map.Entry<String, String> courseInfo : allCourses) {
             int courseId = Integer.parseInt(courseInfo.getKey());
-            availableCourses = availableCourseDataBaseHelper.getAvailableCourseByCourse_Id(courseId);
+            List<Triple<AvailableCourse, String, Integer>> availableCourses = availableCourseDataBaseHelper.getAvailableCourseByCourse_Id(courseId);
             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                 AvailableCourse availableCourse = lCourseInfo.getFirst();
                 String lInstructorName = lCourseInfo.getSecond();
