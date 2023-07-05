@@ -190,7 +190,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                     }
                 if (!check){
                     if (arePrerequisitesMet(prerequisites,getCoursesTakenByStudent)){
-                        Applicant applicant=new Applicant(course.getCourseID(),MainActivity.studentEmail,"NO");
+                        Applicant applicant=new Applicant(course.getCourseID(),MainActivity.studentEmail," ");
                         applicantDataBaseHelper.insertApplicant(applicant);
                         Toast.makeText(SearchAndViewCourseAreAvailable.this,"Wait Until Admin Accept Your Request.", Toast.LENGTH_SHORT).show();
                         //no conflict in time
