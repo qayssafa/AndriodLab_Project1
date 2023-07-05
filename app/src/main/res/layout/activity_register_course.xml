@@ -71,32 +71,46 @@
                 android:background="#CCC">
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Course id    "
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:text="Course Title"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="4dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="deadline"
+                    android:text="Start Date"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="4dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="End Date"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:text="courseMainTopic"
+                    android:text="Schedule"
                     android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="4dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Instructor" />
+
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="4dp"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:text="Venue" />
 
             </TableRow>
         </TableLayout>

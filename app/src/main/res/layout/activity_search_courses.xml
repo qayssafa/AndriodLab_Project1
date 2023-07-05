@@ -17,7 +17,7 @@
         app:srcCompat="@drawable/searchcources" />
 
     <TextView
-        android:id="@+id/newlist"
+        android:id="@+id/newlistToSelect"
         android:layout_width="224dp"
         android:layout_height="44dp"
         android:background="@android:drawable/editbox_background"
@@ -55,7 +55,7 @@
             tools:layout_editor_absoluteY="329dp">
 
             <TableLayout
-                android:id="@+id/table"
+                android:id="@+id/tableToSearchCourses"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="10dp"

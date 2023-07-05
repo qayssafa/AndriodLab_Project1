@@ -146,7 +146,7 @@ public class AvailableCourseDataBaseHelper {
         return availableCourses;
     }
 
-    private String getInstructorName(String instructorEmail) {
+    public String getInstructorName(String instructorEmail) {
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         String query = "SELECT FIRSTNAME, LASTNAME FROM INSTRUCTOR WHERE email = ?";
         Cursor cursor = db.rawQuery(query, new String[]{instructorEmail});
@@ -163,6 +163,18 @@ public class AvailableCourseDataBaseHelper {
         }
         cursor.close();
         return instructorName;
+    }
+
+    public String getInstructorEmail(int regID) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        String query = "SELECT instructor_email FROM AvailableCourse WHERE registration_Number = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(regID)});
+        String email=null;
+        if (cursor.moveToFirst()) {
+             email = cursor.getString(0);
+        }
+        cursor.close();
+        return email;
     }
 
     public List<Map.Entry<String, String>> getAllCoursesForRegistration() {

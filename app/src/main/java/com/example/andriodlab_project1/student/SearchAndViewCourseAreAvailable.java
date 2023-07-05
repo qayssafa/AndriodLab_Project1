@@ -52,11 +52,14 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
     private String key;
 
     private CharSequence[] items;
-    private TextView courseNumber;
+    private TextView startDate;
     private TextView courseTitle;
-    private TextView courseMainTopic;
-    private TextView time;
+    private TextView schedule;
+    private TextView instructor;
+    private TextView venue;
+    private TextView endDate;
     private List<Triple<AvailableCourse, String, Integer>> availableCourses;
+    private         List<Triple<AvailableCourse, String, Integer>> courseSelectedAv;
 
     ActivityRegisterCourseBinding activityRegisterCourseBinding;
     @Override
@@ -72,7 +75,6 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
         continents =dbHelper.getAllCoursesAreAvailableForRegistration();
         CharSequence[] items = convertListToCharSequenceArray(continents);
         Button enroll = findViewById(R.id.ENrollButton);
-
         if (!continents.isEmpty()) {
         listOfCourses.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +100,8 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                                 entry = continents.get(selected);
                                 key = entry.getKey();
                                 course = courseDataBaseHelper.getCourseByID(Integer.parseInt(key));
+                               courseSelectedAv=dbHelper.getAvailableCourseByCourse_Id(Integer.parseInt(key));
+                               AvailableCourse availableCourse1=courseSelectedAv.get(0).getFirst();
                                 int rowCount = tableLayout.getChildCount();
                                 for (int i = rowCount - 1; i > 0; i--) {
                                     View childView = tableLayout.getChildAt(i);
@@ -109,16 +113,13 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                                 row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                                 TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
                                 layoutParams.setMargins(1, 1, 1, 1);
-                                courseNumber = new TextView(row.getContext());
+                                startDate = new TextView(row.getContext());
                                 courseTitle = new TextView(row.getContext());
-                                time = new TextView(row.getContext());
-                                courseMainTopic = new TextView(row.getContext());
+                                endDate = new TextView(row.getContext());
+                                schedule = new TextView(row.getContext());
+                                instructor = new TextView(row.getContext());
+                                venue = new TextView(row.getContext());
 
-                                courseNumber.setText(course.getCourseID() + "");
-                                courseNumber.setBackgroundColor(Color.WHITE);
-                                courseNumber.setLayoutParams(layoutParams);
-                                courseNumber.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(courseNumber);
 
                                 courseTitle.setText(course.getCourseTitle());
                                 courseTitle.setBackgroundColor(Color.WHITE);
@@ -126,17 +127,35 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                                 courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 row.addView(courseTitle);
 
-                                time.setText(entry.getValue());
-                                time.setBackgroundColor(Color.WHITE);
-                                time.setLayoutParams(layoutParams);
-                                time.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(time);
+                                startDate.setText(availableCourse1.getCourseStartDate());
+                                startDate.setBackgroundColor(Color.WHITE);
+                                startDate.setLayoutParams(layoutParams);
+                                startDate.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(startDate);
 
-                                courseMainTopic.setText(convertArrayListToString(course.getCourseMainTopics()));
-                                courseMainTopic.setBackgroundColor(Color.WHITE);
-                                courseMainTopic.setLayoutParams(layoutParams);
-                                courseMainTopic.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                                row.addView(courseMainTopic);
+                                endDate.setText(availableCourse1.getCourseEndDate());
+                                endDate.setBackgroundColor(Color.WHITE);
+                                endDate.setLayoutParams(layoutParams);
+                                endDate.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(endDate);
+
+                                schedule.setText(availableCourse1.getCourseSchedule());
+                                schedule.setBackgroundColor(Color.WHITE);
+                                schedule.setLayoutParams(layoutParams);
+                                schedule.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(schedule);
+
+                                instructor.setText(dbHelper.getInstructorName(dbHelper.getInstructorEmail(availableCourse1.getReg())));
+                                instructor.setBackgroundColor(Color.WHITE);
+                                instructor.setLayoutParams(layoutParams);
+                                instructor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(instructor);
+
+                                venue.setText(availableCourse1.getVenue());
+                                venue.setBackgroundColor(Color.WHITE);
+                                venue.setLayoutParams(layoutParams);
+                                venue.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                row.addView(venue);
 
                                 tableLayout.addView(row);
                             }
