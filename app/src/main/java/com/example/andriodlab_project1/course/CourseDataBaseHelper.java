@@ -4,8 +4,14 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.widget.Toast;
+
 import com.example.andriodlab_project1.common.DataBaseHelper;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,6 +20,10 @@ import java.util.Map;
 
 public class CourseDataBaseHelper {
     private static DataBaseHelper dbHelper;
+    private static int databaseVersion = 1;
+    private byte[] imageBytes;
+    private ByteArrayOutputStream objectByteArrayOutputStream;
+
     public CourseDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
         createTableIfNotExists();
@@ -23,7 +33,7 @@ public class CourseDataBaseHelper {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             // Create the table
             sqLiteDatabase.execSQL("CREATE TABLE COURSE(COURSE_ID INTEGER PRIMARY KEY AUTOINCREMENT, Course_Title TEXT, Course_Main_Topics TEXT, " +
-                    "Prerequisites TEXT NOT NULL,Photo Blob)");
+                    "Prerequisites TEXT NOT NULL,Photo BLOB)");
         }
     }
     public boolean isTableCreatedFirstTime(String tableName) {
@@ -64,6 +74,12 @@ public class CourseDataBaseHelper {
                 stringBuilderForPre.deleteCharAt(stringBuilderForPre.length() - 1); // Remove the last comma
             }
             contentValues.put("Prerequisites", stringBuilderForPre.toString());
+            Bitmap imageStore = course.getPhoto();
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imageStore.compress(Bitmap.CompressFormat.PNG,100,objectByteArrayOutputStream);
+            imageBytes = objectByteArrayOutputStream.toByteArray();
+            contentValues.put("Photo",imageBytes);
+
             //Photo
             sqLiteDatabase.insert("COURSE", null, contentValues);
             return true;
@@ -194,4 +210,86 @@ public class CourseDataBaseHelper {
             ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(splitArray));
             return arrayList;
     }
+
+    public Bitmap getImage(String course_title) {
+        Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT Photo FROM COURSE WHERE Course_Title = ?", new String[]{course_title});
+        Bitmap ret = null;
+        if (c.getCount() != 0) {
+            while (c.moveToNext()) {
+                byte[] conv = c.getBlob(0);
+                ret = BitmapFactory.decodeByteArray(conv, 0, conv.length);
+            }
+        }
+        return ret;
+    }
+
+
+
+    public Bitmap getCourseImage(String courseT) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = db.query("COURSE", new String[]{"Photo"}, "Course_Title=?", new String[]{courseT}, null, null, null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+        } else {
+            cursor.close();
+            throw new IllegalArgumentException("No record found with Course_Title = " + courseT);
+        }
+
+        int photoColumnIndex = cursor.getColumnIndex("Photo");
+        if (photoColumnIndex == -1) {
+            cursor.close();
+            throw new IllegalArgumentException("Column 'Photo' does not exist");
+        }
+
+        byte[] photo = cursor.getBlob(photoColumnIndex);
+        cursor.close();
+
+        if (photo != null) {
+            // Use BitmapFactory.Options to reduce the resolution if necessary
+            final BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeByteArray(photo, 0, photo.length, options);
+
+            // Calculate inSampleSize based on the target size
+            int targetWidth = 1024; // adjust these values based on your requirements
+            int targetHeight = 768;
+            options.inSampleSize = calculateInSampleSize(options, targetWidth, targetHeight);
+
+            // Decode bitmap with inSampleSize set
+            options.inJustDecodeBounds = false;
+            Bitmap bitmap = BitmapFactory.decodeByteArray(photo, 0, photo.length, options);
+
+            if (bitmap != null) {
+                return bitmap;
+            } else {
+                // Handle the case when decoding fails (e.g., return a placeholder image)
+                return null;
+            }
+        } else {
+            throw new IllegalArgumentException("No photo found for Course_Title = " + courseT);
+        }
+    }
+
+    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) >= reqHeight && (halfWidth / inSampleSize) >= reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
+    }
+
 }

@@ -1,5 +1,7 @@
 package com.example.andriodlab_project1.course;
 
+import android.graphics.Bitmap;
+
 import java.sql.Blob;
 import java.util.ArrayList;
 
@@ -8,9 +10,10 @@ public class Course {
     private String CourseTitle;
     private ArrayList<String> CourseMainTopics;
     private ArrayList<String> Prerequisites;
-    private byte[] photo;
+    //private byte[] photo;
+    private Bitmap photo;
 
-    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<String> prerequisites, byte[] photo) {
+    public Course(String courseTitle, ArrayList<String> courseMainTopics, ArrayList<String> prerequisites, Bitmap photo) {
         CourseTitle = courseTitle;
         CourseMainTopics = courseMainTopics;
         Prerequisites = prerequisites;
@@ -36,7 +39,7 @@ public class Course {
         return Prerequisites;
     }
 
-    public byte[] getPhoto() {
+    public Bitmap getPhoto() {
         return photo;
     }
 
@@ -56,7 +59,7 @@ public class Course {
         Prerequisites = prerequisites;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(Bitmap photo) {
         this.photo = photo;
     }
 }

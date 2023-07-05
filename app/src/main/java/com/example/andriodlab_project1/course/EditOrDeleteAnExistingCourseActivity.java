@@ -5,6 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +44,9 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
     CharSequence[] items;
     private Map.Entry<String, String> entry;
     private String value;
+
+    private byte[] photo;
+    private ImageView courseImageView;
     ActivityEditOrDeleteAnExistingCourseBinding activityEditOrDeleteAnExistingCourseBinding;
 
     @Override
@@ -55,10 +62,7 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
         courseTitle = findViewById(R.id.courseTitle);
         courseMainTobic = findViewById(R.id.courseMainTobic);
         preRequest = findViewById(R.id.preRequest);
-
-        ImageView backgroundImageView = findViewById(R.id.imageView3);
-        ImageView overlayImageView = findViewById(R.id.imageView4);
-
+        courseImageView = findViewById(R.id.imageView4);
         dbHelper = new CourseDataBaseHelper(this);
         continents = dbHelper.getAllCourses();
         if (!(continents.isEmpty())) {
@@ -91,6 +95,11 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
                                 courseTitle.setText(course.getCourseTitle());
                                 courseMainTobic.setText(convertArrayListToString(course.getCourseMainTopics()));
                                 preRequest.setText(convertArrayListToString(course.getPrerequisites()));
+                                Bitmap Photo1 = dbHelper.getImage(course.getCourseTitle());
+                                if(Photo1 != null) {
+                                    //courseImageView = findViewById(R.id.imageView4);
+                                    courseImageView.setImageBitmap(Photo1);
+                                }
                             }
                         }
                     });

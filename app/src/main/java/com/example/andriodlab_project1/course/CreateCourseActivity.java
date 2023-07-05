@@ -1,11 +1,15 @@
 package com.example.andriodlab_project1.course;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -21,6 +25,7 @@ import com.example.andriodlab_project1.databinding.ActivityCreateCourseBinding;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,8 +41,11 @@ public class CreateCourseActivity extends DrawerBaseActivity {
     private Map.Entry<String, String> entry;
     private String value;
 
+    private static final int PICK_IMAGE_REQUEST = 100;
+    private Uri imageFilePath;
+    private Bitmap imageToStore;
+
     byte[] blob;
-    Blob photo;
     ActivityCreateCourseBinding activityCreateCourseBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,14 +115,36 @@ public class CreateCourseActivity extends DrawerBaseActivity {
 
         //////////////////
 
-        Button buttonLoadImage = (Button) findViewById(R.id.InsertPhotoButton);
-        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
+        Button loadImage = findViewById(R.id.InsertPhotoButton);
+        loadImage.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View arg0) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, RESULT_LOAD_IMAGE);
+            public void onClick(View view){
+                chooseImage();
             }
         });
+
+//        Button buttonLoadImage = findViewById(R.id.InsertPhotoButton);
+//        ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+//            if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+//                Intent data = result.getData();
+//                Uri selectedImage = data.getData();
+//                String picturePath = getRealPathFromUri(selectedImage);
+//                if (picturePath != null) {
+//                    try {
+//                        File file = new File(picturePath);
+//                        int fileLength = (int) file.length();
+//                        blob = new byte[fileLength];
+//                        FileInputStream fileInputStream = new FileInputStream(file);
+//                        fileInputStream.read(blob);
+//                        fileInputStream.close();
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//        });
+
+
 
         Button SubmitDataButton = findViewById(R.id.Update);
         SubmitDataButton.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +152,7 @@ public class CreateCourseActivity extends DrawerBaseActivity {
             public void onClick(View v) {
                 String courseName=CourseTitleInput.getText().toString();
                 ArrayList<String> courseTopics=convertStringToList(CourseMainTopicsInput.getText().toString());
-                Course course=new Course(courseName,courseTopics,continentsList,blob);
+                Course course=new Course(courseName,courseTopics,continentsList,imageToStore);
                 if (CourseTitleInput.getText().toString().isEmpty()||CourseTitleInput.getText().toString().isBlank()){
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 }
@@ -142,35 +172,33 @@ public class CreateCourseActivity extends DrawerBaseActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
-            Uri selectedImage = data.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
-
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
-
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String picturePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            // Convert to Blob
-            try {
-                File file = new File(picturePath);
-                blob = new byte[(int) file.length()];
-
-                FileInputStream fileInputStream = new FileInputStream(file);
-                fileInputStream.read(blob);
-                fileInputStream.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public void chooseImage(){
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        }
+        catch (Exception e){
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null){
+                imageFilePath = data.getData();
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(),imageFilePath);
+
+            }
+        }
+        catch (Exception e){
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public static CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
         CharSequence[] array = new CharSequence[list.size()];
         int i = 0;
