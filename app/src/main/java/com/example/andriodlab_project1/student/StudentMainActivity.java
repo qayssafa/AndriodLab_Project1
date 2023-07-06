@@ -99,13 +99,14 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
                         notificationId++;
                         markMessageAsSent(message);
                     }
-                    }
                 }
+            }
+        }
             List<Notification> notifications=notificationDataBaseHelper.getNotificationsForStudent(MainActivity.studentEmail);
             for (Notification notification : notifications) {
                 sendGeneralNotification(notification.getMessage());
             }
-            }
+
         }
 
     private void sendCourseStartNotification(String message, int notificationId) {

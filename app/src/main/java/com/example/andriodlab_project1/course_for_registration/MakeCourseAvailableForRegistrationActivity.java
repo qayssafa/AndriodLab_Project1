@@ -21,6 +21,7 @@ import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
 import com.example.andriodlab_project1.databinding.ActivityMakeCourseAvailabeForRegistrationBinding;
+import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
@@ -39,6 +40,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
     private AvailableCourseDataBaseHelper dbHelper;
     private CourseDataBaseHelper courseDataBaseHelper;
     private NotificationDataBaseHelper notificationDataBaseHelper;
+    private Instructor instructor;
     private StudentDataBaseHelper studentDataBaseHelper;
     private InstructorDataBaseHelper instructorDataBaseHelper;
     private List<Triple<AvailableCourse, String, Integer>> availableCourses;
@@ -49,6 +51,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
     private String value;
     private CharSequence[] items;
     private boolean check;
+    private boolean checkInstructor;
 
     ActivityMakeCourseAvailabeForRegistrationBinding activityMakeCourseAvailabeForRegistrationBinding;
     @Override
@@ -62,6 +65,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         EditText InstructorName = (EditText) findViewById(R.id.InstructorNameEditText);
         TextView numberOfCourse = (TextView) findViewById(R.id.CourseNumberTextView);
         check=false;
+        checkInstructor=false;
         TextView listOfCourses = findViewById(R.id.listOfCourses);
         submit = findViewById(R.id.submit);
         //start date edit text
@@ -75,6 +79,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
         continents = courseDataBaseHelper.getAllCourses();
+        instructor=new Instructor();
 
 
         if (!continents.isEmpty()){
@@ -212,6 +217,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             @Override
             public void onClick(View v) {
                 check=false;
+                checkInstructor=false;
                 String venue=Venue.getText().toString();
                 String courseSchedule=CourseSchedule.getText().toString();
                 String instructorName=InstructorName.getText().toString();
@@ -253,36 +259,55 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 else if (venue.isEmpty()||venue.isBlank()){
                     Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Venue not Valid!", Toast.LENGTH_SHORT).show();
                 } else{
-                    allCourses = dbHelper.getAllCoursesAreCurrentTaughtByInstructor(email);
-                    for (Integer courseId : allCourses) {
-                        availableCourses = dbHelper.getAvailableCourseByCourse_Id(courseId);
-                        for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
-                            AvailableCourse availableCourse = lCourseInfo.getFirst();
-                            if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(),courseSchedule)) {
-                                Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course "+courseDataBaseHelper.getCourseName(availableCourse.getCourseId())+" Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
-                                check=true;
+                    if (email!=null){
+                        instructor=instructorDataBaseHelper.getInstructorByEmail(email);
+                        List<String> coursesTaughtByInstructor=instructor.getCoursesTaught();
+                        for (String course:coursesTaughtByInstructor) {
+                            if (Integer.parseInt(course)==Integer.parseInt(value)){
+                                checkInstructor=true;
                                 break;
                             }
                         }
-                        if (check)
-                            break;
+                        if (checkInstructor){
+                            allCourses = dbHelper.getAllCoursesAreCurrentTaughtByInstructor(email);
+                            for (Integer courseId : allCourses) {
+                                availableCourses = dbHelper.getAvailableCourseByCourse_Id(courseId);
+                                for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
+                                    AvailableCourse availableCourse = lCourseInfo.getFirst();
+                                    if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(),courseSchedule)) {
+                                        Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course "+courseDataBaseHelper.getCourseName(availableCourse.getCourseId())+" Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
+                                        check=true;
+                                        break;
+                                    }
+                                }
+                                if (check)
+                                    break;
+                            }
+                            AvailableCourse availableCourse=new AvailableCourse(Integer.parseInt(value),lDeadLine,lEditStartDate,courseSchedule,venue,lEditEndDate);
+                            if ( !check) {
+                                if (dbHelper.insertAvailableCourse(availableCourse, email, 0)) {
+                                    List<String> students = studentDataBaseHelper.getAllStudents();
+                                    for (String student : students) {
+                                        String message = "A New Course '" + courseDataBaseHelper.getCourseName(Integer.parseInt(value)) + "' has been Created.";
+                                        notificationDataBaseHelper.insertNotification(student, message);
+                                    }
+                                    Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration successfully.", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration Failed.", Toast.LENGTH_SHORT).show();
+                                }
+                            }else {
+                                Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration Failed.", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Instructor"+instructor.getFirstName()+instructor.getLastName()+" Not Taught This Course.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration Failed.", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }else {
+                        Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration Failed.", Toast.LENGTH_SHORT).show();
+
                     }
-                    AvailableCourse availableCourse=new AvailableCourse(Integer.parseInt(value),lDeadLine,lEditStartDate,courseSchedule,venue,lEditEndDate);
-                   if (email!=null&& !check) {
-                       if (dbHelper.insertAvailableCourse(availableCourse, email, 0)) {
-                           List<String> students = studentDataBaseHelper.getAllStudents();
-                           for (String student : students) {
-                               String message = "A New Course '" + courseDataBaseHelper.getCourseName(Integer.parseInt(value)) + "' has been Created.";
-                               notificationDataBaseHelper.insertNotification(student, message);
-                           }
-                           Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration successfully.", Toast.LENGTH_SHORT).show();
-                       } else {
-                           Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration Failed.", Toast.LENGTH_SHORT).show();
-                       }
-                   }else {
-                       Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course its Registration Failed.", Toast.LENGTH_SHORT).show();
-                   }
-                }
+                    }
             }
         });
     }

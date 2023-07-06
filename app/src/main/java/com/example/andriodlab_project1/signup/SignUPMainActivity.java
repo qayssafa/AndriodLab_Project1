@@ -1,11 +1,8 @@
 package com.example.andriodlab_project1.signup;
 
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -241,23 +238,19 @@ public class SignUPMainActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public String checkDegree(boolean bsc, boolean msc, boolean phd) {
-        StringBuilder result = new StringBuilder();
-        if (bsc && msc && phd) {
-            result.append("bsc And msc And phd.");
-        } else {
-            if (bsc == msc) {
-                result.append("bsc And msc.");
-            }
-            if (bsc == phd) {
-                result.append("bsc and phd.");
-            }
-            if (msc == phd) {
-                result.append("msc and phd.");
-            }
+    public String checkDegree(boolean hasBsc, boolean hasMsc, boolean hasPhd) {
+        if (hasPhd) {
+            return "Has Ph.D.";
         }
-        return result.toString();
+        if (hasMsc) {
+            return "Has M.Sc.";
+        }
+        if (hasBsc) {
+            return "Has B.Sc.";
+        }
+        return "No degree found.";
     }
+
     public List<String> convertStringToList(String input) {
         ArrayList<String>listOfCourses=new ArrayList<>();
         if (input.isEmpty() || input.isBlank()) {
@@ -267,10 +260,14 @@ public class SignUPMainActivity extends AppCompatActivity {
         else {
             String[] splitArray = input.split(","); // Split the string by space
             for (String s:splitArray) {
-                if (dbHelperCourse.isCourseExists(Integer.parseInt(s))){
-                    listOfCourses.add(dbHelperCourse.getCourseName(Integer.parseInt(s)));
-                } else {
-                    Toast.makeText(SignUPMainActivity.this, "This Course : "+s+" Not Found", Toast.LENGTH_SHORT).show();
+                if (s.matches("^-?\\d+$")){
+                    if (dbHelperCourse.isCourseExists(Integer.parseInt(s))){
+                        listOfCourses.add(dbHelperCourse.getCourseName(Integer.parseInt(s)));
+                    } else {
+                        Toast.makeText(SignUPMainActivity.this, "This Course : "+s+" Not Found", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(SignUPMainActivity.this, "This Course : "+s+" Not Valid", Toast.LENGTH_SHORT).show();
                 }
             }
             return listOfCourses; // Convert array to list

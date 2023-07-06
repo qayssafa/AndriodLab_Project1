@@ -25,6 +25,8 @@ import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 import com.example.andriodlab_project1.student.StudentMainActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -71,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         instructor.setLastName("AAA");
         instructor.setFirstName("AAA");
         instructor.setEmail("I");
+        List<String>courses=new ArrayList<>();
+        courses.add("1");
+        courses.add("2");
+        courses.add("3");
+        instructor.setCoursesTaught(courses);
         instructorDataBaseHelper.insertInstructor(instructor);
 
         // buttons and text views

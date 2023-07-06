@@ -9,6 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.example.andriodlab_project1.common.DataBaseHelper;
+import com.example.andriodlab_project1.signup.SignUPMainActivity;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class InstructorDataBaseHelper {
     private DataBaseHelper dbHelper;
@@ -20,7 +25,7 @@ public class InstructorDataBaseHelper {
         if (isTableCreatedFirstTime("INSTRUCTOR")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             sqLiteDatabase.execSQL("CREATE TABLE INSTRUCTOR(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL," +
-                    "MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL)");
+                    "MOBILE_NUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL,COURSES_TAUGHT TEXT NOT NULL)");
         }
     }
     public boolean isTableCreatedFirstTime(String tableName) {
@@ -49,10 +54,11 @@ public class InstructorDataBaseHelper {
             contentValues.put("FIRSTNAME", instructor.getFirstName());
             contentValues.put("LASTNAME", instructor.getLastName());
             contentValues.put("PASSWORD", instructor.getPassword());
-            contentValues.put("MOBILENUMBER", instructor.getMobileNumber());
+            contentValues.put("MOBILE_NUMBER", instructor.getMobileNumber());
             contentValues.put("ADDRESS", instructor.getAddress());
             contentValues.put("SPECIALIZATION", instructor.getSpecialization());
             contentValues.put("DEGREE", instructor.getDegree());
+            contentValues.put("COURSES_TAUGHT", convertListToString(instructor.getCoursesTaught()));
             sqLiteDatabase.insert("INSTRUCTOR", null, contentValues);
             return true;
         }
@@ -74,6 +80,7 @@ public class InstructorDataBaseHelper {
             instructor.setAddress(cursor.getString(5));
             instructor.setSpecialization(cursor.getString(6));
             instructor.setDegree(cursor.getString(7));
+            instructor.setCoursesTaught(splitStringToList(cursor.getString(8)));
         }
         return instructor;
     }
@@ -102,5 +109,20 @@ public class InstructorDataBaseHelper {
         return email;
     }
 
+    public String convertListToString(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String element : list) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1); // Remove the last comma
+        }
+        return sb.toString();
+    }
+
+    public List<String> splitStringToList(String input) {
+        String[] splitArray = input.split(",");
+        return Arrays.asList(splitArray);
+    }
 
 }
