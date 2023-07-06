@@ -24,6 +24,12 @@
     <string name="Admin">Admin</string>
     <string name="Student">Student</string>
     <string name="profile">Profile</string>
+    <string name="Search_courses">Search courses</string>
+    <string name="Course_registration_alert">Course registration alert</string>
+    <string name="Registration_decision_alert">Registration decision alert</string>
+    <string name="Completed_courses_overview">Completed courses overview</string>
+    <string name="Full_course_history">Full course history</string>
+    <string name="Course_enrollment_updates">Course enrollment updates</string>
     <string name="menu_drawer_open">Drawer Open</string>
     <string name="menu_drawer_close">Drawer Close</string>
 </resources>

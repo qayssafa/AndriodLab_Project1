@@ -13,6 +13,9 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
+import com.example.andriodlab_project1.student.SearchCoursesActivity;
+import com.example.andriodlab_project1.student.StudentMainActivity;
+import com.example.andriodlab_project1.student.ViewEditProfile;
 import com.google.android.material.navigation.NavigationView;
 
 public class StudentDrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,7 +47,15 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            startActivity(new Intent(StudentDrawerBaseActivity.this, SearchAndViewCourseAreAvailableActivity.class));
+            startActivity(new Intent(StudentDrawerBaseActivity.this, StudentMainActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.Search_courses) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, SearchCoursesActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.profile) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, ViewEditProfile.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.logout) {

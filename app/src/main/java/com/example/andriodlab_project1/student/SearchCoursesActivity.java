@@ -13,13 +13,15 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.StudentDrawerBaseActivity;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivitySearchCoursesBinding;
 
 import java.util.List;
 import java.util.Map;
-public class SearchCoursesActivity extends AppCompatActivity {
+public class SearchCoursesActivity extends StudentDrawerBaseActivity {
     private  Course course;
     private TableLayout tableLayout;
 
@@ -35,11 +37,15 @@ public class SearchCoursesActivity extends AppCompatActivity {
 
     private TextView mainTopics;
 
+    ActivitySearchCoursesBinding activitySearchCoursesBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_courses);
+        activitySearchCoursesBinding = ActivitySearchCoursesBinding.inflate(getLayoutInflater());
+        setContentView(activitySearchCoursesBinding.getRoot());
+//        setContentView(R.layout.activity_search_courses);
         TextView newlistToSelect = findViewById(R.id.newlistToSelect);
         dbHelper=new AvailableCourseDataBaseHelper(this);
         courseDataBaseHelper=new CourseDataBaseHelper(this);
