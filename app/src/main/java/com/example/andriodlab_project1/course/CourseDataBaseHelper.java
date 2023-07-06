@@ -139,7 +139,7 @@ public class CourseDataBaseHelper {
         return isCourseExists;
     }
 
-    public static String getCourseName(int courseId){
+    public String getCourseName(int courseId){
         SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT c.Course_Title FROM COURSE c WHERE COURSE_ID = ?", new String[]{String.valueOf(courseId)});
         if (cursor.moveToFirst()) {

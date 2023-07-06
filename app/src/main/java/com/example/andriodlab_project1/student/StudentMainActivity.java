@@ -43,6 +43,7 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
     private Button messages;
     private static final int PERMISSION_REQUEST_CODE = 1;
     private AvailableCourseDataBaseHelper dbHelper;
+    private CourseDataBaseHelper dataBaseHelper;
     private List<Triple<AvailableCourse, String, Integer>> availableCourse;
     private TextView StudntName;
     int notificationId = 0;
@@ -60,7 +61,7 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
         enroll = findViewById(R.id.enrollButtonAndSee);
         messages = findViewById(R.id.messages);
         notificationDataBaseHelper=new NotificationDataBaseHelper(this);
-        CourseDataBaseHelper dataBaseHelper = new CourseDataBaseHelper(this);
+        dataBaseHelper = new CourseDataBaseHelper(this);
         StudntName = (TextView) findViewById(R.id.StudentName);
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         dbHelper = new AvailableCourseDataBaseHelper(this);
@@ -72,7 +73,7 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
         enroll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentMainActivity.this, SearchAndViewCourseAreAvailable.class);
+                Intent intent = new Intent(StudentMainActivity.this, SearchAndViewCourseAreAvailableActivity.class);
                 startActivity(intent);
             }
         });
@@ -91,7 +92,7 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
             List<Triple<AvailableCourse, String, Integer>> availableCourses = dbHelper.getAvailableCourseByCourse_Id(courseId);
             for (Triple<AvailableCourse, String, Integer> availableCourse : availableCourses) {
                 AvailableCourse course = availableCourse.getFirst();
-                String message = "Your Course " + CourseDataBaseHelper.getCourseName(course.getCourseId()) + " Starts Tomorrow!";
+                String message = "Your Course " + dataBaseHelper.getCourseName(course.getCourseId()) + " Starts Tomorrow!";
                 if (!isMessageSent(message)) {
                     if (shouldSendNotification(course.getCourseStartDate())) {
                         sendCourseStartNotification(message, notificationId);

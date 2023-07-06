@@ -55,7 +55,7 @@
             android:name=".instructor.InstructorMainActivity"
             android:exported="false" />
         <activity
-            android:name=".student.SearchAndViewCourseAreAvailable"
+            android:name=".student.SearchAndViewCourseAreAvailableActivity"
             android:exported="false" />
         <activity
             android:name=".student.messages"
@@ -67,6 +67,17 @@
             android:name=".admin.ApplicantDecide"
             android:exported="false" />
 
+        <activity
+            android:name=".instructor.CoursesPreviouslyTaughtActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".instructor.CurrentScheduleActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".instructor.ViewStudentsActivity"
+            android:exported="false" />
 
         <activity
             android:name=".MainActivity"

@@ -190,8 +190,8 @@ public class ApplicantDecide extends DrawerBaseActivity {
                         for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
                             AvailableCourse availableCourse = courseInfo.getFirst();
                             dbHelper.updateNumberOfStudent(availableCourse.getReg());
-                            String message = "Your Course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Starts Tomorrow!";
-                            String message1 = "Your Request to Registered this course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " its Accepted!!";
+                            String message = "Your Course " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Starts Tomorrow!";
+                            String message1 = "Your Request to Registered this course " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " its Accepted!!";
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message);
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message1);
                             Toast.makeText(ApplicantDecide.this, "This Course its Enrolled Successfully.", Toast.LENGTH_SHORT).show();
@@ -201,7 +201,7 @@ public class ApplicantDecide extends DrawerBaseActivity {
                     if (applicantDataBaseHelper.updateApplicantStatus(key, "NO")) {
                         for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
                             AvailableCourse availableCourse = courseInfo.getFirst();
-                            String message1 = "Your Request to Registered this course " + CourseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " its Rejected!!";
+                            String message1 = "Your Request to Registered this course " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " its Rejected!!";
                             notificationDataBaseHelper.insertNotification(applicant1.getEmail(), message1);
                             applicantDataBaseHelper.updateApplicantStatus(key, "NO");
                         }

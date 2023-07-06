@@ -8,13 +8,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.example.andriodlab_project1.admin.AdminMainActivity;
-import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailable;
+import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.google.android.material.navigation.NavigationView;
 
 public class StudentDrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,7 +44,7 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            startActivity(new Intent(StudentDrawerBaseActivity.this, SearchAndViewCourseAreAvailable.class));
+            startActivity(new Intent(StudentDrawerBaseActivity.this, SearchAndViewCourseAreAvailableActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.logout) {

@@ -1,21 +1,13 @@
 package com.example.andriodlab_project1.admin;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.common.User;
-import com.example.andriodlab_project1.course.CreateCourseActivity;
 
 import com.example.andriodlab_project1.R;
-import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
-import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
-import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.databinding.ActivityAdminMainBinding;
 
@@ -40,7 +32,7 @@ public class AdminMainActivity extends DrawerBaseActivity {
         setContentView(activityAdminMainBinding.getRoot());
         AdminName = (TextView)findViewById(R.id.AdminName);
         adminDataBaseHelper = new AdminDataBaseHelper(this);
-        AdminName.setText(adminDataBaseHelper.getAdminByEmail(MainActivity.AdminEmail).getFirstName()+" "+adminDataBaseHelper.getAdminByEmail(MainActivity.AdminEmail).getLastName());
+        AdminName.setText(adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getFirstName()+" "+adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getLastName());
         /*CreateCourseButton = (Button)findViewById(R.id.CreateCourseButton);
         courseForRegestration = (Button)findViewById(R.id.courseForRegestration);
         editOrRemoveCourse = (Button)findViewById(R.id.editOrRemoveCourse);

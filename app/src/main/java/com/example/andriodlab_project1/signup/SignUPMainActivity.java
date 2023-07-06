@@ -268,7 +268,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             String[] splitArray = input.split(","); // Split the string by space
             for (String s:splitArray) {
                 if (dbHelperCourse.isCourseExists(Integer.parseInt(s))){
-                    listOfCourses.add(CourseDataBaseHelper.getCourseName(Integer.parseInt(s)));
+                    listOfCourses.add(dbHelperCourse.getCourseName(Integer.parseInt(s)));
                 } else {
                     Toast.makeText(SignUPMainActivity.this, "This Course : "+s+" Not Found", Toast.LENGTH_SHORT).show();
                 }

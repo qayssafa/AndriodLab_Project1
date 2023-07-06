@@ -1,7 +1,5 @@
 package com.example.andriodlab_project1.student;
 
-import static com.example.andriodlab_project1.course.CreateCourseActivity.convertListToCharSequenceArray;
-
 import android.content.DialogInterface;
 
 import android.graphics.Color;
@@ -14,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
@@ -25,12 +22,7 @@ import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
-import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.databinding.ActivityRegisterCourseBinding;
-import com.example.andriodlab_project1.databinding.ActivityStudentMainBinding;
-import com.example.andriodlab_project1.enrollment.Enrollment;
-import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
-import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +30,7 @@ import java.util.Map;
 
 import kotlin.Triple;
 
-public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
+public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseActivity {
 
     private  Course course;
     private TableLayout tableLayout;
@@ -79,7 +71,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
         listOfCourses.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SearchAndViewCourseAreAvailable.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(SearchAndViewCourseAreAvailableActivity.this);
                 builder.setTitle("Courses Are Available For Registration :");
                 builder.setCancelable(false);
                 tableLayout = findViewById(R.id.student_message_table);
@@ -95,7 +87,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             if (selected < 0) {
-                                Toast.makeText(SearchAndViewCourseAreAvailable.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SearchAndViewCourseAreAvailableActivity.this, "This Course not Valid!", Toast.LENGTH_SHORT).show();
                             } else {
                                 entry = continents.get(selected);
                                 key = entry.getKey();
@@ -145,7 +137,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                                 schedule.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 row.addView(schedule);
 
-                                instructor.setText(courseSelectedAv.get(1).toString());
+                                instructor.setText(courseSelectedAv.get(0).getSecond());
                                 instructor.setBackgroundColor(Color.WHITE);
                                 instructor.setLayoutParams(layoutParams);
                                 instructor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -173,7 +165,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
         });
         }
         else {
-            Toast.makeText(SearchAndViewCourseAreAvailable.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(SearchAndViewCourseAreAvailableActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
 
         }
         enroll.setOnClickListener(new View.OnClickListener(){
@@ -191,7 +183,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                     AvailableCourse availableCourse = availableCourses.get(0).getFirst();
                     AvailableCourse courseAreRegisteredByStudent;
                     selectedCourseSchedule=availableCourse.getCourseSchedule();
-                    selectedCourseScheduleName=CourseDataBaseHelper.getCourseName(availableCourse.getCourseId());
+                    selectedCourseScheduleName=courseDataBaseHelper.getCourseName(availableCourse.getCourseId());
                     List<Map.Entry<Integer, String>> getCoursesAreRegisteredByStudent=dbHelper.getCoursesAreRegisteredByStudent(MainActivity.studentEmail);
                     List<Triple<AvailableCourse, String, Integer>> availableCoursesAreRegisteredByStudent;
                     for (Map.Entry<Integer, String> entry : getCoursesAreRegisteredByStudent) {
@@ -201,7 +193,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                             registeredCourseSchedule=courseAreRegisteredByStudent.getCourseSchedule();
                             if (isTimeConflict(selectedCourseSchedule,registeredCourseSchedule)){
                                 check=true;
-                                registeredCourseScheduleName=CourseDataBaseHelper.getCourseName(courseAreRegisteredByStudent.getCourseId());
+                                registeredCourseScheduleName=courseDataBaseHelper.getCourseName(courseAreRegisteredByStudent.getCourseId());
                                 break;
                             }
                         }
@@ -211,14 +203,14 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                     if (arePrerequisitesMet(prerequisites,getCoursesTakenByStudent)){
                         Applicant applicant=new Applicant(course.getCourseID(),MainActivity.studentEmail," ");
                         applicantDataBaseHelper.insertApplicant(applicant);
-                        Toast.makeText(SearchAndViewCourseAreAvailable.this,"Wait Until Admin Accept Your Request.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Wait Until Admin Accept Your Request.", Toast.LENGTH_SHORT).show();
                         //no conflict in time
                     }else {
-                        Toast.makeText(SearchAndViewCourseAreAvailable.this,"Cannot Registered this course "+ CourseDataBaseHelper.getCourseName(course.getCourseID())
-                                +"\n because your not completed Prerequisites Courses for this course "+CourseDataBaseHelper.getCourseName(course.getCourseID())+".", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Cannot Registered this course "+ courseDataBaseHelper.getCourseName(course.getCourseID())
+                                +"\n because your not completed Prerequisites Courses for this course "+courseDataBaseHelper.getCourseName(course.getCourseID())+".", Toast.LENGTH_SHORT).show();
                     }
                 }else {
-                    Toast.makeText(SearchAndViewCourseAreAvailable.this,"Cannot Registered this course "+ selectedCourseScheduleName +"\n because its Conflict in time with your course "+registeredCourseScheduleName+".", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SearchAndViewCourseAreAvailableActivity.this,"Cannot Registered this course "+ selectedCourseScheduleName +"\n because its Conflict in time with your course "+registeredCourseScheduleName+".", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -230,7 +222,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
         CharSequence[] array = new CharSequence[list.size()];
         int i = 0;
         for (Map.Entry<String, String> entry : list) {
-            array[i++] = CourseDataBaseHelper.getCourseName(Integer.parseInt(entry.getKey()));
+            array[i++] = courseDataBaseHelper.getCourseName(Integer.parseInt(entry.getKey()));
         }
         return array;
     }
@@ -257,7 +249,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
         }
         return true;
     }
-    private boolean isTimeConflict(String time1, String time2) {
+    public boolean isTimeConflict(String time1, String time2) {
         // Extract information from time1
         String[] parts1 = time1.split(" ");
         String[] dayParts1 = parts1[0].split(",");
@@ -285,7 +277,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
             for (String day2 : dayArray2) {
                 if (day1.equals(day2)) {
                     // Days match, check for time conflict
-                    if (isTimeConflict(startTime1, endTime1, startTime2, endTime2)) {
+                    if (checkIsTimeConflict(startTime1, endTime1, startTime2, endTime2)) {
                         // There is a conflict, both day and time overlap
                         return true;
                     }
@@ -297,22 +289,26 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
         return false;
     }
 
-    private boolean isTimeConflict(String startTime1, String endTime1, String startTime2, String endTime2) {
+    public boolean checkIsTimeConflict(String startTime1, String endTime1, String startTime2, String endTime2) {
         int startMinutes1 = convertToMinutes(startTime1);
         int endMinutes1 = convertToMinutes(endTime1);
         int startMinutes2 = convertToMinutes(startTime2);
         int endMinutes2 = convertToMinutes(endTime2);
 
         // Check for time conflict
-        if (startMinutes1 <= endMinutes2 && startMinutes2 <= endMinutes1) {
-            return true;
+        if ((startMinutes1 <= startMinutes2 && startMinutes2 <= endMinutes1) || // Case 1
+                (startMinutes1 <= endMinutes2 && endMinutes2 <= endMinutes1) ||     // Case 2
+                (startMinutes2 <= startMinutes1 && startMinutes1 <= endMinutes2) || // Case 3
+                (startMinutes2 <= endMinutes1 && endMinutes1 <= endMinutes2)) {     // Case 4
+            return true; // There is a time conflict
         }
 
-        // No time conflict
-        return false;
+
+        return false; // No time conflict
     }
 
-    private int convertToMinutes(String time) {
+
+    public int convertToMinutes(String time) {
         String[] parts = time.split(":");
         int hours;
         int minutes;

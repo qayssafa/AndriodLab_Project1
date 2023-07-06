@@ -174,7 +174,7 @@ public class AvailableCourseDataBaseHelper {
             if (cursor.moveToFirst()) {
                 do {
                     if (CourseDataBaseHelper.isCourseExists(Integer.parseInt(cursor.getString(0)))) {
-                        courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), CourseDataBaseHelper.getCourseName(cursor.getInt(0))));
+                        courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), courseDataBaseHelper.getCourseName(cursor.getInt(0))));
                     }
                 } while (cursor.moveToNext());
             }
@@ -233,7 +233,7 @@ public class AvailableCourseDataBaseHelper {
                     "FROM COURSE c " +
                     "INNER JOIN AvailableCourse ac ON c.COURSE_ID = ac.COURSE_ID " +
                     "INNER JOIN enrollments e ON e.COURSE_ID = ac.COURSE_ID " +
-                    "WHERE e.EMAIL = ? AND ac.course_end_date <= ?";
+                    "WHERE e.EMAIL = ? AND ac.course_end_date < ?";
 
             // Execute the query
             Cursor cursor = db.rawQuery(query, new String[]{email, currentTimeString});
@@ -286,30 +286,67 @@ public class AvailableCourseDataBaseHelper {
         }
         return coursesTaken;
     }
-    public List<Map.Entry<String, String>> getAllCoursesAreFinished() {
-        List<Map.Entry<String, String>> courses = new ArrayList<>();
-        long currentTime = new Date().getTime();
+    public List<Integer> getAllCoursesForRegistrationAreTaughtByInstructor(String email) {
+        List<Integer> courses = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String currentTimeString = dateFormat.format(new Date(currentTime));
-        Cursor cursor=null;
+        Cursor cursor = null;
         try {
-            cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse WHERE datetime(courseEndDate) < datetime('" + currentTimeString + "')", null);
+            String query = "SELECT AvailableCourse.COURSE_ID " +
+                    "FROM AvailableCourse " +
+                    "JOIN INSTRUCTOR ON AvailableCourse.instructor_email = INSTRUCTOR.EMAIL " +
+                    "WHERE INSTRUCTOR.EMAIL = ?";
+            String[] selectionArgs = { email };
+            cursor = db.rawQuery(query, selectionArgs);
+
             if (cursor.moveToFirst()) {
                 do {
-                    courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),CourseDataBaseHelper.getCourseName(cursor.getInt(0))));
+                    if (CourseDataBaseHelper.isCourseExists(Integer.parseInt(cursor.getString(0)))) {
+                        courses.add(cursor.getInt(0));
+                    }
                 } while (cursor.moveToNext());
             }
-            cursor.close();
-            db.close();
-            return courses;
-        }finally {
+        } finally {
             if (cursor != null) {
                 cursor.close();
             }
             db.close();
         }
+        return courses;
     }
+
+    public List<Integer> getAllCoursesAreCurrentTaughtByInstructor(String email) {
+        List<Integer> courses = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor = null;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        long currentTime = new Date().getTime();
+        String currentTimeString = dateFormat.format(new Date(currentTime));
+        try {
+            String query = "SELECT ac.COURSE_ID " +
+                    "FROM AvailableCourse ac " +
+                    "JOIN INSTRUCTOR ON ac.instructor_email = INSTRUCTOR.EMAIL " +
+                    "WHERE INSTRUCTOR.EMAIL = ? AND ac.course_end_date >= ?";
+
+            String[] selectionArgs = { email,currentTimeString };
+            cursor = db.rawQuery(query, selectionArgs);
+
+            if (cursor.moveToFirst()) {
+                do {
+                    if (CourseDataBaseHelper.isCourseExists(cursor.getInt(0))) {
+                        courses.add(cursor.getInt(0));
+                    }
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+        return courses;
+    }
+
+
 }
 
 

@@ -1,6 +1,6 @@
-package com.example.andriodlab_project1.student;
+package com.example.andriodlab_project1.instructor;
 
-import static com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity.convertArrayListToString;
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,8 +9,7 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
@@ -18,12 +17,11 @@ import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
 
 import java.util.List;
-import java.util.Map;
 
 import kotlin.Triple;
 
-public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
-    private List<Map.Entry<String, String>> allCourses;
+public class CoursesPreviouslyTaughtActivity extends AppCompatActivity {
+    private List<Integer> allCourses;
     private TableLayout tableLayout;
 
     private AvailableCourseDataBaseHelper availableCourseDataBaseHelper;
@@ -33,33 +31,26 @@ public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_courses);
+        setContentView(R.layout.activity_cources_previously_taught);
+
         TextView courseNumber;
         TextView courseTitle;
-        TextView courseMainTopics;
-        TextView preRequest;
         TextView startTime;
-        TextView instructorName;
-        tableLayout=findViewById(R.id.tableToSearchCourses);
+        tableLayout = findViewById(R.id.tablePreviosly);
         availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
         dbHelper = new CourseDataBaseHelper(this);
-        allCourses = availableCourseDataBaseHelper.getAllCoursesForRegistration();
-        for (Map.Entry<String, String> courseInfo : allCourses) {
-            int courseId = Integer.parseInt(courseInfo.getKey());
+        allCourses = availableCourseDataBaseHelper.getAllCoursesForRegistrationAreTaughtByInstructor(MainActivity.instructorEmail);
+        for (Integer courseId : allCourses) {
             availableCourses = availableCourseDataBaseHelper.getAvailableCourseByCourse_Id(courseId);
             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                 AvailableCourse availableCourse = lCourseInfo.getFirst();
-                String lInstructorName = lCourseInfo.getSecond();
                 TableRow row = new TableRow(tableLayout.getContext());
                 row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
                 TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT, TableRow.LayoutParams.WRAP_CONTENT);
                 layoutParams.setMargins(1, 1, 1, 1);
                 courseNumber = new TextView(row.getContext());
                 courseTitle = new TextView(row.getContext());
-                courseMainTopics = new TextView(row.getContext());
-                preRequest = new TextView(row.getContext());
                 startTime = new TextView(row.getContext());
-                instructorName = new TextView(row.getContext());
 
                 courseNumber.setText(String.valueOf(availableCourse.getCourseId()));
                 courseNumber.setBackgroundColor(Color.WHITE);
@@ -74,19 +65,6 @@ public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
                 courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(courseTitle);
 
-                courseMainTopics.setText(convertArrayListToString(course.getCourseMainTopics()));
-                courseMainTopics.setBackgroundColor(Color.WHITE);
-                courseMainTopics.setLayoutParams(layoutParams);
-                courseMainTopics.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                row.addView(courseMainTopics);
-
-                preRequest.setText(convertArrayListToString(course.getPrerequisites()));
-                preRequest.setBackgroundColor(Color.WHITE);
-                preRequest.setLayoutParams(layoutParams);
-                preRequest.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                ;
-                row.addView(preRequest);
-
 
                 startTime.setText(availableCourse.getCourseStartDate());
                 startTime.setBackgroundColor(Color.WHITE);
@@ -94,14 +72,8 @@ public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
                 startTime.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(startTime);
 
-                instructorName.setText(lInstructorName);
-                instructorName.setBackgroundColor(Color.WHITE);
-                instructorName.setLayoutParams(layoutParams);
-                instructorName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                row.addView(instructorName);
                 tableLayout.addView(row);
             }
         }
     }
 }
-
