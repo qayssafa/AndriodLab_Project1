@@ -165,41 +165,28 @@ public class AvailableCourseDataBaseHelper {
         return instructorName;
     }
 
-    public String getInstructorEmail(int regID) {
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
-        String query = "SELECT instructor_email FROM AvailableCourse WHERE registration_Number = ?";
-        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(regID)});
-        String email=null;
-        if (cursor.moveToFirst()) {
-             email = cursor.getString(0);
-        }
-        cursor.close();
-        return email;
-    }
-
     public List<Map.Entry<String, String>> getAllCoursesForRegistration() {
         List<Map.Entry<String, String>> courses = new ArrayList<>();
         SQLiteDatabase db = dbHelper.getReadableDatabase();
-        Cursor cursor=null;
+        Cursor cursor = null;
         try {
-            cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse", null);
+            cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse ORDER BY course_start_date DESC", null);
             if (cursor.moveToFirst()) {
                 do {
-                    if (CourseDataBaseHelper.isCourseExists(Integer.parseInt(cursor.getString(0)))){
-                        courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0),CourseDataBaseHelper.getCourseName(cursor.getInt(0))));
+                    if (CourseDataBaseHelper.isCourseExists(Integer.parseInt(cursor.getString(0)))) {
+                        courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), CourseDataBaseHelper.getCourseName(cursor.getInt(0))));
                     }
                 } while (cursor.moveToNext());
             }
-            cursor.close();
-            db.close();
-            return courses;
-        }finally {
+        } finally {
             if (cursor != null) {
                 cursor.close();
             }
             db.close();
         }
+        return courses;
     }
+
     public List<Map.Entry<String, String>> getAllCoursesAreAvailableForRegistration() {
         List<Map.Entry<String, String>> courses = new ArrayList<>();
         long currentTime = new Date().getTime();

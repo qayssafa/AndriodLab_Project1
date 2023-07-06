@@ -145,7 +145,7 @@ public class SearchAndViewCourseAreAvailable extends StudentDrawerBaseActivity {
                                 schedule.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 row.addView(schedule);
 
-                                instructor.setText(dbHelper.getInstructorName(dbHelper.getInstructorEmail(availableCourse1.getReg())));
+                                instructor.setText(courseSelectedAv.get(1).toString());
                                 instructor.setBackgroundColor(Color.WHITE);
                                 instructor.setLayoutParams(layoutParams);
                                 instructor.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

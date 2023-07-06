@@ -21,16 +21,13 @@ import androidx.core.content.ContextCompat;
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.StudentDrawerBaseActivity;
-import com.example.andriodlab_project1.admin.ApplicantDecide;
 import com.example.andriodlab_project1.common.User;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
-import com.example.andriodlab_project1.databinding.ActivityStudentMainBinding;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.notification.Notification;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
-import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -52,13 +49,13 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
     StudentDataBaseHelper studentDataBaseHelper;
     EnrollmentDataBaseHelper enrollmentDataBaseHelper;
     public static User user = new User();
-    ActivityStudentMainBinding activityStudentMainBinding;
+    com.example.andriodlab_project1.databinding.ActivityStudentMainBinding activityStudentMainBinding;
     private NotificationDataBaseHelper notificationDataBaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityStudentMainBinding = ActivityStudentMainBinding.inflate(getLayoutInflater());
+        activityStudentMainBinding = com.example.andriodlab_project1.databinding.ActivityStudentMainBinding.inflate(getLayoutInflater());
         setContentView(activityStudentMainBinding.getRoot());
         enroll = findViewById(R.id.enrollButtonAndSee);
         messages = findViewById(R.id.messages);
@@ -83,7 +80,7 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
         messages.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(StudentMainActivity.this, messages.class);
+                Intent intent = new Intent(StudentMainActivity.this, SearchCoursesActivity.class);
                 startActivity(intent);
             }
         });
