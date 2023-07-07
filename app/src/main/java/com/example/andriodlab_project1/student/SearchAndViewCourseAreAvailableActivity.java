@@ -50,7 +50,7 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
     private TextView endDate;
     private List<Triple<AvailableCourse, String, Integer>> availableCourses;
     private List<Triple<AvailableCourse, String, Integer>> courseSelectedAv;
-
+    private CharSequence[] items;
     ActivityRegisterCourseBinding activityRegisterCourseBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +63,12 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
 
         TextView listOfCourses = findViewById(R.id.enrollCoursesList);
         continents =dbHelper.getAllCoursesAreAvailableForRegistration();
-        CharSequence[] items = convertListToCharSequenceArray(continents);
+        items = convertListToCharSequenceArray(continents);
         Button enroll = findViewById(R.id.ENrollButton);
         if (!continents.isEmpty()) {
         listOfCourses.setOnClickListener(v -> {
+            continents =dbHelper.getAllCoursesAreAvailableForRegistration();
+            items = convertListToCharSequenceArray(continents);
             AlertDialog.Builder builder = new AlertDialog.Builder(SearchAndViewCourseAreAvailableActivity.this);
             builder.setTitle("Courses Are Available For Registration :");
             builder.setCancelable(false);

@@ -28,6 +28,7 @@ public class AvailableCourseDataBaseHelper {
 
     public AvailableCourseDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
+        courseDataBaseHelper= new CourseDataBaseHelper(context);
         createTableIfNotExists();
     }
 
@@ -176,7 +177,7 @@ public class AvailableCourseDataBaseHelper {
             cursor = db.rawQuery("SELECT COURSE_ID FROM AvailableCourse ORDER BY course_start_date DESC", null);
             if (cursor.moveToFirst()) {
                 do {
-                    if (CourseDataBaseHelper.isCourseExists(Integer.parseInt(cursor.getString(0)))) {
+                    if (courseDataBaseHelper.isCourseExists(Integer.parseInt(cursor.getString(0)))) {
                         courses.add(new AbstractMap.SimpleEntry<>(cursor.getString(0), courseDataBaseHelper.getCourseName(cursor.getInt(0))));
                     }
                 } while (cursor.moveToNext());
@@ -377,6 +378,68 @@ public class AvailableCourseDataBaseHelper {
         db.close();
 
         return courses;
+    }
+    public List<Map.Entry<Integer, Integer>> getAllCoursesAreAvailableForRegistrationWithRegId() {
+        List<Map.Entry<Integer, Integer>> courses = new ArrayList<>();
+        long currentTime = new Date().getTime();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        String currentTimeString = dateFormat.format(new Date(currentTime));
+        Cursor cursor = null;
+        try {
+            if (isTableCreatedFirstTime("enrollments")) {
+                SQLiteDatabase db = dbHelper.getReadableDatabase();
+                cursor = db.rawQuery("SELECT ac.COURSE_ID, ac.registration_Number " +
+                        "FROM AvailableCourse ac " +
+                        "LEFT JOIN COURSE c ON ac.COURSE_ID = c.COURSE_ID " +
+                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') ", null);
+            } else {
+                SQLiteDatabase db1 = dbHelper.getReadableDatabase();
+                cursor = db1.rawQuery("SELECT ac.COURSE_ID, ac.registration_Number " +
+                        "FROM AvailableCourse ac " +
+                        "LEFT JOIN enrollments e ON ac.COURSE_ID = e.COURSE_ID " +
+                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') " +
+                        "AND e.COURSE_ID IS NULL", null);
+            }
+            if (cursor.moveToFirst()) {
+                do {
+                    courses.add(new AbstractMap.SimpleEntry<>(cursor.getInt(1), cursor.getInt(0)));
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            return courses;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    public boolean updateAvailableCourse(AvailableCourse availableCourse,String email) {
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        // Create a ContentValues object and put the updated values
+        ContentValues values = new ContentValues();
+        values.put("instructor_name", getInstructorName(email));
+        values.put("registration_deadline", availableCourse.getRegistrationDeadline());
+        values.put("course_start_date", availableCourse.getCourseStartDate());
+        values.put("course_end_date", availableCourse.getCourseEndDate());
+        values.put("course_schedule", availableCourse.getCourseSchedule());
+        values.put("venue", availableCourse.getVenue());
+
+        // Define the WHERE clause to identify the row(s) to update
+        String whereClause = "registration_Number = ?";
+
+        // Define the selection arguments for the WHERE clause
+        String[] whereArgs = { String.valueOf(availableCourse.getReg()) };
+
+        // Perform the update operation
+        int rowsAffected = db.update("AvailableCourse", values, whereClause, whereArgs);
+
+        // Check the number of rows affected to determine if the update was successful
+        if (rowsAffected > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

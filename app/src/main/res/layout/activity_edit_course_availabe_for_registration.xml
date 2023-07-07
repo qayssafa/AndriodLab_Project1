@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".course_for_registration.EditCourseAvailabeForRegistrationActivity">
+    tools:context=".course_for_registration.EditCourseAvailableForRegistrationActivity">
 
     <ImageView
         android:id="@+id/imageView20"
@@ -14,7 +14,7 @@
         app:srcCompat="@drawable/editreg" />
 
     <TextView
-        android:id="@+id/listOfCourses"
+        android:id="@+id/listOfCoursesUpdate"
         android:layout_width="224dp"
         android:layout_height="44dp"
         android:background="@android:drawable/editbox_background"
@@ -31,7 +31,7 @@
         tools:ignore="UnknownIdInLayout" />
 
     <EditText
-        android:id="@+id/VenueEditText"
+        android:id="@+id/VenueEditTextEdit"
         android:layout_width="173dp"
         android:layout_height="41dp"
         android:ems="10"
@@ -45,7 +45,7 @@
         app:layout_constraintVertical_bias="0.868" />
 
     <EditText
-        android:id="@+id/CourseScheduleEditText"
+        android:id="@+id/CourseScheduleEditTextEdit"
         android:layout_width="173dp"
         android:layout_height="41dp"
         android:ems="10"
@@ -59,7 +59,7 @@
         app:layout_constraintVertical_bias="0.795" />
 
     <EditText
-        android:id="@+id/StartDateEditText"
+        android:id="@+id/StartDateEditTextEdit"
         android:layout_width="173dp"
         android:layout_height="41dp"
         android:clickable="true"
@@ -78,7 +78,6 @@
         android:id="@+id/CourseNumberTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.764"
@@ -87,7 +86,7 @@
         app:layout_constraintVertical_bias="0.473" />
 
     <EditText
-        android:id="@+id/InstructorNameEditText"
+        android:id="@+id/InstructorNameEditTextEdit"
         android:layout_width="170dp"
         android:layout_height="44dp"
         android:ems="10"
@@ -101,7 +100,7 @@
         app:layout_constraintVertical_bias="0.529" />
 
     <EditText
-        android:id="@+id/CourseEndDate"
+        android:id="@+id/CourseEndDateEdit"
         android:layout_width="170dp"
         android:layout_height="44dp"
         android:ems="10"
@@ -115,7 +114,7 @@
         app:layout_constraintVertical_bias="0.665" />
 
     <EditText
-        android:id="@+id/RegistrationDeadLineEditText"
+        android:id="@+id/RegistrationDeadLineEditTextEdit"
         android:layout_width="173dp"
         android:layout_height="41dp"
         android:clickable="true"
@@ -131,7 +130,7 @@
         app:layout_constraintVertical_bias="0.726" />
 
     <Button
-        android:id="@+id/submit"
+        android:id="@+id/submitEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="submit"
@@ -143,6 +142,7 @@
         app:layout_constraintVertical_bias="0.976" />
 
     <TextView
+        android:id="@+id/CourseNumberTextViewEdit"
         android:layout_width="433dp"
         android:layout_height="52dp"
         android:background="#C4C7CA"

@@ -60,6 +60,7 @@ public class ViewPreviousOfferings extends DrawerBaseActivity {
         availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
         continents = availableCourseDataBaseHelper.getAllCoursesForRegistration();
         tableLayout = findViewById(R.id.table);
+        continents=filterContinents(continents);
 
         if (!continents.isEmpty()) {
             listOfCourses.setOnClickListener(v -> {
@@ -81,6 +82,7 @@ public class ViewPreviousOfferings extends DrawerBaseActivity {
                         }
                     }
                     entry = continents.get(selected);
+
                     value = entry.getKey();
                     availableCourses = availableCourseDataBaseHelper.getAvailableCourseByCourse_Id(Integer.parseInt(value));
                     for (Triple<AvailableCourse, String, Integer> courseInfo : availableCourses) {
@@ -111,7 +113,7 @@ public class ViewPreviousOfferings extends DrawerBaseActivity {
                         courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         row.addView(courseTitle);
 
-                        date.setText(" " + availableCourse.getCourseStartDate() + " To " + availableCourse.getRegistrationDeadline() + " ");
+                        date.setText(" " + availableCourse.getCourseStartDate() + " To " + availableCourse.getCourseEndDate() + " ");
                         date.setBackgroundColor(Color.WHITE);
                         date.setLayoutParams(layoutParams);
                         date.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -168,4 +170,19 @@ public class ViewPreviousOfferings extends DrawerBaseActivity {
 
         return uniqueList.toArray(new CharSequence[0]);
     }
+    private List<Map.Entry<String, String>> filterContinents(List<Map.Entry<String, String>> continents) {
+        List<Map.Entry<String, String>> filteredContinents = new ArrayList<>();
+        Set<String> uniqueKeys = new HashSet<>();
+
+        for (Map.Entry<String, String> entry : continents) {
+            String key = entry.getKey();
+            if (!uniqueKeys.contains(key)) {
+                filteredContinents.add(entry);
+                uniqueKeys.add(key);
+            }
+        }
+
+        return filteredContinents;
+    }
+
 }

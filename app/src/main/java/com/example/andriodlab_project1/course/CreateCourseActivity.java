@@ -46,7 +46,8 @@ public class CreateCourseActivity extends DrawerBaseActivity {
 
     byte[] blob;
     ActivityCreateCourseBinding activityCreateCourseBinding;
-
+    private List<Map.Entry<String, String>> continents;
+    private boolean[] selectedContinents;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,58 +59,41 @@ public class CreateCourseActivity extends DrawerBaseActivity {
         TextView Prerequisites = findViewById(R.id.list);
         dbHelper = new CourseDataBaseHelper(this);
 
-        List<Map.Entry<String, String>> continents = dbHelper.getAllCourses();
+        continents = dbHelper.getAllCourses();
 
-        boolean[] selectedContinents = new boolean[continents.size()];
+        selectedContinents = new boolean[continents.size()];
 
         ArrayList<String> continentsList = new ArrayList<>();
-        Prerequisites.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(CreateCourseActivity.this);
-                builder.setTitle("Prerequisites:");
-                builder.setCancelable(false);
-                CharSequence[] items = convertListToCharSequenceArray(continents);
+        Prerequisites.setOnClickListener(v -> {
+            continents = dbHelper.getAllCourses();
+            selectedContinents = new boolean[continents.size()];
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreateCourseActivity.this);
+            builder.setTitle("Prerequisites:");
+            builder.setCancelable(false);
+            CharSequence[] items = convertListToCharSequenceArray(continents);
 
-                builder.setMultiChoiceItems(items, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if (isChecked) {
-                            entry = continents.get(which);
-                            value = entry.getValue();
-                            continentsList.add(value);
-                            Collections.sort(continentsList);
-                        } else {
-                            if (which >= 0 && which < continentsList.size()) {
-                                continentsList.remove(which);
-                            } else {
-                                // Handle boundary condition: index out of range
-                                // Display an error message or handle it as per your requirement
-                            }
-                        }
+            builder.setMultiChoiceItems(items, selectedContinents, (dialog, which, isChecked) -> {
+                if (isChecked) {
+                    entry = continents.get(which);
+                    value = entry.getValue();
+                    continentsList.add(value);
+                    Collections.sort(continentsList);
+                } else {
+                    if (which >= 0 && which < continentsList.size()) {
+                        continentsList.remove(which);
+                    } else {
+                        // Handle boundary condition: index out of range
+                        // Display an error message or handle it as per your requirement
                     }
-                });
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                builder.setNeutralButton("Clear All", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Arrays.fill(selectedContinents, false);
-                        continentsList.clear();
-                    }
-                });
-                builder.show();
-            }
+                }
+            });
+            builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+            builder.setNeutralButton("Clear All", (dialog, which) -> {
+                Arrays.fill(selectedContinents, false);
+                continentsList.clear();
+            });
+            builder.show();
         });
 
 

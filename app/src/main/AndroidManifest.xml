@@ -81,6 +81,13 @@
         <activity
             android:name=".student.SearchCoursesActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".course_for_registration.EditCourseAvailableForRegistrationActivity"
+            android:exported="false" />
+
+
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
