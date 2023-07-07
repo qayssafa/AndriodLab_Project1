@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="Instructor_navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item android:title="@string/Instructor">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/home"
+                        android:icon="@drawable/baseline_home_24"
+                        android:title="@string/menu_home" />
+                    <item
+                        android:id="@+id/Search_courses"
+                        android:icon="@drawable/baseline_search_24"
+                        android:title="@string/Search_courses" />
+                    <item
+                        android:id="@+id/Course_registration_alert"
+                        android:icon="@drawable/baseline_notifications_24"
+                        android:title="@string/Course_registration_alert" />
+                    <item
+                        android:id="@+id/Registration_decision_alert"
+                        android:icon="@drawable/baseline_notifications_24"
+                        android:title="@string/Registration_decision_alert" />
+                    <item
+                        android:id="@+id/Completed_courses_overview"
+                        android:icon="@drawable/baseline_event_available_24"
+                        android:title="@string/Completed_courses_overview" />
+                    <item
+                        android:id="@+id/Full_course_history"
+                        android:icon="@drawable/baseline_history_24"
+                        android:title="@string/Full_course_history" />
+                    <item
+                        android:id="@+id/Course_enrollment_updates"
+                        android:icon="@drawable/baseline_notifications_24"
+                        android:title="@string/Course_enrollment_updates" />
+                </group>
+            </menu>
+        </item>
+
+        <item android:title="@string/profile">
+            <menu>
+                <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/profile"
+                        android:icon="@drawable/baseline_portrait_24"
+                        android:title="@string/profile" />
+                    <item
+                        android:id="@+id/logout"
+                        android:icon="@drawable/baseline_logout_24"
+                        android:title="@string/menu_logout" />
+                </group>
+            </menu>
+        </item>
+    </group>
+</menu>

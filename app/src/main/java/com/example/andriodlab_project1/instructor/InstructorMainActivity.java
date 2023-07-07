@@ -7,15 +7,21 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.databinding.ActivityInstructorMainBinding;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
 
-public class InstructorMainActivity extends AppCompatActivity {
+public class InstructorMainActivity extends InstructorDrawerBaswActivity {
+
+    ActivityInstructorMainBinding activityInstructorMainBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_instructor_main);
+        activityInstructorMainBinding = ActivityInstructorMainBinding.inflate(getLayoutInflater());
+        setContentView(activityInstructorMainBinding.getRoot());
+        //setContentView(R.layout.activity_instructor_main);
         Button button = findViewById(R.id.button4);
         Button button1 = findViewById(R.id.button5);
         Button button2 = findViewById(R.id.button6);

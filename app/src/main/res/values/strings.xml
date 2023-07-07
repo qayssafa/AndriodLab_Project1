@@ -23,6 +23,7 @@
     <string name="menu_logout">Logout</string>
     <string name="Admin">Admin</string>
     <string name="Student">Student</string>
+    <string name="Instructor">Instructor</string>
     <string name="profile">Profile</string>
     <string name="Search_courses">Search courses</string>
     <string name="Course_registration_alert">Course registration alert</string>
