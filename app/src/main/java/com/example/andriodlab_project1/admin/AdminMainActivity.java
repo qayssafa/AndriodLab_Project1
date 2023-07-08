@@ -30,11 +30,11 @@ public class AdminMainActivity extends DrawerBaseActivity {
         AdminName = findViewById(R.id.AdminName);
         adminDataBaseHelper = new AdminDataBaseHelper(this);
         AdminName.setText(adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getFirstName() + " " + adminDataBaseHelper.getAdminByEmail(MainActivity.adminEmail).getLastName());
-        Button button = findViewById(R.id.button);
+        /*Button button = findViewById(R.id.button);
         button.setOnClickListener(v -> {
             Intent intent = new Intent(AdminMainActivity.this, EditCourseAvailableForRegistrationActivity.class);
             startActivity(intent);
-        });
+        });*/
 
     }
 }

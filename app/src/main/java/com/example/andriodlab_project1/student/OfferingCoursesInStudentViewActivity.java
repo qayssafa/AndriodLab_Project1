@@ -12,22 +12,28 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.StudentDrawerBaseActivity;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivitySearchCoursesBinding;
 
 import java.util.List;
 import java.util.Map;
 
 import kotlin.Triple;
 
-public class OfferingCoursesInStudentViewActivity  extends AppCompatActivity {
+public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActivity {
+
+    ActivitySearchCoursesBinding activitySearchCoursesBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_courses);
+        activitySearchCoursesBinding = ActivitySearchCoursesBinding.inflate(getLayoutInflater());
+        setContentView(activitySearchCoursesBinding.getRoot());
+        //setContentView(R.layout.activity_search_courses);
         TextView courseNumber;
         TextView courseTitle;
         TextView courseMainTopics;

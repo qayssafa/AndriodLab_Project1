@@ -5,12 +5,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.StudentDrawerBaseActivity;
+import com.example.andriodlab_project1.databinding.ActivityCoursesStudiedInTheCenterBinding;
 
-public class CoursesStudiedInTheCenterActivity extends AppCompatActivity {
+public class CoursesStudiedInTheCenterActivity extends StudentDrawerBaseActivity {
+
+    ActivityCoursesStudiedInTheCenterBinding activityCoursesStudiedInTheCenterBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_courses_studied_in_the_center);
+        activityCoursesStudiedInTheCenterBinding = ActivityCoursesStudiedInTheCenterBinding.inflate(getLayoutInflater());
+        setContentView(activityCoursesStudiedInTheCenterBinding.getRoot());
+        //setContentView(R.layout.activity_courses_studied_in_the_center);
     }
 }

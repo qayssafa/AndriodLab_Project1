@@ -1,7 +1,5 @@
 package com.example.andriodlab_project1.student;
 
-import android.content.DialogInterface;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;

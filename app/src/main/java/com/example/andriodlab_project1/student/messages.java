@@ -11,9 +11,11 @@ import android.widget.TextView;
 
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.StudentDrawerBaseActivity;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
+import com.example.andriodlab_project1.databinding.ActivityMessagesBinding;
 import com.example.andriodlab_project1.notification.Notification;
 import com.example.andriodlab_project1.notification.NotificationDataBaseHelper;
 import com.example.andriodlab_project1.signup.SignUPMainActivity;
@@ -22,12 +24,16 @@ import java.util.List;
 
 import kotlin.Triple;
 
-public class messages extends AppCompatActivity {
+public class messages extends StudentDrawerBaseActivity {
+
+    ActivityMessagesBinding activityMessagesBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_messages);
+        activityMessagesBinding = ActivityMessagesBinding.inflate(getLayoutInflater());
+        setContentView(activityMessagesBinding.getRoot());
+        //setContentView(R.layout.activity_messages);
         int conunt=0;
         NotificationDataBaseHelper dbHelper = new NotificationDataBaseHelper(this);
         List<Notification> notifications= dbHelper.getNotificationsForStudent(MainActivity.studentEmail);

@@ -12,10 +12,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.andriodlab_project1.student.CourseWithdrawActivity;
+import com.example.andriodlab_project1.student.CoursesStudiedInTheCenterActivity;
+import com.example.andriodlab_project1.student.OfferingCoursesInStudentViewActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
 import com.example.andriodlab_project1.student.ViewEditProfile;
+import com.example.andriodlab_project1.student.messages;
 import com.google.android.material.navigation.NavigationView;
 
 public class StudentDrawerBaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -52,6 +56,26 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
             finish();
         }else if (id == R.id.Search_courses) {
             startActivity(new Intent(StudentDrawerBaseActivity.this, SearchCoursesActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.Messages) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, messages.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.OfferingCourses) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, OfferingCoursesInStudentViewActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.AvailableCourses) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, SearchAndViewCourseAreAvailableActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.CoursesStudiedInTheCenter) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, CoursesStudiedInTheCenterActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.CourseWithdraw) {
+            startActivity(new Intent(StudentDrawerBaseActivity.this, CourseWithdrawActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.profile) {
