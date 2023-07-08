@@ -216,20 +216,21 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseScheduleOptions);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         courseSchedule.setAdapter(adapter);
+        courseSchedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedValue = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         submit.setOnClickListener(v -> {
             check = false;
             checkInstructor = false;
             String venue = Venue.getText().toString();
-            courseSchedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    selectedValue = parent.getItemAtPosition(position).toString();
-                }
 
-                @Override
-                public void onNothingSelected(AdapterView<?> parent) {
-                }
-            });
             //String courseSchedule = CourseSchedule.getText().toString();
             String instructorName = InstructorName.getText().toString();
             String lDeadLine = deadLine.getText().toString();
