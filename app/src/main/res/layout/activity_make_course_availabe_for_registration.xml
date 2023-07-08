@@ -10,6 +10,7 @@
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/regis" />
 
     <TextView
@@ -41,20 +42,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.868" />
-
-    <EditText
-        android:id="@+id/CourseScheduleEditText"
-        android:layout_width="173dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:hint="Course Schedule"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.795" />
 
     <EditText
         android:id="@+id/StartDateEditText"
@@ -168,6 +155,17 @@
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView12"
         app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="172dp"
+        android:layout_height="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.945"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.791" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
