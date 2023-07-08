@@ -9,9 +9,12 @@ import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +56,10 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
     private boolean check;
     private boolean checkInstructor;
 
+    private Spinner courseSchedule;
+    private String selectedValue;
+
+
     ActivityMakeCourseAvailabeForRegistrationBinding activityMakeCourseAvailabeForRegistrationBinding;
 
     @Override
@@ -61,7 +68,8 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         activityMakeCourseAvailabeForRegistrationBinding = ActivityMakeCourseAvailabeForRegistrationBinding.inflate(getLayoutInflater());
         setContentView(activityMakeCourseAvailabeForRegistrationBinding.getRoot());
         EditText Venue = findViewById(R.id.VenueEditText);
-        EditText CourseSchedule = findViewById(R.id.CourseScheduleEditText);
+        courseSchedule = (Spinner)findViewById(R.id.spinner);
+        //EditText CourseSchedule = findViewById(R.id.CourseScheduleEditText);
         EditText InstructorName = findViewById(R.id.InstructorNameEditText);
         TextView numberOfCourse = findViewById(R.id.CourseNumberTextView);
         check = false;
@@ -174,11 +182,55 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         } else {
             Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
         }
+        String[] courseScheduleOptions = {
+                "M,W : 8:00 AM - 9:00 AM",
+                "M,W : 9:30 AM - 10:30 AM",
+                "M,W : 11:00 AM - 12:00 PM",
+                "M,W : 12:30 PM - 1:30 PM",
+                "M,W : 2:00 PM - 3:30 PM",
+                "M : 8:00 AM - 10:00 AM",
+                "M : 11:00 AM - 1:00 PM",
+                "M : 2:00 PM - 4:00 PM",
+                "W : 8:00 AM - 10:00 AM",
+                "W : 11:00 AM - 1:00 PM",
+                "W : 2:00 PM - 4:00 PM",
+                "T,R : 8:00 AM - 9:00 AM",
+                "T,R : 9:30 AM - 10:30 AM",
+                "T,R : 11:00 AM - 12:00 PM",
+                "T,R : 12:30 PM - 1:30 PM",
+                "T,R : 2:00 PM - 3:30 PM",
+                "T : 8:00 AM - 10:00 AM",
+                "T : 11:00 AM - 1:00 PM",
+                "T : 2:00 PM - 4:00 PM",
+                "R : 8:00 AM - 10:00 AM",
+                "R : 11:00 AM - 1:00 PM",
+                "R : 2:00 PM - 4:00 PM",
+                "S,M : 9:30 AM - 10:30 AM",
+                "S,M : 11:00 AM - 12:00 PM",
+                "S,W : 9:30 AM - 10:30 AM",
+                "S,W : 11:00 AM - 12:00 PM",
+                "S : 8:00 AM - 10:00 AM",
+                "S : 11:00 AM - 1:00 PM",
+                "S : 2:00 PM - 4:00 PM"
+        };
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseScheduleOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        courseSchedule.setAdapter(adapter);
         submit.setOnClickListener(v -> {
             check = false;
             checkInstructor = false;
             String venue = Venue.getText().toString();
-            String courseSchedule = CourseSchedule.getText().toString();
+            courseSchedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    selectedValue = parent.getItemAtPosition(position).toString();
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                }
+            });
+            //String courseSchedule = CourseSchedule.getText().toString();
             String instructorName = InstructorName.getText().toString();
             String lDeadLine = deadLine.getText().toString();
             String lEditStartDate = editStartDate.getText().toString();
@@ -207,7 +259,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This DeadLine Date not Valid!", Toast.LENGTH_SHORT).show();
             } else if (!isEndDateAfterStartDate(lEditStartDate, lDeadLine)) {
                 Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Start Date And DeadLine Date  not Valid!", Toast.LENGTH_SHORT).show();
-            } else if (courseSchedule.isEmpty() || courseSchedule.isBlank()) {
+            } else if (selectedValue.isEmpty() || selectedValue.isBlank()) {
                 Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This courseSchedule not Valid!", Toast.LENGTH_SHORT).show();
             } else if (venue.isEmpty() || venue.isBlank()) {
                 Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Venue not Valid!", Toast.LENGTH_SHORT).show();
@@ -227,7 +279,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             availableCourses = dbHelper.getAvailableCourseByCourse_Id(courseId);
                             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                                 AvailableCourse availableCourse = lCourseInfo.getFirst();
-                                if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), courseSchedule)) {
+                                if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), selectedValue)) {
                                     Toast.makeText(MakeCourseAvailableForRegistrationActivity.this, "This Course " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
                                     check = true;
                                     break;
@@ -236,7 +288,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             if (check)
                                 break;
                         }
-                        AvailableCourse availableCourse = new AvailableCourse(Integer.parseInt(value), lDeadLine, lEditStartDate, courseSchedule, venue, lEditEndDate);
+                        AvailableCourse availableCourse = new AvailableCourse(Integer.parseInt(value), lDeadLine, lEditStartDate, selectedValue, venue, lEditEndDate);
                         if (!check) {
                             if (dbHelper.insertAvailableCourse(availableCourse, email, 0)) {
                                 List<String> students = studentDataBaseHelper.getAllStudents();
