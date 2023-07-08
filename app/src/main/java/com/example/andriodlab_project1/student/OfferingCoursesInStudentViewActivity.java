@@ -18,6 +18,7 @@ import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
 import com.example.andriodlab_project1.databinding.ActivitySearchCoursesBinding;
+import com.example.andriodlab_project1.databinding.ActivityViewPreviousOfferingsBinding;
 
 import java.util.List;
 import java.util.Map;
@@ -26,13 +27,12 @@ import kotlin.Triple;
 
 public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActivity {
 
-    ActivitySearchCoursesBinding activitySearchCoursesBinding;
-
+     ActivityViewPreviousOfferingsBinding activityViewPreviousOfferingsBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activitySearchCoursesBinding = ActivitySearchCoursesBinding.inflate(getLayoutInflater());
-        setContentView(activitySearchCoursesBinding.getRoot());
+        activityViewPreviousOfferingsBinding = ActivityViewPreviousOfferingsBinding.inflate(getLayoutInflater());
+        setContentView(activityViewPreviousOfferingsBinding.getRoot());
         //setContentView(R.layout.activity_search_courses);
         TextView courseNumber;
         TextView courseTitle;
