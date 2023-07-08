@@ -39,6 +39,10 @@
                         android:id="@+id/CS"
                         android:icon="@drawable/baseline_co_present_24"
                         android:title="@string/Course_students" />
+                    <item
+                        android:id="@+id/EditCourseAvailableForRegistrationActivity"
+                        android:icon="@drawable/baseline_edit_24"
+                        android:title="@string/EditCourseAvailableForRegistrationActivity" />
                 </group>
             </menu>
         </item>

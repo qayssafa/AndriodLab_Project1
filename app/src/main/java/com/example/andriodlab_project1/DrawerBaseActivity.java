@@ -18,6 +18,7 @@ import com.example.andriodlab_project1.admin.ApplicantDecideActivity;
 import com.example.andriodlab_project1.admin.ViewInstructorProfileActivity;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
+import com.example.andriodlab_project1.course_for_registration.EditCourseAvailableForRegistrationActivity;
 import com.example.andriodlab_project1.course_for_registration.MakeCourseAvailableForRegistrationActivity;
 import com.example.andriodlab_project1.course_for_registration.ViewPreviousOfferings;
 import com.example.andriodlab_project1.enrollment.ViewTheStudentsOfAnyCourseActivity;
@@ -72,6 +73,10 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
             finish();
         }else if (id == R.id.CH) {
             startActivity(new Intent(DrawerBaseActivity.this, ViewPreviousOfferings.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.EditCourseAvailableForRegistrationActivity) {
+            startActivity(new Intent(DrawerBaseActivity.this, EditCourseAvailableForRegistrationActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.RD) {

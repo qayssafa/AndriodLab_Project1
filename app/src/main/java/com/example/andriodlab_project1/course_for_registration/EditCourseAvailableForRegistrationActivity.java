@@ -8,8 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivityEditCourseAvailabeForRegistrationBinding;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
@@ -23,7 +26,7 @@ import java.util.Map;
 
 import kotlin.Triple;
 
-public class EditCourseAvailableForRegistrationActivity extends AppCompatActivity {
+public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivity {
 
     private EditText InstructorName;
 
@@ -48,10 +51,14 @@ public class EditCourseAvailableForRegistrationActivity extends AppCompatActivit
     private boolean check;
     private boolean checkInstructor;
 
+    ActivityEditCourseAvailabeForRegistrationBinding activityEditCourseAvailabeForRegistrationBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_course_availabe_for_registration);
+        activityEditCourseAvailabeForRegistrationBinding = ActivityEditCourseAvailabeForRegistrationBinding.inflate(getLayoutInflater());
+        setContentView(activityEditCourseAvailabeForRegistrationBinding.getRoot());
+        //setContentView(R.layout.activity_edit_course_availabe_for_registration);
 
         InstructorName = findViewById(R.id.InstructorNameEditTextEdit);
         EditText editStartDate = (EditText) findViewById(R.id.StartDateEditTextEdit);

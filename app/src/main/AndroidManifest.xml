@@ -46,6 +46,9 @@
             android:name=".course_for_registration.MakeCourseAvailableForRegistrationActivity"
             android:exported="false" />
         <activity
+            android:name=".course_for_registration.EditCourseAvailableForRegistrationActivity"
+            android:exported="false" />
+        <activity
             android:name=".course.CreateCourseActivity"
             android:exported="false" />
         <activity
