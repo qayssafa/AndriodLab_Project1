@@ -36,8 +36,6 @@ public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActi
         //setContentView(R.layout.activity_search_courses);
         TextView courseNumber;
         TextView courseTitle;
-        TextView courseMainTopics;
-        TextView preRequest;
         TextView startTime;
         TextView instructorName;
         TableLayout tableLayout = findViewById(R.id.tableToSearchCourses);
@@ -56,8 +54,6 @@ public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActi
                 layoutParams.setMargins(1, 1, 1, 1);
                 courseNumber = new TextView(row.getContext());
                 courseTitle = new TextView(row.getContext());
-                courseMainTopics = new TextView(row.getContext());
-                preRequest = new TextView(row.getContext());
                 startTime = new TextView(row.getContext());
                 instructorName = new TextView(row.getContext());
 
@@ -74,19 +70,11 @@ public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActi
                 courseTitle.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(courseTitle);
 
-                courseMainTopics.setText(convertArrayListToString(course.getCourseMainTopics()));
-                courseMainTopics.setBackgroundColor(Color.WHITE);
-                courseMainTopics.setLayoutParams(layoutParams);
-                courseMainTopics.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                row.addView(courseMainTopics);
-
-                preRequest.setText(convertArrayListToString(course.getPrerequisites()));
-                preRequest.setBackgroundColor(Color.WHITE);
-                preRequest.setLayoutParams(layoutParams);
-                preRequest.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                ;
-                row.addView(preRequest);
-
+                instructorName.setText(lInstructorName);
+                instructorName.setBackgroundColor(Color.WHITE);
+                instructorName.setLayoutParams(layoutParams);
+                instructorName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                row.addView(instructorName);
 
                 startTime.setText(availableCourse.getCourseStartDate());
                 startTime.setBackgroundColor(Color.WHITE);
@@ -94,11 +82,6 @@ public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActi
                 startTime.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                 row.addView(startTime);
 
-                instructorName.setText(lInstructorName);
-                instructorName.setBackgroundColor(Color.WHITE);
-                instructorName.setLayoutParams(layoutParams);
-                instructorName.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                row.addView(instructorName);
                 tableLayout.addView(row);
             }
         }
