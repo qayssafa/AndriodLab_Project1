@@ -7,54 +7,59 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="433dp"
-        android:layout_height="760dp"
-        app:srcCompat="@drawable/signup"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-4dp" />
+        android:layout_width="436dp"
+        android:layout_height="765dp"
+        android:layout_marginTop="-25dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/up2" />
 
     <Button
         android:id="@+id/btnSignUpAdmin"
         android:layout_width="127dp"
         android:layout_height="52dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="8dp"
         android:text="Admin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toEndOf="@+id/btnSignUpInstructor"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/btnSignUpInstructor"
         android:layout_width="131dp"
         android:layout_height="56dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text=" Instructor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnSignUpStudent"
         android:layout_width="127dp"
         android:layout_height="52dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="Student"
         app:layout_constraintEnd_toStartOf="@+id/btnSignUpInstructor"
-        app:layout_constraintHorizontal_bias="0.761"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/mm"
-        android:layout_width="294dp"
-        android:layout_height="459dp"
-        android:layout_marginTop="140dp"
+        android:layout_width="310dp"
+        android:layout_height="528dp"
+        android:layout_marginTop="164dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.589"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSignUpInstructor">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/editEmail"
@@ -96,16 +101,51 @@
             android:hint="Confirm password"
             android:inputType="textPassword" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Insetphoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Inset photo" />
+
+            <ImageView
+                android:id="@+id/Photo"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/baseline_co_present_24" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <Button
         android:id="@+id/signup"
-        android:layout_width="143dp"
-        android:layout_height="47dp"
+        android:layout_width="139dp"
+        android:layout_height="42dp"
+        android:layout_marginBottom="16dp"
         android:text="signup"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.556"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Log in here"
+        android:textColorLink="#FA1212"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.179" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

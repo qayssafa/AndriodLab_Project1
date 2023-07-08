@@ -1,9 +1,12 @@
 package com.example.andriodlab_project1.signup;
 
+import static com.example.andriodlab_project1.course.CreateCourseActivity.PICK_IMAGE_REQUEST;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.admin.Admin;
 import com.example.andriodlab_project1.admin.AdminDataBaseHelper;
@@ -31,6 +35,8 @@ public class SignUPMainActivity extends AppCompatActivity {
     private InstructorDataBaseHelper dbHelperInstructor;
     private AdminDataBaseHelper dbHelperAdmin;
     private CourseDataBaseHelper dbHelperCourse;
+
+    private static final int PICK_IMAGE_REQUEST = 100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,23 @@ public class SignUPMainActivity extends AppCompatActivity {
         final StudentFragment student = new StudentFragment();
         final FragmentManager fragmentManager = getSupportFragmentManager();
         signUpAdmin.setEnabled(false);
+        TextView textView = findViewById(R.id.login);
+
+        textView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(SignUPMainActivity.this, MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button loadImage = findViewById(R.id.Insetphoto);
+        loadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
         signUpInstructor.setOnClickListener(view -> {
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.remove(student);
@@ -123,6 +146,17 @@ public class SignUPMainActivity extends AppCompatActivity {
                 bsc = instructor.isCheckedBSc();
                 msc = instructor.isCheckedMSc();
                 phd = instructor.isCheckedPhD();
+
+                if(bsc == true){
+                    instructor.checkBoxMSc.setChecked(false);
+                    instructor.checkBoxPhD.setChecked(false);
+                }else if(msc == true){
+                    instructor.checkBoxBSc.setChecked(false);
+                    instructor.checkBoxPhD.setChecked(false);
+                }else if(phd == true){
+                    instructor.checkBoxBSc.setChecked(false);
+                    instructor.checkBoxMSc.setChecked(false);
+                }
                 checkResult = checkUser(lFirstName, lLastName, lEmail, lPassword, lConfirmPassword, lPhone, lAddress, true, 1);
                 String checkDegree = checkDegree(bsc, msc, phd);
                 List<String> coursesList = convertStringToList(lListOfCourses);
@@ -151,6 +185,17 @@ public class SignUPMainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void chooseImage() {
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public boolean checkUser(String firstName, String lastName, String email, String password, String confirmPassword, String phone, String address, boolean selection, int choice) {

@@ -19,14 +19,16 @@ public class instructorFragment extends Fragment {
     EditText addressInstructor;
     EditText specialization;
     EditText courses;
-    private CheckBox checkBoxBSc;
-    private CheckBox checkBoxMSc;
-    private CheckBox checkBoxPhD;
+     CheckBox checkBoxBSc;
+     CheckBox checkBoxMSc;
+     CheckBox checkBoxPhD;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+
         return inflater.inflate(R.layout.fragment_instructor, container, false);
     }
 
@@ -81,15 +83,9 @@ public class instructorFragment extends Fragment {
         return null;
     }
 
-    public boolean isCheckedBSc() {
-        return checkBoxBSc.isChecked();
-    }
+    public boolean isCheckedBSc() {return checkBoxBSc.isChecked();}
 
-    public boolean isCheckedMSc() {
-        return checkBoxMSc.isChecked();
-    }
+    public boolean isCheckedMSc() {return checkBoxMSc.isChecked();}
 
-    public boolean isCheckedPhD() {
-        return checkBoxPhD.isChecked();
-    }
+    public boolean isCheckedPhD() {return checkBoxPhD.isChecked();}
 }

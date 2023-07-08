@@ -40,7 +40,7 @@ public class CreateCourseActivity extends DrawerBaseActivity {
     private Map.Entry<String, String> entry;
     private String value;
 
-    private static final int PICK_IMAGE_REQUEST = 100;
+    public static final int PICK_IMAGE_REQUEST = 100;
     private Uri imageFilePath;
     private Bitmap imageToStore;
 
