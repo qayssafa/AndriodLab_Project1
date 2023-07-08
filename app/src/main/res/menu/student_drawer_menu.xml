@@ -16,25 +16,26 @@
                         android:icon="@drawable/baseline_search_24"
                         android:title="@string/Search_courses" />
                     <item
-                        android:id="@+id/Course_registration_alert"
+                        android:id="@+id/Messages"
                         android:icon="@drawable/baseline_notifications_24"
                         android:title="@string/Course_registration_alert" />
                     <item
-                        android:id="@+id/Registration_decision_alert"
-                        android:icon="@drawable/baseline_notifications_24"
-                        android:title="@string/Registration_decision_alert" />
-                    <item
-                        android:id="@+id/Completed_courses_overview"
-                        android:icon="@drawable/baseline_event_available_24"
-                        android:title="@string/Completed_courses_overview" />
-                    <item
-                        android:id="@+id/Full_course_history"
+                        android:id="@+id/OfferingCourses"
                         android:icon="@drawable/baseline_history_24"
-                        android:title="@string/Full_course_history" />
+                        android:title="@string/OfferingCourses" />
                     <item
-                        android:id="@+id/Course_enrollment_updates"
-                        android:icon="@drawable/baseline_notifications_24"
-                        android:title="@string/Course_enrollment_updates" />
+                        android:id="@+id/AvailableCourses"
+                        android:icon="@drawable/baseline_history_24"
+                        android:title="@string/AvailableCourses" />
+                    <item
+                        android:id="@+id/CoursesStudiedInTheCenter"
+                        android:icon="@drawable/baseline_history_24"
+                        android:title="@string/CoursesStudiedInTheCenter" />
+                    <item
+                        android:id="@+id/CourseWithdraw"
+                        android:icon="@drawable/baseline_history_24"
+                        android:title="@string/CourseWithdraw" />
+
                 </group>
             </menu>
         </item>
