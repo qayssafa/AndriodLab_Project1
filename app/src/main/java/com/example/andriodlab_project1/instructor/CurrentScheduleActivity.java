@@ -9,23 +9,29 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivityCurrentScheduleBinding;
 
 import java.util.List;
 
 import kotlin.Triple;
 
-public class CurrentScheduleActivity extends AppCompatActivity {
+public class CurrentScheduleActivity extends InstructorDrawerBaswActivity {
+
+    ActivityCurrentScheduleBinding activityCurrentScheduleBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_current_schedule);
+        activityCurrentScheduleBinding = ActivityCurrentScheduleBinding.inflate(getLayoutInflater());
+        setContentView(activityCurrentScheduleBinding.getRoot());
+//        setContentView(R.layout.activity_current_schedule);
         TextView courseNumber;
         TextView courseTitle;
         TextView schedule;

@@ -11,11 +11,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivityViewStudentsBinding;
 import com.example.andriodlab_project1.enrollment.EnrollmentDataBaseHelper;
 import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
@@ -23,7 +25,7 @@ import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewStudentsActivity extends AppCompatActivity {
+public class ViewStudentsActivity extends InstructorDrawerBaswActivity {
     private TableLayout studentTable;
 
     private Course course;
@@ -34,10 +36,14 @@ public class ViewStudentsActivity extends AppCompatActivity {
     private List<Integer> continents;
     private int selected;
 
+    ActivityViewStudentsBinding activityViewStudentsBinding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_students);
+        activityViewStudentsBinding = ActivityViewStudentsBinding.inflate(getLayoutInflater());
+        setContentView(activityViewStudentsBinding.getRoot());
+//        setContentView(R.layout.activity_view_students);
         TextView showStudents = findViewById(R.id.newlistToSee);
         AvailableCourseDataBaseHelper dbHelper = new AvailableCourseDataBaseHelper(this);
         courseDataBaseHelper = new CourseDataBaseHelper(this);

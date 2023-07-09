@@ -36,6 +36,9 @@
     <string name="Full_course_history">Full course history</string>
     <string name="Course_enrollment_updates">Course enrollment updates</string>
     <string name="EditCourseAvailableForRegistrationActivity">Modify Course Registration</string>
+    <string name="CoursesPreviouslyTaughtActivity">Course History</string>
+    <string name="CurrentSchedule">Current Schedule</string>
+    <string name="ViewStudentsActivity">Student Roster</string>
     <string name="menu_drawer_open">Drawer Open</string>
     <string name="menu_drawer_close">Drawer Close</string>
 </resources>

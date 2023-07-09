@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="200dp"
     android:padding="20dp"
-    android:background="@drawable/ic_launcher_background"
+    android:background="@drawable/incnav"
     android:id="@+id/navHeaderLInstructor"
     android:gravity="bottom"
     android:orientation="vertical"

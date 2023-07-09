@@ -12,29 +12,18 @@
                         android:icon="@drawable/baseline_home_24"
                         android:title="@string/menu_home" />
                     <item
-                        android:id="@+id/Search_courses"
+                        android:id="@+id/CoursesPreviouslyTaughtActivity"
                         android:icon="@drawable/baseline_search_24"
-                        android:title="@string/Search_courses" />
+                        android:title="@string/CoursesPreviouslyTaughtActivity" />
                     <item
-                        android:id="@+id/Course_registration_alert"
+                        android:id="@+id/CurrentSchedule"
                         android:icon="@drawable/baseline_notifications_24"
-                        android:title="@string/Course_registration_alert" />
+                        android:title="@string/CurrentSchedule" />
                     <item
-                        android:id="@+id/Registration_decision_alert"
+                        android:id="@+id/ViewStudentsActivity"
                         android:icon="@drawable/baseline_notifications_24"
-                        android:title="@string/Registration_decision_alert" />
-                    <item
-                        android:id="@+id/Completed_courses_overview"
-                        android:icon="@drawable/baseline_event_available_24"
-                        android:title="@string/Completed_courses_overview" />
-                    <item
-                        android:id="@+id/Full_course_history"
-                        android:icon="@drawable/baseline_history_24"
-                        android:title="@string/Full_course_history" />
-                    <item
-                        android:id="@+id/Course_enrollment_updates"
-                        android:icon="@drawable/baseline_notifications_24"
-                        android:title="@string/Course_enrollment_updates" />
+                        android:title="@string/ViewStudentsActivity" />
+
                 </group>
             </menu>
         </item>

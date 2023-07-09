@@ -12,6 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.example.andriodlab_project1.instructor.CoursesPreviouslyTaughtActivity;
+import com.example.andriodlab_project1.instructor.CurrentScheduleActivity;
+import com.example.andriodlab_project1.instructor.InstructorMainActivity;
+import com.example.andriodlab_project1.instructor.ViewStudentsActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
@@ -47,11 +51,19 @@ public class InstructorDrawerBaswActivity extends AppCompatActivity implements N
         int id = item.getItemId();
 
         if (id == R.id.home) {
-            startActivity(new Intent(InstructorDrawerBaswActivity.this, StudentMainActivity.class));
+            startActivity(new Intent(InstructorDrawerBaswActivity.this, InstructorMainActivity.class));
             overridePendingTransition(0, 0);
             finish();
-        }else if (id == R.id.Search_courses) {
-            startActivity(new Intent(InstructorDrawerBaswActivity.this, SearchCoursesActivity.class));
+        }else if (id == R.id.CoursesPreviouslyTaughtActivity) {
+            startActivity(new Intent(InstructorDrawerBaswActivity.this, CoursesPreviouslyTaughtActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.CurrentSchedule) {
+            startActivity(new Intent(InstructorDrawerBaswActivity.this, CurrentScheduleActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }else if (id == R.id.ViewStudentsActivity) {
+            startActivity(new Intent(InstructorDrawerBaswActivity.this, ViewStudentsActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.profile) {
