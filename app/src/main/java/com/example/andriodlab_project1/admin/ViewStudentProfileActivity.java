@@ -1,7 +1,6 @@
 package com.example.andriodlab_project1.admin;
 
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
@@ -16,7 +15,6 @@ import android.widget.Toast;
 import com.example.andriodlab_project1.DrawerBaseActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.databinding.ActivityViewStudentProfileBinding;
-import com.example.andriodlab_project1.instructor.Instructor;
 import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.student.Student;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
@@ -34,8 +32,7 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
     TextView studentAddress;
     private ImageView displayPhoto;
 
-    ImageButton searchInstructor;
-    private InstructorDataBaseHelper instructorDataBaseHelper;
+    ImageButton searchStudent;
     private StudentDataBaseHelper studentDataBaseHelper;
 
     private List<Map.Entry<String, String>> continents;
@@ -60,10 +57,9 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
         studentEmail = findViewById(R.id.enterEmail);
         studentPhone = findViewById(R.id.InsMobileNumber);
         studentAddress = findViewById(R.id.InsAddress);
-        searchInstructor = findViewById(R.id.searchInstructor);
+        searchStudent = findViewById(R.id.searchStudentEdit);
         TextView listOfStudent = findViewById(R.id.list);
 
-        instructorDataBaseHelper = new InstructorDataBaseHelper(this);
         studentDataBaseHelper  = new StudentDataBaseHelper(this);
         continents = studentDataBaseHelper.getAllStudentEmailAndName();
 
@@ -97,17 +93,10 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
                                 studentPhone.setText("");
                                 studentAddress.setText("");
 
-
                             }
                         }
 
                     });
-                    Bitmap Photo1 = studentDataBaseHelper.getImage(student.getEmail());
-                    if(Photo1 != null) {
-                        //courseImageView = findViewById(R.id.imageView4);
-                        displayPhoto = findViewById(R.id.imageView18);
-                        displayPhoto.setImageBitmap(Photo1);
-                    }
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -119,13 +108,19 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
             });
         }
 
-        searchInstructor.setOnClickListener(v -> {
+        searchStudent.setOnClickListener(v -> {
             if (!(studentEmail.getText().toString().isEmpty()) && studentDataBaseHelper.isRegistered(studentEmail.getText().toString())) {
                 Student student1 = studentDataBaseHelper.getStudentByEmail(studentEmail.getText().toString());
                 studentLName.setText(String.valueOf(student1.getLastName()));
                 studentFName.setText(String.valueOf(student1.getFirstName()));
                 studentPhone.setText(String.valueOf(student1.getMobileNumber()));
                 studentAddress.setText(String.valueOf(student1.getAddress()));
+                Bitmap Photo1 = studentDataBaseHelper.getImage(student1.getEmail());
+                if(Photo1 != null) {
+                    //courseImageView = findViewById(R.id.imageView4);
+                    displayPhoto = findViewById(R.id.imageView18);
+                    displayPhoto.setImageBitmap(Photo1);
+                }
             } else {
                 Toast.makeText(ViewStudentProfileActivity.this, "This Email its not Valid.", Toast.LENGTH_SHORT).show();
 

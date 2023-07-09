@@ -60,7 +60,7 @@
         tools:ignore="UnknownIdInLayout" />
 
     <ImageButton
-        android:id="@+id/searchInstructor"
+        android:id="@+id/searchStudentEdit"
         android:layout_width="47dp"
         android:layout_height="42dp"
         app:layout_constraintBottom_toBottomOf="parent"

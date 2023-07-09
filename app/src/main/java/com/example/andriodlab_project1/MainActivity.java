@@ -30,7 +30,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private StudentDataBaseHelper studentDataBaseHelper;
+     private StudentDataBaseHelper studentDataBaseHelper;
     private AdminDataBaseHelper adminDataBaseHelper;
     private InstructorDataBaseHelper instructorDataBaseHelper;
     public static String studentEmail;
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         student.setPassword("1");
         student.setMobileNumber("123131323141323123");
         student.setAddress("sadaad");
-        studentDataBaseHelper.insertStudent(student);
+        //studentDataBaseHelper.insertStudent(student);
         instructor.setDegree("@13");
         instructor.setSpecialization("@13");
         instructor.setMobileNumber("@13");
@@ -121,12 +121,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, SignUPMainActivity.class));
-            }
-        });
+        signUp.setOnClickListener(v -> startActivity(new Intent(MainActivity.this, SignUPMainActivity.class)));
     }
 
 
