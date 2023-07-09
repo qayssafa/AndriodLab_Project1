@@ -103,7 +103,7 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
                                     instructorAddress.setText("");
                                     instructorSpecialization.setText("");
                                     instructorDegree.setText("");
-                                    Bitmap Photo1 = studentDataBaseHelper.getImage(instructor.getEmail());
+                                    Bitmap Photo1 = instructorDataBaseHelper.getImage(instructor.getEmail());
                                     if(Photo1 != null) {
                                         //courseImageView = findViewById(R.id.imageView4);
                                         displayPhotoIns = findViewById(R.id.imageView18);
