@@ -10,8 +10,10 @@ import androidx.annotation.Nullable;
 
 import com.example.andriodlab_project1.common.DataBaseHelper;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class StudentDataBaseHelper {
@@ -103,6 +105,22 @@ public class StudentDataBaseHelper {
         }
         cursor.close();
         return students;
+    }
+
+    public List<Map.Entry<String, String>> getAllStudentEmailAndName() {
+        List<Map.Entry<String, String>> emailAndNameList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT EMAIL, FIRSTNAME, LASTNAME FROM STUDENT", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String email = cursor.getString(0);
+                String name = cursor.getString(1) + " " + cursor.getString(2);
+                emailAndNameList.add(new AbstractMap.SimpleEntry<>(email, name));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return emailAndNameList;
     }
 
 

@@ -101,8 +101,6 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
                                     instructorSpecialization.setText("");
                                     instructorDegree.setText("");
 
-
-
                                 }
                             }
                         });
@@ -119,9 +117,7 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
         }
 
         searchInstructor.setOnClickListener(v -> {
-            if (!(instructorEmail.getText().toString().isEmpty()) && studentDataBaseHelper.isRegistered(instructorEmail.getText().toString())) {
-                Student student1 = studentDataBaseHelper.getStudentByEmail(instructorEmail.getText().toString());
-            } else if (!(instructorEmail.getText().toString().isEmpty()) && instructorDataBaseHelper.isRegistered(instructorEmail.getText().toString())) {
+            if (!(instructorEmail.getText().toString().isEmpty()) && instructorDataBaseHelper.isRegistered(instructorEmail.getText().toString())) {
 
                 Instructor instructor1 = instructorDataBaseHelper.getInstructorByEmail(instructorEmail.getText().toString());
 
