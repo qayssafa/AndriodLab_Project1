@@ -85,22 +85,30 @@ public class CourseDataBaseHelper {
         }
         return false;
     }
-    public boolean deleteCourse(int courseId){
+    public boolean deleteCourse(int courseId) {
         SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-        int rowsAffected=sqLiteDatabase.delete("COURSE", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
-        sqLiteDatabase.close();
-        if (rowsAffected > 0) {
-            return true;
-            //toastMessage
-            // Update was successful
-            // You can perform any additional actions or show a success message
-        } else {
-            return false;
-            //toastMessage
-            // Update failed
-            // Handle the case where the course with the given courseId doesn't exist or other errors occurred
+        sqLiteDatabase.beginTransaction();
+        int rowsAffected;
+        try {
+            // Delete from COURSE table
+            rowsAffected = sqLiteDatabase.delete("COURSE", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
+
+            // Delete from AvailableCourse table
+            if (rowsAffected > 0) {
+                sqLiteDatabase.delete("AvailableCourse", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
+                sqLiteDatabase.delete("enrollments", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
+                sqLiteDatabase.delete("APPLICANT", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
+
+            }
+
+            sqLiteDatabase.setTransactionSuccessful();
+        } finally {
+            sqLiteDatabase.endTransaction();
+            sqLiteDatabase.close();
         }
+        return rowsAffected > 0;
     }
+
     public Boolean updateCourse(Course course) {
         SQLiteDatabase sqLiteDatabaseR = dbHelper.getReadableDatabase();
         Cursor cursor = sqLiteDatabaseR.rawQuery("SELECT * FROM COURSE WHERE COURSE_ID = ?", new String[]{String.valueOf(course.getCourseID())});

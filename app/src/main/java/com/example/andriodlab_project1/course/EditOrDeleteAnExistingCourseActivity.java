@@ -97,21 +97,30 @@ public class EditOrDeleteAnExistingCourseActivity extends DrawerBaseActivity {
                 builder.show();
             });
             delete.setOnClickListener(view -> {
-                if (dbHelper.deleteCourse(Integer.parseInt(value))) {
-                    Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Successfully.", Toast.LENGTH_SHORT).show();
-                    continents.remove(selected);
-                    courseTitle.setText("");
-                    courseNumber.setText("");
-                    courseMainTobic.setText("");
-                    preRequest.setText("");
+                if (value!=null){
+                    if (dbHelper.deleteCourse(Integer.parseInt(value))) {
+                        Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Successfully.", Toast.LENGTH_SHORT).show();
+                        continents.remove(selected);
+                        courseTitle.setText("");
+                        courseNumber.setText("");
+                        courseMainTobic.setText("");
+                        preRequest.setText("");
 
-                } else {
-                    Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Failed.", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "This Courses Deleted Failed.", Toast.LENGTH_SHORT).show();
+                    }
+                }else {
+                    Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "Select Course Please!.", Toast.LENGTH_SHORT).show();
                 }
             });
             edit.setOnClickListener(v -> {
-                Intent intent = new Intent(EditOrDeleteAnExistingCourseActivity.this, EditPageActivity.class);
-                startActivity(intent);
+                if (value!=null){
+                    Intent intent = new Intent(EditOrDeleteAnExistingCourseActivity.this, EditPageActivity.class);
+                    startActivity(intent);
+                }else {
+                    Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "Select Course Please!.", Toast.LENGTH_SHORT).show();
+                }
+
             });
         }else {
             Toast.makeText(EditOrDeleteAnExistingCourseActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();

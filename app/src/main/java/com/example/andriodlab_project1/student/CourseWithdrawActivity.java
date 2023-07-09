@@ -36,7 +36,7 @@ public class CourseWithdrawActivity extends StudentDrawerBaseActivity {
     private EditText ReasonsString;
     private Button WithdrawButton;
 
-    private Course course;
+    private TextView listToWithDraw;
 
     private List<Map.Entry<Integer, String>> continents;
     private EnrollmentDataBaseHelper dbHelper;
@@ -53,7 +53,9 @@ public class CourseWithdrawActivity extends StudentDrawerBaseActivity {
 
         ReasonsString = (EditText) findViewById(R.id.Reasons);
         WithdrawButton = (Button) findViewById(R.id.SubmitWithdraw);
+        listToWithDraw=(TextView) findViewById(R.id.listToWithDraw);
 
+        dbHelper=new EnrollmentDataBaseHelper(this);
         AvailableCourseDataBaseHelper availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
 
         courseDataBaseHelper = new CourseDataBaseHelper(this);
@@ -61,7 +63,7 @@ public class CourseWithdrawActivity extends StudentDrawerBaseActivity {
         CharSequence[] items = convertListToCharSequenceArray(continents);
 
         if (!continents.isEmpty()) {
-            ReasonsString.setOnClickListener(v -> {
+            listToWithDraw.setOnClickListener(v -> {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CourseWithdrawActivity.this);
                 builder.setTitle("Courses Are Available To Withdraw It :");
                 builder.setCancelable(false);

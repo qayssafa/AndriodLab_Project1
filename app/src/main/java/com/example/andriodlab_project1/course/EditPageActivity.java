@@ -33,6 +33,7 @@ public class EditPageActivity extends AppCompatActivity {
     private NotificationDataBaseHelper notificationDataBaseHelper;
     private EnrollmentDataBaseHelper enrollmentDataBaseHelper;
     private TextView Prerequisites;
+    private TextView id;
     private Button SubmitDataButton;
 
     private ImageButton GoBackButton;
@@ -54,6 +55,7 @@ public class EditPageActivity extends AppCompatActivity {
         CourseTitleInput = findViewById(R.id.EditCourseTitleInput);
         CourseMainTopicsInput = findViewById(R.id.EditCourseMainTopicsInput);
         Prerequisites = findViewById(R.id.Editlist);
+        id = findViewById(R.id.courseIdNew);
         GoBackButton = findViewById(R.id.BackButton);
 
         continents = dbHelper.getAllCourses();
@@ -67,17 +69,15 @@ public class EditPageActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(EditPageActivity.this);
             builder.setTitle("Edit Prerequisites:");
             builder.setCancelable(false);
-            builder.setMultiChoiceItems(items, selectedContinents, new DialogInterface.OnMultiChoiceClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                    if (isChecked) {
-                        entry = continents.get(which);
-                        value = entry.getValue();
-                        continentsList.add(value);
-                        Collections.sort(continentsList);
-                    } else {
-                        continentsList.remove(which);
-                    }
+            builder.setMultiChoiceItems(items, selectedContinents, (dialog, which, isChecked) -> {
+                if (isChecked) {
+                    entry = continents.get(which);
+                    value = entry.getValue();
+                    continentsList.add(value);
+                    id.setText(entry.getKey());
+                    Collections.sort(continentsList);
+                } else {
+                    continentsList.remove(which);
                 }
             });
             builder.setPositiveButton("OK", (dialog, which) -> dialog.dismiss());
@@ -100,7 +100,6 @@ public class EditPageActivity extends AppCompatActivity {
             }
             ArrayList<String> courseTopics = convertStringToList(CourseMainTopicsInput.getText().toString());
             Course course = new Course(courseName, courseTopics, continentsList, null);
-            EditOrDeleteAnExistingCourseActivity editOrDeleteAnExistingCourse;
             course.setCourseID(EditOrDeleteAnExistingCourseActivity.id);
             if (dbHelper.updateCourse(course)) {
                 ArrayList<String> studentsAreTakenCourse = enrollmentDataBaseHelper.getStudentsByCourseId(EditOrDeleteAnExistingCourseActivity.id);
@@ -134,13 +133,26 @@ public class EditPageActivity extends AppCompatActivity {
     }
 
     public static CharSequence[] convertListToCharSequenceArray(List<Map.Entry<String, String>> list) {
-        CharSequence[] array = new CharSequence[list.size() - 1];
+        if (list.isEmpty()) {
+            return new CharSequence[0]; // Return an empty array if the list is empty
+        }
+
+        int nonMatchingEntriesCount = 0;
+        for (Map.Entry<String, String> entry : list) {
+            if (entry.getKey().equals(EditOrDeleteAnExistingCourseActivity.id + "")) {
+                nonMatchingEntriesCount++;
+            }
+        }
+
+        CharSequence[] array = new CharSequence[list.size() - nonMatchingEntriesCount];
         int i = 0;
         for (Map.Entry<String, String> entry : list) {
             if (!entry.getKey().equals(EditOrDeleteAnExistingCourseActivity.id + "")) {
                 array[i++] = entry.getValue();
             }
         }
+
         return array;
     }
+
 }

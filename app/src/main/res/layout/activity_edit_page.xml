@@ -47,7 +47,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/courseId"
+        app:layout_constraintTop_toBottomOf="@+id/courseIdNew"
         app:layout_constraintVertical_bias="0.122" />
 
 
@@ -92,11 +92,10 @@
         app:layout_constraintVertical_bias="0.852" />
 
     <TextView
-        android:id="@+id/courseId"
+        android:id="@+id/courseIdNew"
         android:layout_width="207dp"
         android:layout_height="43dp"
         android:gravity="center"
-        android:text="Course ID"
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

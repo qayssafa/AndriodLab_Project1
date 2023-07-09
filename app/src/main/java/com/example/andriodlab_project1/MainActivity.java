@@ -30,7 +30,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    private DataBaseHelper dataBaseHelper;
     private StudentDataBaseHelper studentDataBaseHelper;
     private AdminDataBaseHelper adminDataBaseHelper;
     private InstructorDataBaseHelper instructorDataBaseHelper;
@@ -46,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // get the data
-        dataBaseHelper=new DataBaseHelper(this);
         adminDataBaseHelper = new AdminDataBaseHelper(this);
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
