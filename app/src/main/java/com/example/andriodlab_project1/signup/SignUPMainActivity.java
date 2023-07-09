@@ -169,6 +169,7 @@ public class SignUPMainActivity extends AppCompatActivity {
                     email.setText("");
                     password.setText("");
                     confirmPassword.setText("");
+                    instructor.setEmpty();
                 }
             } else if (!signUpAdmin.isEnabled()) {
                 boolean isChecked = checkUser(lFirstName, lLastName, lEmail, lPassword, lConfirmPassword, null, null, false, 2);
@@ -181,7 +182,6 @@ public class SignUPMainActivity extends AppCompatActivity {
                     email.setText("");
                     password.setText("");
                     confirmPassword.setText("");
-                    instructor.setEmpty();
                 }
             }
         });
