@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
         instructor.setMobileNumber("@13");
         instructor.setPassword("1");
         instructor.setAddress("@13");
-        instructor.setLastName("AAA");
-        instructor.setFirstName("AAA");
+        instructor.setLastName("Safa");
+        instructor.setFirstName("Qays");
         instructor.setEmail("I");
         List<String>courses=new ArrayList<>();
         courses.add("1");

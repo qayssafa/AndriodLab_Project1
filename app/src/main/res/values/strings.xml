@@ -14,7 +14,8 @@
     <string name="Create_new_course">Create a new course</string>
     <string name="Edit_delete">Edit or delete courses</string>
     <string name="Make_course_available">Make course available </string>
-    <string name="view_users_profile">view users profile</string>
+    <string name="ViewInstructorProfileActivity">View Instructor Profile</string>
+    <string name="ViewStudentProfileActivity">View Student Profile</string>
     <string name="Course_history">Course history</string>
     <string name="Registration_decisions">Registration decisions</string>
     <string name="Course_students">Course students</string>

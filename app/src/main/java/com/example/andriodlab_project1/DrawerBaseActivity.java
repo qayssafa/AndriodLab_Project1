@@ -16,6 +16,7 @@ import android.widget.FrameLayout;
 import com.example.andriodlab_project1.admin.AdminMainActivity;
 import com.example.andriodlab_project1.admin.ApplicantDecideActivity;
 import com.example.andriodlab_project1.admin.ViewInstructorProfileActivity;
+import com.example.andriodlab_project1.admin.ViewStudentProfileActivity;
 import com.example.andriodlab_project1.course.CreateCourseActivity;
 import com.example.andriodlab_project1.course.EditOrDeleteAnExistingCourseActivity;
 import com.example.andriodlab_project1.course_for_registration.EditCourseAvailableForRegistrationActivity;
@@ -67,8 +68,12 @@ public class DrawerBaseActivity extends AppCompatActivity implements NavigationV
             startActivity(new Intent(DrawerBaseActivity.this, MakeCourseAvailableForRegistrationActivity.class));
             overridePendingTransition(0, 0);
             finish();
-        } else if (id == R.id.VUP) {
+        } else if (id == R.id.ViewInstructorProfileActivity) {
             startActivity(new Intent(DrawerBaseActivity.this, ViewInstructorProfileActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        } else if (id == R.id.ViewStudentProfileActivity) {
+            startActivity(new Intent(DrawerBaseActivity.this, ViewStudentProfileActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CH) {

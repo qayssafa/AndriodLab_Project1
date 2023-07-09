@@ -24,9 +24,13 @@
                         android:icon="@drawable/baseline_event_available_24"
                         android:title="@string/Make_course_available" />
                     <item
-                        android:id="@+id/VUP"
+                        android:id="@+id/ViewInstructorProfileActivity"
                         android:icon="@drawable/baseline_supervised_user_circle_24"
-                        android:title="@string/view_users_profile" />
+                        android:title="@string/ViewInstructorProfileActivity" />
+                    <item
+                        android:id="@+id/ViewStudentProfileActivity"
+                        android:icon="@drawable/baseline_supervised_user_circle_24"
+                        android:title="@string/ViewStudentProfileActivity" />
                     <item
                         android:id="@+id/CH"
                         android:icon="@drawable/baseline_history_24"

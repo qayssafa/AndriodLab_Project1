@@ -42,6 +42,23 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.271" />
 
+    <TextView
+        android:id="@+id/list"
+        android:layout_width="40dp"
+        android:layout_height="44dp"
+        android:background="@android:drawable/editbox_background"
+        android:backgroundTint="#65affb"
+        android:drawableEnd="@android:drawable/arrow_down_float"
+        android:drawablePadding="16dp"
+        android:padding="21dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.275"
+        tools:ignore="UnknownIdInLayout" />
+
     <ImageButton
         android:id="@+id/searchInstructor"
         android:layout_width="47dp"

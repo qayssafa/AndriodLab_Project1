@@ -11,8 +11,11 @@ import androidx.annotation.Nullable;
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.signup.SignUPMainActivity;
 
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class InstructorDataBaseHelper {
@@ -126,6 +129,22 @@ public class InstructorDataBaseHelper {
     public List<String> splitStringToList(String input) {
         String[] splitArray = input.split(",");
         return Arrays.asList(splitArray);
+    }
+
+    public List<Map.Entry<String, String>> getAllInstructorsEmailAndName() {
+        List<Map.Entry<String, String>> emailAndNameList = new ArrayList<>();
+        SQLiteDatabase sqLiteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT EMAIL, FIRSTNAME, LASTNAME FROM INSTRUCTOR", null);
+        if (cursor.moveToFirst()) {
+            do {
+                String email = cursor.getString(0);
+                String name = cursor.getString(1) + " " + cursor.getString(2);
+                emailAndNameList.add(new AbstractMap.SimpleEntry<>(email, name));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        sqLiteDatabase.close();
+        return emailAndNameList;
     }
 
 }
