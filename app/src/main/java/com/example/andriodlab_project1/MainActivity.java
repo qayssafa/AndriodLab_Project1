@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         courses.add("2");
         courses.add("3");
         instructor.setCoursesTaught(courses);
-        instructorDataBaseHelper.insertInstructor(instructor);
+        //instructorDataBaseHelper.insertInstructor(instructor);
 
         // buttons and text views
         EditText email = findViewById(R.id.etEmail);

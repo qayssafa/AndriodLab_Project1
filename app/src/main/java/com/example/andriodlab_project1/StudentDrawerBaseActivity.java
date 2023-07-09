@@ -18,6 +18,7 @@ import com.example.andriodlab_project1.student.OfferingCoursesInStudentActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
+import com.example.andriodlab_project1.student.StudentProfileActivity;
 import com.example.andriodlab_project1.student.ViewEditProfile;
 import com.example.andriodlab_project1.student.messages;
 import com.google.android.material.navigation.NavigationView;
@@ -79,7 +80,7 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.profile) {
-            startActivity(new Intent(StudentDrawerBaseActivity.this, ViewEditProfile.class));
+            startActivity(new Intent(StudentDrawerBaseActivity.this, StudentProfileActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.logout) {

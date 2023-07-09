@@ -1,5 +1,10 @@
-package com.example.andriodlab_project1.instructor;
+package com.example.andriodlab_project1.student;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+
+import com.example.andriodlab_project1.R;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.Color;
@@ -8,6 +13,7 @@ import android.os.Bundle;
 import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.StudentDrawerBaseActivity;
 import com.example.andriodlab_project1.databinding.ActivityInstructorProfileBinding;
 
 import android.view.View;
@@ -16,45 +22,46 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.databinding.ActivityStudentProfileBinding;
+import com.example.andriodlab_project1.instructor.Instructor;
+import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
+import com.example.andriodlab_project1.instructor.InstructorProfileActivity;
 
 import java.util.regex.Pattern;
 
-public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
+public class StudentProfileActivity extends StudentDrawerBaseActivity {
 
-    ActivityInstructorProfileBinding activityInstructorProfileBinding;
+    ActivityStudentProfileBinding activityStudentProfileBinding;
 
     EditText firstName, lastName, mobileNumber, address, specialization, degree, password,insEmail;
 
-    TextView instructorName;
+    TextView StudentName;
     Button editProfile;
 
-    private InstructorDataBaseHelper instructorDataBaseHelper;
+    private StudentDataBaseHelper studentDataBaseHelper;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityInstructorProfileBinding = ActivityInstructorProfileBinding.inflate(getLayoutInflater());
-        setContentView(activityInstructorProfileBinding.getRoot());
-        //setContentView(R.layout.activity_instructor_profile);
+        activityStudentProfileBinding = ActivityStudentProfileBinding.inflate(getLayoutInflater());
+        setContentView(activityStudentProfileBinding.getRoot());
+//        setContentView(R.layout.activity_student_profile);
 
         firstName = findViewById(R.id.InsFirstName);
         lastName = findViewById(R.id.InsLastName);
         mobileNumber = findViewById(R.id.InsMobileNumber);
         address = findViewById(R.id.InsAddress);
-        specialization = findViewById(R.id.InsSpecialization);
-        degree = findViewById(R.id.InsDegree);
         password = findViewById(R.id.inspassword);
         editProfile = findViewById(R.id.buttonEditProfile);
-        instructorName = findViewById(R.id.inccName);
+        StudentName = findViewById(R.id.inccName);
         insEmail = findViewById(R.id.insEmail);
 
 
-        instructorDataBaseHelper = new InstructorDataBaseHelper(this);
-        instructorName.setText(instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getFirstName() + " " + instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getLastName());
-        Instructor instructor = instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail);
-        setInstructorData(instructor);
-
+        studentDataBaseHelper = new StudentDataBaseHelper(this);
+        StudentName.setText(studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getFirstName() + " " + studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getLastName());
+        Student student = studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail);
+        setStudentData(student);
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,15 +70,13 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                 String lastNameText = lastName.getText().toString();
                 String mobileNumberText = mobileNumber.getText().toString();
                 String addressText = address.getText().toString();
-                String specializationText = specialization.getText().toString();
-                String degreeText = degree.getText().toString();
                 String passwordText = password.getText().toString();
                 String insEmailText = insEmail.getText().toString();
                 String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
                 Pattern emailPattern = Pattern.compile(emailRegex);
 
                 if (firstNameText.isEmpty() || firstNameText.isBlank() || firstNameText.length() < 3 || firstNameText.length() > 20) {
-                    Toast.makeText(InstructorProfileActivity.this, "First name must be between 3 and 20 characters!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentProfileActivity.this, "First name must be between 3 and 20 characters!", Toast.LENGTH_SHORT).show();
                 }
                 else if (lastNameText.isEmpty() || lastNameText.isBlank() || lastNameText.length() < 3 || lastNameText.length() > 20) {
                     showToastMessage("Last name must be between 3 and 20 characters!");
@@ -80,36 +85,30 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                     showToastMessage("Password must be between 8 and 15 characters and contain at least one number, one lowercase letter, and one uppercase letter!");
                 } else if (mobileNumberText.isEmpty() || mobileNumberText.isBlank() || mobileNumberText.length() != 10) {
                     showToastMessage("Mobile number must be 10 digits!");
-                } else if (addressText.isEmpty() || addressText.isBlank()  ) {
+                } else if (addressText.isEmpty() || addressText.isBlank() ) {
                     showToastMessage("Address field is empty ");
-                } else if (specializationText.isEmpty() || specializationText.isBlank() ) {
-                    showToastMessage("Specialization field is empty");
-                } else if (degreeText.isEmpty() || degreeText.isBlank() ) {
-                    showToastMessage("Degree field is empty");
-                }
-                else if (insEmailText.isEmpty() || insEmailText.isBlank() || !emailPattern.matcher(insEmailText).matches()) {
+                } else if (insEmailText.isEmpty() || insEmailText.isBlank() || !emailPattern.matcher(insEmailText).matches()) {
                     showToastMessage("This Email not Valid!");
                 }
                 else {
-                    Instructor updatedInstructor = new Instructor();
-                    updatedInstructor.setFirstName(firstNameText);
-                    updatedInstructor.setLastName(lastNameText);
-                    updatedInstructor.setMobileNumber(mobileNumberText);
-                    updatedInstructor.setAddress(addressText);
-                    updatedInstructor.setSpecialization(specializationText);
-                    updatedInstructor.setDegree(degreeText);
-                    updatedInstructor.setPassword(passwordText);
-                    updatedInstructor.setEmail(insEmailText);
+                    Student updateStudent = new Student();
+                    updateStudent.setFirstName(firstNameText);
+                    updateStudent.setLastName(lastNameText);
+                    updateStudent.setMobileNumber(mobileNumberText);
+                    updateStudent.setAddress(addressText);
+                    updateStudent.setPassword(passwordText);
+                    updateStudent.setEmail(insEmailText);
 
-                    instructorDataBaseHelper.updateInstructor(updatedInstructor);
+                    studentDataBaseHelper.updateStudent(updateStudent);
 
-                    Toast.makeText(InstructorProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(StudentProfileActivity.this, "Profile updated successfully", Toast.LENGTH_SHORT).show();
 
-                    instructorName.setText(instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getFirstName() + " " + instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getLastName());
+                    StudentName.setText(studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getFirstName() + " " + studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getLastName());
                 }
 
             }
         });
+
     }
 
     private void showToastMessage(String message) {
@@ -121,29 +120,23 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
         toast.show();
     }
 
-    private void setInstructorData(Instructor instructor) {
-        insEmail.setText(instructor.getEmail());
+    private void setStudentData(Student student) {
+        insEmail.setText(student.getEmail());
         insEmail.setSelection(insEmail.getText().length());
         insEmail.clearFocus();
-        firstName.setText(instructor.getFirstName());
+        firstName.setText(student.getFirstName());
         firstName.setSelection(firstName.getText().length());
         firstName.clearFocus();
-        lastName.setText(instructor.getLastName());
+        lastName.setText(student.getLastName());
         lastName.setSelection(lastName.getText().length());
         lastName.clearFocus();
-        mobileNumber.setText(instructor.getMobileNumber());
+        mobileNumber.setText(student.getMobileNumber());
         mobileNumber.setSelection(mobileNumber.getText().length());
         mobileNumber.clearFocus();
-        address.setText(instructor.getAddress());
+        address.setText(student.getAddress());
         address.setSelection(address.getText().length());
         address.clearFocus();
-        specialization.setText(instructor.getSpecialization());
-        specialization.setSelection(specialization.getText().length());
-        specialization.clearFocus();
-        degree.setText(instructor.getDegree());
-        degree.setSelection(degree.getText().length());
-        degree.clearFocus();
-        password.setText(instructor.getPassword());
+        password.setText(student.getPassword());
         password.setSelection(password.getText().length());
         password.clearFocus();
     }

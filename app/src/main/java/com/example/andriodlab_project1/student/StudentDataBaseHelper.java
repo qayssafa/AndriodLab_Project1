@@ -11,6 +11,7 @@ import android.graphics.BitmapFactory;
 import androidx.annotation.Nullable;
 
 import com.example.andriodlab_project1.common.DataBaseHelper;
+import com.example.andriodlab_project1.instructor.Instructor;
 
 import java.io.ByteArrayOutputStream;
 import java.util.AbstractMap;
@@ -147,6 +148,23 @@ public class StudentDataBaseHelper {
         sqLiteDatabase.close();
         return emailAndNameList;
     }
+
+
+
+    public int updateStudent(Student student) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("FIRSTNAME", student.getFirstName());
+        contentValues.put("LASTNAME", student.getLastName());
+        contentValues.put("PASSWORD", student.getPassword());
+        contentValues.put("MOBILENUMBER", student.getMobileNumber());
+        contentValues.put("ADDRESS", student.getAddress());
+
+        String email = student.getEmail();
+        return sqLiteDatabase.update("STUDENT", contentValues, "EMAIL = ?", new String[]{email});
+    }
+
+
 
 
 }
