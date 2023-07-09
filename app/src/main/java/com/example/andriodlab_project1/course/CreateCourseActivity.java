@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -113,7 +114,8 @@ public class CreateCourseActivity extends DrawerBaseActivity {
             public void onClick(View v) {
                 String courseName = CourseTitleInput.getText().toString();
                 ArrayList<String> courseTopics = convertStringToList(CourseMainTopicsInput.getText().toString());
-                Course course = new Course(courseName, courseTopics, continentsList, imageToStore);
+                Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.defaultphoto);
+                Course course = new Course(courseName, courseTopics, continentsList, imageToStore == null? bitmap : imageToStore);
                 if (CourseTitleInput.getText().toString().isEmpty() || CourseTitleInput.getText().toString().isBlank()) {
                     Toast.makeText(CreateCourseActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
                 } else if (CourseMainTopicsInput.getText().toString().isEmpty() || CourseMainTopicsInput.getText().toString().isBlank()) {
