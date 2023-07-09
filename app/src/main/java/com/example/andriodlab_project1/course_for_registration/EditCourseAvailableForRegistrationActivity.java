@@ -304,7 +304,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             if (dbHelper.updateAvailableCourse(availableCourse, email)) {
                                 List<String> students = enrollmentDataBaseHelper.getStudentsByCourseId(value);
                                 for (String student : students) {
-                                    String message = "This Course '" + courseDataBaseHelper.getCourseByID(value) + "' has been Updated.";
+                                    String message = "This Course " + courseDataBaseHelper.getCourseByID(value).getCourseTitle() + " has been Updated.";
                                     notificationDataBaseHelper.insertNotification(student, message);
                                 }
                                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Course its Updated successfully.", Toast.LENGTH_SHORT).show();
