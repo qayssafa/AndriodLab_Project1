@@ -128,6 +128,9 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                     updatedInstructor.setDegree(degreeText);
                     updatedInstructor.setPassword(passwordText);
                     updatedInstructor.setEmail(insEmailText);
+                    if(imageToStore != null){
+                        changeimages.setImageBitmap(imageToStore);
+                    }
                     if(imageToStore != null)
                         updatedInstructor.setPhoto(imageToStore);
                     else
