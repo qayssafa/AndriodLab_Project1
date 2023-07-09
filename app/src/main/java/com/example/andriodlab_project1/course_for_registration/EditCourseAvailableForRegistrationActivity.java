@@ -71,7 +71,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         EditText editStartDate = (EditText) findViewById(R.id.StartDateEditTextEdit);
         EditText editEndDate = (EditText) findViewById(R.id.CourseEndDateEdit);
         EditText deadLine = (EditText) findViewById(R.id.RegistrationDeadLineEditTextEdit);
-        CourseSchedule = (EditText) findViewById(R.id.CourseScheduleEditTextEdit);
+        //CourseSchedule = (EditText) findViewById(R.id.CourseScheduleEditTextEdit);
         Venue = (EditText) findViewById(R.id.VenueEditTextEdit);
         CourseNumber = (TextView) findViewById(R.id.CourseNumberTextViewEdit);
         Button submit = findViewById(R.id.submitEdit);
