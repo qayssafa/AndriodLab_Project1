@@ -81,7 +81,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.578" />
 
     <TextView
         android:id="@+id/InsLastName"
@@ -92,7 +92,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.646" />
+        app:layout_constraintVertical_bias="0.63" />
 
     <TextView
         android:id="@+id/InsMobileNumber"
@@ -103,7 +103,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701" />
+        app:layout_constraintVertical_bias="0.683" />
 
     <TextView
         android:id="@+id/InsAddress"
@@ -114,7 +114,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.751" />
+        app:layout_constraintVertical_bias="0.731" />
 
     <TextView
         android:id="@+id/InsSpecialization"
@@ -125,7 +125,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.799" />
+        app:layout_constraintVertical_bias="0.779" />
 
     <TextView
         android:id="@+id/InsDegree"
@@ -136,6 +136,6 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.849" />
+        app:layout_constraintVertical_bias="0.829" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

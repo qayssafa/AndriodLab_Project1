@@ -81,7 +81,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.588" />
+        app:layout_constraintVertical_bias="0.578" />
 
     <TextView
         android:id="@+id/InsLastName"
@@ -92,7 +92,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.646" />
+        app:layout_constraintVertical_bias="0.63" />
 
     <TextView
         android:id="@+id/InsMobileNumber"
@@ -103,7 +103,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.701" />
+        app:layout_constraintVertical_bias="0.68" />
 
     <TextView
         android:id="@+id/InsAddress"
@@ -114,8 +114,7 @@
         app:layout_constraintHorizontal_bias="0.729"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.751" />
-
+        app:layout_constraintVertical_bias="0.734" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

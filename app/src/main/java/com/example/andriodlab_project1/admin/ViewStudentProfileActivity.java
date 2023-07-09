@@ -4,6 +4,8 @@ import androidx.appcompat.app.AlertDialog;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -112,9 +114,21 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
             if (!(studentEmail.getText().toString().isEmpty()) && studentDataBaseHelper.isRegistered(studentEmail.getText().toString())) {
                 Student student1 = studentDataBaseHelper.getStudentByEmail(studentEmail.getText().toString());
                 studentLName.setText(String.valueOf(student1.getLastName()));
+                studentLName.setTextSize(20);
+                studentLName.setTextColor(Color.BLACK);
+                studentLName.setTypeface(null, Typeface.BOLD);
                 studentFName.setText(String.valueOf(student1.getFirstName()));
+                studentFName.setTextSize(20);
+                studentFName.setTextColor(Color.BLACK);
+                studentFName.setTypeface(null, Typeface.BOLD);
                 studentPhone.setText(String.valueOf(student1.getMobileNumber()));
+                studentPhone.setTextSize(20);
+                studentPhone.setTextColor(Color.BLACK);
+                studentPhone.setTypeface(null, Typeface.BOLD);
                 studentAddress.setText(String.valueOf(student1.getAddress()));
+                studentAddress.setTextSize(20);
+                studentAddress.setTextColor(Color.BLACK);
+                studentAddress.setTypeface(null, Typeface.BOLD);
                 Bitmap Photo1 = studentDataBaseHelper.getImage(student1.getEmail());
                 if(Photo1 != null) {
                     //courseImageView = findViewById(R.id.imageView4);

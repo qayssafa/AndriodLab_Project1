@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -103,12 +105,6 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
                                     instructorAddress.setText("");
                                     instructorSpecialization.setText("");
                                     instructorDegree.setText("");
-                                    Bitmap Photo1 = instructorDataBaseHelper.getImage(instructor.getEmail());
-                                    if(Photo1 != null) {
-                                        //courseImageView = findViewById(R.id.imageView4);
-                                        displayPhotoIns = findViewById(R.id.imageView18);
-                                        displayPhotoIns.setImageBitmap(Photo1);
-                                    }
                                 }
                             }
                         });
@@ -130,11 +126,35 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
                 Instructor instructor1 = instructorDataBaseHelper.getInstructorByEmail(instructorEmail.getText().toString());
 
                 instructorLName.setText(String.valueOf(instructor1.getLastName()));
+                instructorLName.setTextSize(20);
+                instructorLName.setTextColor(Color.BLACK);
+                instructorLName.setTypeface(null, Typeface.BOLD);
                 instructorFName.setText(String.valueOf(instructor1.getFirstName()));
+                instructorFName.setTextSize(20);
+                instructorFName.setTextColor(Color.BLACK);
+                instructorFName.setTypeface(null, Typeface.BOLD);
                 instructorPhone.setText(String.valueOf(instructor1.getMobileNumber()));
+                instructorPhone.setTextSize(20);
+                instructorPhone.setTextColor(Color.BLACK);
+                instructorPhone.setTypeface(null, Typeface.BOLD);
                 instructorAddress.setText(String.valueOf(instructor1.getAddress()));
+                instructorAddress.setTextSize(20);
+                instructorAddress.setTextColor(Color.BLACK);
+                instructorAddress.setTypeface(null, Typeface.BOLD);
                 instructorSpecialization.setText(String.valueOf(instructor1.getSpecialization()));
+                instructorSpecialization.setTextSize(20);
+                instructorSpecialization.setTextColor(Color.BLACK);
+                instructorSpecialization.setTypeface(null, Typeface.BOLD);
                 instructorDegree.setText(String.valueOf(instructor1.getDegree()));
+                instructorDegree.setTextSize(20);
+                instructorDegree.setTextColor(Color.BLACK);
+                instructorDegree.setTypeface(null, Typeface.BOLD);
+                Bitmap Photo1 = instructorDataBaseHelper.getImage(instructor.getEmail());
+                if(Photo1 != null) {
+                    //courseImageView = findViewById(R.id.imageView4);
+                    displayPhotoIns = findViewById(R.id.imageView18);
+                    displayPhotoIns.setImageBitmap(Photo1);
+                }
 
             } else {
                 Toast.makeText(ViewInstructorProfileActivity.this, "This Email its not Valid.", Toast.LENGTH_SHORT).show();
