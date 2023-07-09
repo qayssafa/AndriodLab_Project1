@@ -386,20 +386,10 @@ public class AvailableCourseDataBaseHelper {
         String currentTimeString = dateFormat.format(new Date(currentTime));
         Cursor cursor = null;
         try {
-            if (isTableCreatedFirstTime("enrollments")) {
-                SQLiteDatabase db = dbHelper.getReadableDatabase();
-                cursor = db.rawQuery("SELECT ac.COURSE_ID, ac.registration_Number " +
-                        "FROM AvailableCourse ac " +
-                        "LEFT JOIN COURSE c ON ac.COURSE_ID = c.COURSE_ID " +
-                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') ", null);
-            } else {
                 SQLiteDatabase db1 = dbHelper.getReadableDatabase();
-                cursor = db1.rawQuery("SELECT ac.COURSE_ID, ac.registration_Number " +
+                cursor = db1.rawQuery("SELECT ac.COURSE_ID, ac.registration_deadline " +
                         "FROM AvailableCourse ac " +
-                        "LEFT JOIN enrollments e ON ac.COURSE_ID = e.COURSE_ID " +
-                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') " +
-                        "AND e.COURSE_ID IS NULL", null);
-            }
+                        "WHERE datetime(ac.registration_deadline) >= datetime('" + currentTimeString + "') " , null);
             if (cursor.moveToFirst()) {
                 do {
                     courses.add(new AbstractMap.SimpleEntry<>(cursor.getInt(1), cursor.getInt(0)));
@@ -414,8 +404,9 @@ public class AvailableCourseDataBaseHelper {
         }
     }
 
-    public boolean updateAvailableCourse(AvailableCourse availableCourse,String email) {
+    public boolean updateAvailableCourse(AvailableCourse availableCourse, String email) {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
+
         // Create a ContentValues object and put the updated values
         ContentValues values = new ContentValues();
         values.put("instructor_name", getInstructorName(email));
@@ -435,11 +426,7 @@ public class AvailableCourseDataBaseHelper {
         int rowsAffected = db.update("AvailableCourse", values, whereClause, whereArgs);
 
         // Check the number of rows affected to determine if the update was successful
-        if (rowsAffected > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return rowsAffected > 0;
     }
 
 

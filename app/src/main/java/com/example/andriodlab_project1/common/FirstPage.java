@@ -9,6 +9,11 @@ import android.widget.TextView;
 
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+
+import java.util.List;
+
+import kotlin.Triple;
 
 public class FirstPage extends AppCompatActivity {
 
@@ -40,8 +45,58 @@ public class FirstPage extends AppCompatActivity {
         date3 = findViewById(R.id.date3);
         date4 = findViewById(R.id.date4);
         date5 = findViewById(R.id.date5);
-
         btnLogin = findViewById(R.id.nextpage);
+        AvailableCourseDataBaseHelper availableCourseDataBaseHelper=new AvailableCourseDataBaseHelper(this);
+        List<Triple<String, String, String>> courses = availableCourseDataBaseHelper.getRecentlyAddedCourses();
+
+        int numCourses = courses != null ? courses.size() : 0;
+
+        for (int i = 0; i < 5; i++) {
+            TextView idTextView = null;
+            TextView titleTextView = null;
+            TextView dateTextView = null;
+
+            // Find the TextViews dynamically based on the loop index
+            switch (i) {
+                case 0:
+                    idTextView = id1;
+                    titleTextView = title1;
+                    dateTextView = date1;
+                    break;
+                case 1:
+                    idTextView = id2;
+                    titleTextView = title2;
+                    dateTextView = date2;
+                    break;
+                case 2:
+                    idTextView = id3;
+                    titleTextView = title3;
+                    dateTextView = date3;
+                    break;
+                case 3:
+                    idTextView = id4;
+                    titleTextView = title4;
+                    dateTextView = date4;
+                    break;
+                case 4:
+                    idTextView = id5;
+                    titleTextView = title5;
+                    dateTextView = date5;
+                    break;
+            }
+
+            if (i < numCourses) {
+                Triple<String, String, String> courseInfo = courses.get(i);
+                idTextView.setText(courseInfo.getFirst());
+                titleTextView.setText(courseInfo.getSecond());
+                dateTextView.setText(courseInfo.getThird());
+            } else {
+                idTextView.setText("N/A");
+                titleTextView.setText("N/A");
+                dateTextView.setText("N/A");
+            }
+        }
+
 
         btnLogin.setOnClickListener(v -> {
             startActivity(new Intent(FirstPage.this, MainActivity.class));

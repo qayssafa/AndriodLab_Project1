@@ -61,7 +61,6 @@ public class SearchAndViewCourseAreAvailableActivity extends StudentDrawerBaseAc
 
         TextView listOfCourses = findViewById(R.id.enrollCoursesList);
         continents =dbHelper.getAllCoursesAreAvailableForRegistration();
-        items = convertListToCharSequenceArray(continents);
         Button enroll = findViewById(R.id.ENrollButton);
         if (!continents.isEmpty()) {
         listOfCourses.setOnClickListener(v -> {
