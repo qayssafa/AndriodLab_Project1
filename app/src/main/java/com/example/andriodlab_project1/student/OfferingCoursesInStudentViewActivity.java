@@ -33,7 +33,6 @@ public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActi
         super.onCreate(savedInstanceState);
         activityViewPreviousOfferingsBinding = ActivityViewPreviousOfferingsBinding.inflate(getLayoutInflater());
         setContentView(activityViewPreviousOfferingsBinding.getRoot());
-        //setContentView(R.layout.activity_search_courses);
         TextView courseNumber;
         TextView courseTitle;
         TextView startTime;
