@@ -65,7 +65,7 @@ public class EditPageActivity extends AppCompatActivity {
         CourseTitleInput = findViewById(R.id.EditCourseTitleInput);
         CourseMainTopicsInput = findViewById(R.id.EditCourseMainTopicsInput);
         Prerequisites = findViewById(R.id.Editlist);
-        id = findViewById(R.id.courseIdNew);
+        //id = findViewById(R.id.courseIdNew);
         GoBackButton = findViewById(R.id.BackButton);
         insertPhoto = findViewById(R.id.InsertPhotoButton);
 
