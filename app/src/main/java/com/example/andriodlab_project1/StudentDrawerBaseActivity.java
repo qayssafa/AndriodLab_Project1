@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 
 import com.example.andriodlab_project1.student.CourseWithdrawActivity;
 import com.example.andriodlab_project1.student.CoursesStudiedInTheCenterActivity;
+import com.example.andriodlab_project1.student.OfferingCoursesInStudentActivity;
 import com.example.andriodlab_project1.student.OfferingCoursesInStudentViewActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
@@ -63,7 +64,7 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.OfferingCourses) {
-            startActivity(new Intent(StudentDrawerBaseActivity.this, OfferingCoursesInStudentViewActivity.class));
+            startActivity(new Intent(StudentDrawerBaseActivity.this, OfferingCoursesInStudentActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.AvailableCourses) {

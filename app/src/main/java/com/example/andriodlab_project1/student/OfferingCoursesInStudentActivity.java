@@ -17,6 +17,7 @@ import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivityOfferingCoursesInStudentBinding;
 import com.example.andriodlab_project1.databinding.ActivitySearchCoursesBinding;
 
 import java.util.List;
@@ -24,14 +25,15 @@ import java.util.Map;
 
 import kotlin.Triple;
 
-public class OfferingCoursesInStudentViewActivity  extends StudentDrawerBaseActivity {
+public class OfferingCoursesInStudentActivity  extends StudentDrawerBaseActivity {
 
-      //ActivityOfferingCoursesInStudentViewBinding activityOfferingCoursesInStudentViewBinding;
+    ActivityOfferingCoursesInStudentBinding activityOfferingCoursesInStudentBinding ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       // activityOfferingCoursesInStudentViewBinding = ActivityOfferingCoursesInStudentViewBinding.inflate(getLayoutInflater());
-        //setContentView(activityOfferingCoursesInStudentViewBinding.getRoot());
+        activityOfferingCoursesInStudentBinding = ActivityOfferingCoursesInStudentBinding.inflate(getLayoutInflater());
+        setContentView(activityOfferingCoursesInStudentBinding.getRoot());
         //setContentView(R.layout.activity_search_courses);
         TextView courseNumber;
         TextView courseTitle;
