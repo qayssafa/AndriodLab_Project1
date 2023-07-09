@@ -1,7 +1,11 @@
 package com.example.andriodlab_project1.student;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.andriodlab_project1.R;
@@ -16,9 +20,11 @@ import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.StudentDrawerBaseActivity;
 import com.example.andriodlab_project1.databinding.ActivityInstructorProfileBinding;
 
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.andriodlab_project1.R;
@@ -40,6 +46,14 @@ public class StudentProfileActivity extends StudentDrawerBaseActivity {
 
     private StudentDataBaseHelper studentDataBaseHelper;
 
+    ImageView changeimagesStudent;
+
+    Button changeImagesButtonStudent;
+
+    public static final int PICK_IMAGE_REQUEST = 100;
+    private Uri imageFilePath;
+    private Bitmap imageToStore;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +70,27 @@ public class StudentProfileActivity extends StudentDrawerBaseActivity {
         editProfile = findViewById(R.id.buttonEditProfile);
         StudentName = findViewById(R.id.inccName);
         insEmail = findViewById(R.id.insEmail);
+        changeimagesStudent = findViewById(R.id.imageView18);
+        changeImagesButtonStudent = findViewById(R.id.changeImageStudent);
 
 
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         StudentName.setText(studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getFirstName() + " " + studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail).getLastName());
         Student student = studentDataBaseHelper.getStudentByEmail(MainActivity.studentEmail);
         setStudentData(student);
+
+        Bitmap Photo1 = studentDataBaseHelper.getImage(insEmail.getText().toString());
+        if(Photo1 != null) {
+            //courseImageView = findViewById(R.id.imageView4);
+            changeimagesStudent.setImageBitmap(Photo1);
+        }
+
+        changeImagesButtonStudent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,6 +127,14 @@ public class StudentProfileActivity extends StudentDrawerBaseActivity {
                     updateStudent.setAddress(addressText);
                     updateStudent.setPassword(passwordText);
                     updateStudent.setEmail(insEmailText);
+
+                    if(imageToStore != null){
+                        changeimagesStudent.setImageBitmap(imageToStore);
+                    }
+                    if(imageToStore != null)
+                        updateStudent.setPhoto(imageToStore);
+                    else
+                        updateStudent.setPhoto(Photo1);
 
                     studentDataBaseHelper.updateStudent(updateStudent);
 
@@ -139,5 +176,30 @@ public class StudentProfileActivity extends StudentDrawerBaseActivity {
         password.setText(student.getPassword());
         password.setSelection(password.getText().length());
         password.clearFocus();
+    }
+
+    public void chooseImage() {
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                imageFilePath = data.getData();
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
