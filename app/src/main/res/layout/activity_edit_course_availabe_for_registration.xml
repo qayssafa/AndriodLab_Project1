@@ -44,19 +44,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.868" />
 
-    <EditText
-        android:id="@+id/CourseScheduleEditTextEdit"
-        android:layout_width="173dp"
-        android:layout_height="41dp"
-        android:ems="10"
-        android:hint="Course Schedule"
-        android:inputType="text"
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="172dp"
+        android:layout_height="22dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.949"
+        app:layout_constraintHorizontal_bias="0.945"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.795" />
+        app:layout_constraintVertical_bias="0.791" />
 
     <EditText
         android:id="@+id/StartDateEditTextEdit"
