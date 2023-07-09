@@ -4,10 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
     EditText studentEmail;
     TextView studentPhone;
     TextView studentAddress;
+    private ImageView displayPhoto;
 
     ImageButton searchInstructor;
     private InstructorDataBaseHelper instructorDataBaseHelper;
@@ -51,7 +54,7 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
         activityViewStudentProfileBinding = ActivityViewStudentProfileBinding.inflate(getLayoutInflater());
         setContentView(activityViewStudentProfileBinding.getRoot());
         //setContentView(R.layout.activity_view_student_profile);
-
+        //imageView18
         studentFName = findViewById(R.id.InsFirstName);
         studentLName = findViewById(R.id.InsLastName);
         studentEmail = findViewById(R.id.enterEmail);
@@ -63,6 +66,7 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
         studentDataBaseHelper  = new StudentDataBaseHelper(this);
         continents = studentDataBaseHelper.getAllStudentEmailAndName();
+
         if (!(continents.isEmpty())) {
             listOfStudent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -96,14 +100,20 @@ public class ViewStudentProfileActivity extends DrawerBaseActivity {
 
                             }
                         }
+
                     });
+                    Bitmap Photo1 = studentDataBaseHelper.getImage(student.getEmail());
+                    if(Photo1 != null) {
+                        //courseImageView = findViewById(R.id.imageView4);
+                        displayPhoto = findViewById(R.id.imageView18);
+                        displayPhoto.setImageBitmap(Photo1);
+                    }
                     builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                         }
                     });
-
                     builder.show();
                 }
             });

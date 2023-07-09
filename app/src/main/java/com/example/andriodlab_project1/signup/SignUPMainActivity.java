@@ -2,13 +2,17 @@ package com.example.andriodlab_project1.signup;
 
 import static com.example.andriodlab_project1.course.CreateCourseActivity.PICK_IMAGE_REQUEST;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +39,9 @@ public class SignUPMainActivity extends AppCompatActivity {
     private InstructorDataBaseHelper dbHelperInstructor;
     private AdminDataBaseHelper dbHelperAdmin;
     private CourseDataBaseHelper dbHelperCourse;
-
-    private static final int PICK_IMAGE_REQUEST = 100;
+    public static final int PICK_IMAGE_REQUEST = 100;
+    private Uri imageFilePath;
+    private Bitmap imageToStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,7 +132,8 @@ public class SignUPMainActivity extends AppCompatActivity {
                 lPhone = student.getPhoneStudentValue();
                 checkResult = checkUser(lFirstName, lLastName, lEmail, lPassword, lConfirmPassword, lPhone, lAddress, true, 0);
                 if (checkResult) {
-                    student1 = new Student(lEmail, lFirstName, lLastName, lPassword, lPhone, lAddress);
+                    //Bitmap studentPhoto = imageToStore;
+                    student1 = new Student(lEmail, lFirstName, lLastName, lPassword, lPhone, lAddress,imageToStore);
                     dbHelperStudent.insertStudent(student1);
                     Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
                     firstName.setText("");
@@ -193,6 +199,19 @@ public class SignUPMainActivity extends AppCompatActivity {
             intent.setType("image/*");
             intent.setAction(Intent.ACTION_GET_CONTENT);
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                imageFilePath = data.getData();
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+
+            }
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }

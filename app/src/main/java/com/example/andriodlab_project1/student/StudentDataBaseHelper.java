@@ -5,11 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
 import com.example.andriodlab_project1.common.DataBaseHelper;
 
+import java.io.ByteArrayOutputStream;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.Map;
 
 public class StudentDataBaseHelper {
     private final DataBaseHelper dbHelper;
+    private byte[] imageBytes;
+    private ByteArrayOutputStream objectByteArrayOutputStream;
 
     public StudentDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -27,7 +32,7 @@ public class StudentDataBaseHelper {
     private void createTableIfNotExists() {
         if (isTableCreatedFirstTime("STUDENT")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
-            sqLiteDatabase.execSQL("CREATE TABLE STUDENT(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL,MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL)");
+            sqLiteDatabase.execSQL("CREATE TABLE STUDENT(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL,MOBILENUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,PHOTO BLOB)");
         }
     }
 
@@ -59,6 +64,11 @@ public class StudentDataBaseHelper {
             contentValues.put("PASSWORD", student.getPassword());
             contentValues.put("MOBILENUMBER", student.getMobileNumber());
             contentValues.put("ADDRESS", student.getAddress());
+            Bitmap imageStore = student.getPhoto();
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imageStore.compress(Bitmap.CompressFormat.PNG,100,objectByteArrayOutputStream);
+            imageBytes = objectByteArrayOutputStream.toByteArray();
+            contentValues.put("PHOTO",imageBytes);
             sqLiteDatabase.insert("STUDENT", null, contentValues);
             return true;
         }
@@ -77,8 +87,23 @@ public class StudentDataBaseHelper {
             student.setPassword(cursor.getString(3));
             student.setMobileNumber(cursor.getString(4));
             student.setAddress(cursor.getString(5));
+            byte[] conv = cursor.getBlob(6);
+            Bitmap ret = BitmapFactory.decodeByteArray(conv, 0, conv.length);
+            student.setPhoto(ret);
         }
         return student;
+    }
+
+    public Bitmap getImage(String Student_Email) {
+        Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT PHOTO FROM STUDENT WHERE EMAIL = ?", new String[]{Student_Email});
+        Bitmap ret = null;
+        if (c.getCount() != 0) {
+            while (c.moveToNext()) {
+                byte[] conv = c.getBlob(0);
+                ret = BitmapFactory.decodeByteArray(conv, 0, conv.length);
+            }
+        }
+        return ret;
     }
 
 
