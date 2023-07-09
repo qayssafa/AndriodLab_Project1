@@ -71,7 +71,6 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         EditText editStartDate = (EditText) findViewById(R.id.StartDateEditTextEdit);
         EditText editEndDate = (EditText) findViewById(R.id.CourseEndDateEdit);
         EditText deadLine = (EditText) findViewById(R.id.RegistrationDeadLineEditTextEdit);
-        //CourseSchedule = (EditText) findViewById(R.id.CourseScheduleEditTextEdit);
         Venue = (EditText) findViewById(R.id.VenueEditTextEdit);
         CourseNumber = (TextView) findViewById(R.id.CourseNumberTextViewEdit);
         Button submit = findViewById(R.id.submitEdit);
@@ -136,13 +135,12 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     entry = continents.get(selected);
                     key = entry.getKey();
                     value=entry.getValue();
-                    CourseNumber.setText(String.valueOf(value));
 
                     availableCourses = dbHelper.getAvailableCourseByCourse_Id(value);
                     for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                         AvailableCourse availableCourse = lCourseInfo.getFirst();
+                        CourseNumber.setText(String.valueOf(value));
                         Venue.setText(availableCourse.getVenue());
-                        CourseSchedule.setText(availableCourse.getCourseSchedule());
                         InstructorName.setText(lCourseInfo.getSecond());
                         deadLine.setText(availableCourse.getRegistrationDeadline());
                         editStartDate.setText(availableCourse.getCourseStartDate());
@@ -242,7 +240,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             check = false;
             checkInstructor = false;
             String venue = Venue.getText().toString();
-            //String courseSchedule = CourseSchedule.getText().toString();
+            String courseSchedule = selectedValue;
             String instructorName = InstructorName.getText().toString();
             String lDeadLine = deadLine.getText().toString();
             String lEditStartDate = editStartDate.getText().toString();
@@ -271,7 +269,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This DeadLine Date not Valid!", Toast.LENGTH_SHORT).show();
             } else if (!isEndDateAfterStartDate(lEditStartDate, lDeadLine)) {
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Start Date And DeadLine Date  not Valid!", Toast.LENGTH_SHORT).show();
-            } else if (selectedValue.isEmpty() || selectedValue.isBlank()) {
+            } else if (courseSchedule.isEmpty() || courseSchedule.isBlank()) {
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This courseSchedule not Valid!", Toast.LENGTH_SHORT).show();
             } else if (venue.isEmpty() || venue.isBlank()) {
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Venue not Valid!", Toast.LENGTH_SHORT).show();
@@ -280,7 +278,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     instructor = instructorDataBaseHelper.getInstructorByEmail(email);
                     List<String> coursesTaughtByInstructor = instructor.getCoursesTaught();
                     for (String course : coursesTaughtByInstructor) {
-                        if (course.equals(courseDataBaseHelper.getCourseName(value))) {
+                        if (value==Integer.parseInt(course)) {
                             checkInstructor = true;
                             break;
                         }
@@ -291,7 +289,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             availableCourses = dbHelper.getAvailableCourseByCourse_Id(courseId);
                             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                                 AvailableCourse availableCourse = lCourseInfo.getFirst();
-                                if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), selectedValue)&&(value!=availableCourse.getCourseId())) {
+                                if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), courseSchedule)&&(value!=availableCourse.getCourseId())) {
                                     Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This  Course Are you Registration it " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
                                     check = true;
                                     break;
@@ -300,8 +298,8 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             if (check)
                                 break;
                         }
-                        AvailableCourse availableCourse = new AvailableCourse(value, lDeadLine, lEditStartDate, selectedValue, venue, lEditEndDate);
-                        availableCourse.setReg(key);
+                        AvailableCourse availableCourse = new AvailableCourse(value, lDeadLine, lEditStartDate, courseSchedule, venue, lEditEndDate);
+                        availableCourse.setReg(value);
                         if (!check) {
                             if (dbHelper.updateAvailableCourse(availableCourse, email)) {
                                 List<String> students = enrollmentDataBaseHelper.getStudentsByCourseId(value);

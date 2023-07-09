@@ -318,7 +318,7 @@ public class SignUPMainActivity extends AppCompatActivity {
             for (String s : splitArray) {
                 if (s.matches("^-?\\d+$")) {
                     if (dbHelperCourse.isCourseExists(Integer.parseInt(s))) {
-                        listOfCourses.add(dbHelperCourse.getCourseName(Integer.parseInt(s)));
+                        listOfCourses.add(s);
                     } else {
                         Toast.makeText(SignUPMainActivity.this, "This Course : " + s + " Not Found", Toast.LENGTH_SHORT).show();
                     }
