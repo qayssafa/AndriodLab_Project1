@@ -1,8 +1,12 @@
 package com.example.andriodlab_project1.instructor;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
@@ -10,9 +14,11 @@ import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
 import com.example.andriodlab_project1.databinding.ActivityInstructorProfileBinding;
 
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.andriodlab_project1.R;
@@ -28,7 +34,15 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
     TextView instructorName;
     Button editProfile;
 
+    ImageView changeimages;
+
+    Button changeImagesButton;
+
     private InstructorDataBaseHelper instructorDataBaseHelper;
+
+    public static final int PICK_IMAGE_REQUEST = 100;
+    private Uri imageFilePath;
+    private Bitmap imageToStore;
 
 
     @Override
@@ -48,12 +62,26 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
         editProfile = findViewById(R.id.buttonEditProfile);
         instructorName = findViewById(R.id.inccName);
         insEmail = findViewById(R.id.insEmail);
+        changeimages = findViewById(R.id.imageView18);
+        changeImagesButton = findViewById(R.id.changeImage);
 
 
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
         instructorName.setText(instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getFirstName() + " " + instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getLastName());
         Instructor instructor = instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail);
         setInstructorData(instructor);
+        Bitmap Photo1 = instructorDataBaseHelper.getImage(insEmail.getText().toString());
+        if(Photo1 != null) {
+            //courseImageView = findViewById(R.id.imageView4);
+            changeimages.setImageBitmap(Photo1);
+        }
+
+        changeImagesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
 
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +128,13 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                     updatedInstructor.setDegree(degreeText);
                     updatedInstructor.setPassword(passwordText);
                     updatedInstructor.setEmail(insEmailText);
+                    if(imageToStore != null){
+                        changeimages.setImageBitmap(imageToStore);
+                    }
+                    if(imageToStore != null)
+                        updatedInstructor.setPhoto(imageToStore);
+                    else
+                        updatedInstructor.setPhoto(Photo1);
 
                     instructorDataBaseHelper.updateInstructor(updatedInstructor);
 
@@ -146,5 +181,32 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
         password.setText(instructor.getPassword());
         password.setSelection(password.getText().length());
         password.clearFocus();
+
+        //changeimages.
+    }
+
+    public void chooseImage() {
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                imageFilePath = data.getData();
+                imageToStore = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -23,8 +23,8 @@ import java.util.stream.Collectors;
 
 public class InstructorDataBaseHelper {
     private final DataBaseHelper dbHelper;
-    private byte[] imageBytes;
-    private ByteArrayOutputStream objectByteArrayOutputStream;
+    private byte[] imageBytes,imageBytes2;
+    private ByteArrayOutputStream objectByteArrayOutputStream,objectByteArrayOutputStream2;
 
     public InstructorDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -180,7 +180,11 @@ public class InstructorDataBaseHelper {
         contentValues.put("ADDRESS", instructor.getAddress());
         contentValues.put("SPECIALIZATION", instructor.getSpecialization());
         contentValues.put("DEGREE", instructor.getDegree());
-
+        Bitmap imageStore = instructor.getPhoto();
+        objectByteArrayOutputStream2 = new ByteArrayOutputStream();
+        imageStore.compress(Bitmap.CompressFormat.PNG,100,objectByteArrayOutputStream2);
+        imageBytes2 = objectByteArrayOutputStream2.toByteArray();
+        contentValues.put("PHOTO",imageBytes2);
         // Update the row with matching EMAIL, return the number of rows affected
         return sqLiteDatabase.update("INSTRUCTOR", contentValues, "EMAIL = ?", new String[]{instructor.getEmail()});
     }
