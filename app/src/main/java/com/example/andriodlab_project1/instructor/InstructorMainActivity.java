@@ -4,17 +4,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
+import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.admin.AdminDataBaseHelper;
 import com.example.andriodlab_project1.databinding.ActivityInstructorMainBinding;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
 
 public class InstructorMainActivity extends InstructorDrawerBaswActivity {
 
+    private TextView InstructorName;
+    private InstructorDataBaseHelper instructorDataBaseHelper;
     ActivityInstructorMainBinding activityInstructorMainBinding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,21 +27,10 @@ public class InstructorMainActivity extends InstructorDrawerBaswActivity {
         activityInstructorMainBinding = ActivityInstructorMainBinding.inflate(getLayoutInflater());
         setContentView(activityInstructorMainBinding.getRoot());
         //setContentView(R.layout.activity_instructor_main);
-        Button button = findViewById(R.id.button4);
-        Button button1 = findViewById(R.id.button5);
-        Button button2 = findViewById(R.id.button6);
-        button.setOnClickListener(v -> {
-            Intent intent = new Intent(InstructorMainActivity.this, CoursesPreviouslyTaughtActivity.class);
-            startActivity(intent);
-        });
+        InstructorName = findViewById(R.id.incName);
+        instructorDataBaseHelper = new InstructorDataBaseHelper(this);
+        InstructorName.setText(instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getFirstName() + " " + instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getLastName());
 
-        button1.setOnClickListener(v -> {
-            Intent intent = new Intent(InstructorMainActivity.this, CurrentScheduleActivity.class);
-            startActivity(intent);
-        });
-        button2.setOnClickListener(v -> {
-            Intent intent = new Intent(InstructorMainActivity.this, ViewStudentsActivity.class);
-            startActivity(intent);
-        });
+
     }
 }

@@ -55,8 +55,7 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
         super.onCreate(savedInstanceState);
         activityStudentMainBinding = com.example.andriodlab_project1.databinding.ActivityStudentMainBinding.inflate(getLayoutInflater());
         setContentView(activityStudentMainBinding.getRoot());
-        Button enroll = findViewById(R.id.enrollButtonAndSee);
-        Button messages = findViewById(R.id.messages);
+
         notificationDataBaseHelper=new NotificationDataBaseHelper(this);
         dataBaseHelper = new CourseDataBaseHelper(this);
         TextView studentName = (TextView) findViewById(R.id.StudentName);
@@ -67,15 +66,6 @@ public class StudentMainActivity extends StudentDrawerBaseActivity {
 
         sendCourseReminderNotification();
 
-        enroll.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentMainActivity.this, SearchAndViewCourseAreAvailableActivity.class);
-            startActivity(intent);
-        });
-
-        messages.setOnClickListener(v -> {
-            Intent intent = new Intent(StudentMainActivity.this, SearchCoursesActivity.class);
-            startActivity(intent);
-        });
     }
     private void sendCourseReminderNotification() {
         List<Integer> courses = enrollmentDataBaseHelper.getCoursesByStudentEmail(MainActivity.studentEmail);
