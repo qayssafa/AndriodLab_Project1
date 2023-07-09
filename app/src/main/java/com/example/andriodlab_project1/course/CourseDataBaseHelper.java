@@ -20,8 +20,8 @@ import java.util.Map;
 
 public class CourseDataBaseHelper {
     private static DataBaseHelper dbHelper;
-    private byte[] imageBytes;
-    private ByteArrayOutputStream objectByteArrayOutputStream;
+    private byte[] imageBytes,imageBytes4;
+    private ByteArrayOutputStream objectByteArrayOutputStream,objectByteArrayOutputStream4;
 
     public CourseDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -133,6 +133,12 @@ public class CourseDataBaseHelper {
                 stringBuilderForPre.deleteCharAt(stringBuilderForPre.length() - 1); // Remove the last comma
             }
             contentValues.put("Prerequisites", stringBuilderForPre.toString());
+
+            Bitmap imageStore = course.getPhoto();
+            objectByteArrayOutputStream4 = new ByteArrayOutputStream();
+            imageStore.compress(Bitmap.CompressFormat.PNG,100,objectByteArrayOutputStream4);
+            imageBytes4 = objectByteArrayOutputStream4.toByteArray();
+            contentValues.put("PHOTO",imageBytes4);
 
             //Photo
             int rowsAffected = sqLiteDatabase.update("COURSE", contentValues, "COURSE_ID = ?", new String[]{String.valueOf(course.getCourseID())});

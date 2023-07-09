@@ -1,11 +1,15 @@
 package com.example.andriodlab_project1.course;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,11 +40,17 @@ public class EditPageActivity extends AppCompatActivity {
     private TextView id;
     private Button SubmitDataButton;
 
+    private Button insertPhoto;
     private ImageButton GoBackButton;
     private boolean[] selectedContinents;
     private ArrayList<String> continentsList;
     private Map.Entry<String, String> entry;
     private String value;
+
+    public static final int PICK_IMAGE_REQUEST = 100;
+    private Uri imageFilePath;
+    private Bitmap imageToStoreNew;
+
 
 
     private int idF;
@@ -57,6 +67,7 @@ public class EditPageActivity extends AppCompatActivity {
         Prerequisites = findViewById(R.id.Editlist);
         id = findViewById(R.id.courseIdNew);
         GoBackButton = findViewById(R.id.BackButton);
+        insertPhoto = findViewById(R.id.InsertPhotoButton);
 
         continents = dbHelper.getAllCourses();
         SubmitDataButton = findViewById(R.id.EditUpdate);
@@ -88,6 +99,14 @@ public class EditPageActivity extends AppCompatActivity {
             });
             builder.show();
         });
+
+        insertPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                chooseImage();
+            }
+        });
+
         SubmitDataButton.setOnClickListener(v -> {
 
             while (CourseTitleInput.getText().toString().isEmpty() || CourseTitleInput.getText().toString().isBlank()) {
@@ -98,8 +117,14 @@ public class EditPageActivity extends AppCompatActivity {
             while (CourseMainTopicsInput.getText().toString().isEmpty() || CourseMainTopicsInput.getText().toString().isBlank()) {
                 Toast.makeText(EditPageActivity.this, "This Course Title not Valid!", Toast.LENGTH_SHORT).show();
             }
+            Bitmap Photo1 = dbHelper.getImage(courseName);
             ArrayList<String> courseTopics = convertStringToList(CourseMainTopicsInput.getText().toString());
-            Course course = new Course(courseName, courseTopics, continentsList, null);
+            Bitmap toSave;
+            if(imageToStoreNew != null)
+                toSave = imageToStoreNew;
+            else
+                toSave = Photo1;
+            Course course = new Course(courseName, courseTopics, continentsList, toSave);
             course.setCourseID(EditOrDeleteAnExistingCourseActivity.id);
             if (dbHelper.updateCourse(course)) {
                 ArrayList<String> studentsAreTakenCourse = enrollmentDataBaseHelper.getStudentsByCourseId(EditOrDeleteAnExistingCourseActivity.id);
@@ -153,6 +178,31 @@ public class EditPageActivity extends AppCompatActivity {
         }
 
         return array;
+    }
+
+    public void chooseImage() {
+        try {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        try {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+                imageFilePath = data.getData();
+                imageToStoreNew = MediaStore.Images.Media.getBitmap(getContentResolver(), imageFilePath);
+
+            }
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
