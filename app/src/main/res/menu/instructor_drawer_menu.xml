@@ -13,15 +13,15 @@
                         android:title="@string/menu_home" />
                     <item
                         android:id="@+id/CoursesPreviouslyTaughtActivity"
-                        android:icon="@drawable/baseline_search_24"
+                        android:icon="@drawable/baseline_history_24"
                         android:title="@string/CoursesPreviouslyTaughtActivity" />
                     <item
                         android:id="@+id/CurrentSchedule"
-                        android:icon="@drawable/baseline_notifications_24"
+                        android:icon="@drawable/baseline_event_available_24"
                         android:title="@string/CurrentSchedule" />
                     <item
                         android:id="@+id/ViewStudentsActivity"
-                        android:icon="@drawable/baseline_notifications_24"
+                        android:icon="@drawable/baseline_supervised_user_circle_24"
                         android:title="@string/ViewStudentsActivity" />
 
                 </group>

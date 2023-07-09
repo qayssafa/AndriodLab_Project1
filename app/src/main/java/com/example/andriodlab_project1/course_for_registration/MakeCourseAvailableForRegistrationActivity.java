@@ -232,6 +232,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             String venue = Venue.getText().toString();
 
             //String courseSchedule = CourseSchedule.getText().toString();
+
             String instructorName = InstructorName.getText().toString();
             String lDeadLine = deadLine.getText().toString();
             String lEditStartDate = editStartDate.getText().toString();

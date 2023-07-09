@@ -137,6 +137,19 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     key = entry.getKey();
                     value=entry.getValue();
                     CourseNumber.setText(String.valueOf(value));
+
+                    availableCourses = dbHelper.getAvailableCourseByCourse_Id(value);
+                    for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
+                        AvailableCourse availableCourse = lCourseInfo.getFirst();
+                        Venue.setText(availableCourse.getVenue());
+                        CourseSchedule.setText(availableCourse.getCourseSchedule());
+                        InstructorName.setText(lCourseInfo.getSecond());
+                        deadLine.setText(availableCourse.getRegistrationDeadline());
+                        editStartDate.setText(availableCourse.getCourseStartDate());
+                        editEndDate.setText(availableCourse.getCourseEndDate());
+
+                    }
+
                 });
                 builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
@@ -279,7 +292,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                                 AvailableCourse availableCourse = lCourseInfo.getFirst();
                                 if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), courseSchedule)&&(value!=availableCourse.getCourseId())) {
-                                    Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Course " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This  Course Are you Registration it " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
                                     check = true;
                                     break;
                                 }
