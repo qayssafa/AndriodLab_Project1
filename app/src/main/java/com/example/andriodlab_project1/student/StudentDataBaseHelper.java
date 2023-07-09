@@ -22,8 +22,8 @@ import java.util.Map;
 
 public class StudentDataBaseHelper {
     private final DataBaseHelper dbHelper;
-    private byte[] imageBytes;
-    private ByteArrayOutputStream objectByteArrayOutputStream;
+    private byte[] imageBytes,imageBytes3;
+    private ByteArrayOutputStream objectByteArrayOutputStream,objectByteArrayOutputStream3;
 
     public StudentDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -159,6 +159,11 @@ public class StudentDataBaseHelper {
         contentValues.put("PASSWORD", student.getPassword());
         contentValues.put("MOBILENUMBER", student.getMobileNumber());
         contentValues.put("ADDRESS", student.getAddress());
+        Bitmap imageStore = student.getPhoto();
+        objectByteArrayOutputStream3 = new ByteArrayOutputStream();
+        imageStore.compress(Bitmap.CompressFormat.PNG,100,objectByteArrayOutputStream3);
+        imageBytes3 = objectByteArrayOutputStream3.toByteArray();
+        contentValues.put("PHOTO",imageBytes3);
 
         String email = student.getEmail();
         return sqLiteDatabase.update("STUDENT", contentValues, "EMAIL = ?", new String[]{email});
