@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student.CoursesStudiedActivity">
+    tools:context=".student.CoursessStudiedActivity">
 
     <ImageView
         android:id="@+id/imageView21"
@@ -17,7 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        tools:srcCompat="@drawable/studied" />
+        app:srcCompat="@drawable/ff" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.288">
+        app:layout_constraintVertical_bias="0.226">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -56,25 +56,25 @@
                         android:layout_width="20dp"
                         android:layout_height="wrap_content"
                         android:layout_margin="1dp"
+                        android:gravity="center"
                         android:padding="5dp"
                         android:text="Course id"
-                        android:gravity="center"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:padding="5dp"
                         android:text="Course Title"
-                        android:gravity="center"
                         android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="70dp"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:padding="5dp"
                         android:text="time"
-                        android:gravity="center"
                         android:textStyle="bold" />
 
 
@@ -82,4 +82,6 @@
             </TableLayout>
         </HorizontalScrollView>
     </ScrollView>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

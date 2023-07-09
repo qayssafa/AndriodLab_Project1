@@ -19,8 +19,11 @@
         android:theme="@style/Theme.AndriodLab_Project1"
         tools:targetApi="31">
         <activity
+            android:name=".student.CoursessStudiedActivity"
+            android:exported="false" />
+        <activity
             android:name=".common.FirstPage"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -106,12 +109,8 @@
             android:name=".student.CourseWithdrawActivity"
             android:exported="false" />
         <activity
-            android:name=".student.CoursesStudiedActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.andriodlab_project1.student.CourseWithdrawActivity;
-import com.example.andriodlab_project1.student.CoursesStudiedActivity;
+import com.example.andriodlab_project1.student.CoursessStudiedActivity;
 import com.example.andriodlab_project1.student.OfferingCoursesInStudentActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
@@ -71,7 +71,7 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CoursesStudiedInTheCenter) {
-            startActivity(new Intent(StudentDrawerBaseActivity.this, CoursesStudiedActivity.class));
+            startActivity(new Intent(StudentDrawerBaseActivity.this, CoursessStudiedActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CourseWithdraw) {

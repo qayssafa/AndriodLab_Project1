@@ -14,21 +14,24 @@ import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
+import com.example.andriodlab_project1.databinding.ActivityCoursessStudiedBinding;
 
 import java.util.List;
 import java.util.Map;
 
 import kotlin.Triple;
 
-public class CoursesStudiedActivity extends StudentDrawerBaseActivity {
 
-    ActivityCoursesStudiedInTheCenterBinding activityCoursesStudiedInTheCenterBinding;
+public class CoursessStudiedActivity extends StudentDrawerBaseActivity {
+
+    ActivityCoursessStudiedBinding activityCoursessStudiedInTheCenterBinding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        activityCoursesStudiedInTheCenterBinding = ActivityCoursesStudiedInTheCenterBinding.inflate(getLayoutInflater());
-        setContentView(activityCoursesStudiedInTheCenterBinding.getRoot());
+        activityCoursessStudiedInTheCenterBinding = ActivityCoursessStudiedBinding.inflate(getLayoutInflater());
+        setContentView(activityCoursessStudiedInTheCenterBinding.getRoot());
+
         //setContentView(R.layout.activity_courses_studied_in_the_center);
         TextView courseNumber;
         TextView courseTitle;
