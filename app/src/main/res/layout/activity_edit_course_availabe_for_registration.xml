@@ -11,6 +11,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/editreg" />
 
     <TextView
@@ -140,11 +143,15 @@
 
     <TextView
         android:id="@+id/CourseNumberTextViewEdit"
-        android:layout_width="433dp"
-        android:layout_height="52dp"
-        android:background="#C4C7CA"
-        app:layout_constraintTop_toTopOf="@+id/imageView20"
-        tools:layout_editor_absoluteX="0dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.763"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.473" />
+
     <ImageView
         android:id="@+id/imageView12"
         android:layout_width="40dp"

@@ -242,7 +242,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             check = false;
             checkInstructor = false;
             String venue = Venue.getText().toString();
-            String courseSchedule = CourseSchedule.getText().toString();
+            //String courseSchedule = CourseSchedule.getText().toString();
             String instructorName = InstructorName.getText().toString();
             String lDeadLine = deadLine.getText().toString();
             String lEditStartDate = editStartDate.getText().toString();
@@ -271,7 +271,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This DeadLine Date not Valid!", Toast.LENGTH_SHORT).show();
             } else if (!isEndDateAfterStartDate(lEditStartDate, lDeadLine)) {
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Start Date And DeadLine Date  not Valid!", Toast.LENGTH_SHORT).show();
-            } else if (courseSchedule.isEmpty() || courseSchedule.isBlank()) {
+            } else if (selectedValue.isEmpty() || selectedValue.isBlank()) {
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This courseSchedule not Valid!", Toast.LENGTH_SHORT).show();
             } else if (venue.isEmpty() || venue.isBlank()) {
                 Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Venue not Valid!", Toast.LENGTH_SHORT).show();
@@ -291,7 +291,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             availableCourses = dbHelper.getAvailableCourseByCourse_Id(courseId);
                             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                                 AvailableCourse availableCourse = lCourseInfo.getFirst();
-                                if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), courseSchedule)&&(value!=availableCourse.getCourseId())) {
+                                if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), selectedValue)&&(value!=availableCourse.getCourseId())) {
                                     Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This  Course Are you Registration it " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
                                     check = true;
                                     break;
@@ -300,7 +300,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             if (check)
                                 break;
                         }
-                        AvailableCourse availableCourse = new AvailableCourse(value, lDeadLine, lEditStartDate, courseSchedule, venue, lEditEndDate);
+                        AvailableCourse availableCourse = new AvailableCourse(value, lDeadLine, lEditStartDate, selectedValue, venue, lEditEndDate);
                         availableCourse.setReg(key);
                         if (!check) {
                             if (dbHelper.updateAvailableCourse(availableCourse, email)) {
