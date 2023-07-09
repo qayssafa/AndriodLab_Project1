@@ -29,7 +29,7 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
 
     ActivityInstructorProfileBinding activityInstructorProfileBinding;
 
-    EditText firstName, lastName, mobileNumber, address, specialization, degree, password,insEmail;
+    EditText firstName, lastName, mobileNumber, address, specialization, degree, password,insEmail, inscourses;
 
     TextView instructorName;
     Button editProfile;
@@ -64,6 +64,7 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
         insEmail = findViewById(R.id.insEmail);
         changeimages = findViewById(R.id.imageView18);
         changeImagesButton = findViewById(R.id.changeImage);
+        inscourses = findViewById(R.id.inscourses);
 
 
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
