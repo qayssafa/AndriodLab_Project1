@@ -142,10 +142,12 @@
         android:textColorLink="#FA1212"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.641"
+        app:layout_constraintHorizontal_bias="0.649"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.179" />
+        app:layout_constraintVertical_bias="0.175"
+        android:textStyle="bold"
+        android:textColor="#65AFFB"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
