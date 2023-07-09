@@ -270,7 +270,7 @@ public class MakeCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     instructor = instructorDataBaseHelper.getInstructorByEmail(email);
                     List<String> coursesTaughtByInstructor = instructor.getCoursesTaught();
                     for (String course : coursesTaughtByInstructor) {
-                        if (name.equals(course)) {
+                        if (Integer.parseInt(value)==Integer.parseInt(course)) {
                             checkInstructor = true;
                             break;
                         }
