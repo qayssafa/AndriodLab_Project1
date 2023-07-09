@@ -226,7 +226,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                             for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
                                 AvailableCourse availableCourse = lCourseInfo.getFirst();
                                 if (searchAndViewCourseAreAvailableActivity.isTimeConflict(availableCourse.getCourseSchedule(), courseSchedule)&&(value!=availableCourse.getCourseId())) {
-                                    Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This Course " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "This  Course Are you Registration it " + courseDataBaseHelper.getCourseName(availableCourse.getCourseId()) + " Schedule its Conflict With this Instructor.", Toast.LENGTH_SHORT).show();
                                     check = true;
                                     break;
                                 }
@@ -261,7 +261,6 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             }
         });
     }
-
     public static boolean isEndDateAfterStartDate(String startDateString, String endDateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(startDateString, formatter);

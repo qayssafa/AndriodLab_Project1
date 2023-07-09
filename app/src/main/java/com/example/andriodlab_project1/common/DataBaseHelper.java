@@ -11,7 +11,7 @@ import com.example.andriodlab_project1.instructor.InstructorDataBaseHelper;
 import com.example.andriodlab_project1.student.StudentDataBaseHelper;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "my_database11";
+    private static final String DATABASE_NAME = "FinalProject";
     private static final int DATABASE_VERSION = 1;
 
     public DataBaseHelper(Context context) {

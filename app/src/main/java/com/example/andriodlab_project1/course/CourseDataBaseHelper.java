@@ -97,7 +97,6 @@ public class CourseDataBaseHelper {
             if (rowsAffected > 0) {
                 sqLiteDatabase.delete("AvailableCourse", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
                 sqLiteDatabase.delete("enrollments", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
-                sqLiteDatabase.delete("APPLICANT", "COURSE_ID = ?", new String[]{String.valueOf(courseId)});
 
             }
 

@@ -48,35 +48,6 @@ public class MainActivity extends AppCompatActivity {
         adminDataBaseHelper = new AdminDataBaseHelper(this);
         studentDataBaseHelper = new StudentDataBaseHelper(this);
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
-        Admin newUser = new Admin();
-        Student student=new Student();
-        Instructor instructor=new Instructor();
-        newUser.setEmail("A");
-        newUser.setFirstName("John");
-        newUser.setLastName("Doe");
-        newUser.setPassword("1");
-        adminDataBaseHelper.insertAdmin(newUser);
-        student.setEmail("S");
-        student.setFirstName("Joh1n");
-        student.setLastName("Do1e");
-        student.setPassword("1");
-        student.setMobileNumber("123131323141323123");
-        student.setAddress("sadaad");
-        //studentDataBaseHelper.insertStudent(student);
-        instructor.setDegree("@13");
-        instructor.setSpecialization("@13");
-        instructor.setMobileNumber("@13");
-        instructor.setPassword("1");
-        instructor.setAddress("@13");
-        instructor.setLastName("Safa");
-        instructor.setFirstName("Qays");
-        instructor.setEmail("I");
-        List<String>courses=new ArrayList<>();
-        courses.add("1");
-        courses.add("2");
-        courses.add("3");
-        instructor.setCoursesTaught(courses);
-        //instructorDataBaseHelper.insertInstructor(instructor);
 
         // buttons and text views
         EditText email = findViewById(R.id.etEmail);
