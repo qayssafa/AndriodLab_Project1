@@ -91,5 +91,17 @@ public class EnrollmentDataBaseHelper {
         }
         return courseIds;
     }
+    public boolean deleteEnrollment(int courseId, String studentEmail) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+
+        String tableName = "enrollments";
+        String whereClause = "COURSE_ID = ? AND EMAIL = ?";
+        String[] whereArgs = {String.valueOf(courseId), studentEmail};
+
+        int rowsDeleted = sqLiteDatabase.delete(tableName, whereClause, whereArgs);
+        return rowsDeleted > 0;
+    }
+
+
 
 }

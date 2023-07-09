@@ -39,7 +39,7 @@ public class OfferingCoursesInStudentActivity  extends StudentDrawerBaseActivity
         TextView courseTitle;
         TextView startTime;
         TextView instructorName;
-        TableLayout tableLayout = findViewById(R.id.tableToSearchCourses);
+        TableLayout tableLayout = findViewById(R.id.tableForConductedCourses);
         AvailableCourseDataBaseHelper availableCourseDataBaseHelper = new AvailableCourseDataBaseHelper(this);
         CourseDataBaseHelper dbHelper = new CourseDataBaseHelper(this);
         List<Map.Entry<String, String>> allCourses = availableCourseDataBaseHelper.getAllCoursesForRegistration();
