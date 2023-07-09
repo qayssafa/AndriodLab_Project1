@@ -97,6 +97,19 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     key = entry.getKey();
                     value=entry.getValue();
                     CourseNumber.setText(String.valueOf(value));
+
+                    availableCourses = dbHelper.getAvailableCourseByCourse_Id(value);
+                    for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
+                        AvailableCourse availableCourse = lCourseInfo.getFirst();
+                        Venue.setText(availableCourse.getVenue());
+                        CourseSchedule.setText(availableCourse.getCourseSchedule());
+                        InstructorName.setText(lCourseInfo.getSecond());
+                        deadLine.setText(availableCourse.getRegistrationDeadline());
+                        editStartDate.setText(availableCourse.getCourseStartDate());
+                        editEndDate.setText(availableCourse.getCourseEndDate());
+
+                    }
+
                 });
                 builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
@@ -261,6 +274,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             }
         });
     }
+
     public static boolean isEndDateAfterStartDate(String startDateString, String endDateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(startDateString, formatter);
