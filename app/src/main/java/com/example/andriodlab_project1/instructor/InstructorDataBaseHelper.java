@@ -169,4 +169,20 @@ public class InstructorDataBaseHelper {
         return emailAndNameList;
     }
 
+    public int updateInstructor(Instructor instructor) {
+        SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("EMAIL", instructor.getEmail());
+        contentValues.put("FIRSTNAME", instructor.getFirstName());
+        contentValues.put("LASTNAME", instructor.getLastName());
+        contentValues.put("PASSWORD", instructor.getPassword());
+        contentValues.put("MOBILE_NUMBER", instructor.getMobileNumber());
+        contentValues.put("ADDRESS", instructor.getAddress());
+        contentValues.put("SPECIALIZATION", instructor.getSpecialization());
+        contentValues.put("DEGREE", instructor.getDegree());
+
+        // Update the row with matching EMAIL, return the number of rows affected
+        return sqLiteDatabase.update("INSTRUCTOR", contentValues, "EMAIL = ?", new String[]{instructor.getEmail()});
+    }
+
 }

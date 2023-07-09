@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <TextView
-        android:id="@+id/AdminName"
+        android:id="@+id/inccName"
         android:layout_width="171dp"
         android:layout_height="47dp"
         android:textSize="30dp"

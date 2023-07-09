@@ -15,6 +15,7 @@ import android.widget.FrameLayout;
 import com.example.andriodlab_project1.instructor.CoursesPreviouslyTaughtActivity;
 import com.example.andriodlab_project1.instructor.CurrentScheduleActivity;
 import com.example.andriodlab_project1.instructor.InstructorMainActivity;
+import com.example.andriodlab_project1.instructor.InstructorProfileActivity;
 import com.example.andriodlab_project1.instructor.ViewStudentsActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
@@ -67,7 +68,7 @@ public class InstructorDrawerBaswActivity extends AppCompatActivity implements N
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.profile) {
-            startActivity(new Intent(InstructorDrawerBaswActivity.this, ViewEditProfile.class));
+            startActivity(new Intent(InstructorDrawerBaswActivity.this, InstructorProfileActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.logout) {
