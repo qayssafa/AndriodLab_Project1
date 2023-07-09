@@ -58,61 +58,72 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.485">
 
-        <TableLayout
-            android:id="@+id/student_message_table"
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:stretchColumns="*">
+            android:fillViewport="true">
 
-            <!-- Header row -->
-            <TableRow
-                android:layout_width="match_parent"
+            <TableLayout
+                android:id="@+id/student_message_table"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="#CCC">
+                android:stretchColumns="*">
 
-                <TextView
-                    android:layout_width="4dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="Course Title"
-                    android:textStyle="bold" />
+                <!-- Header row -->
+                <TableRow
+                    android:background="#CCC">
 
-                <TextView
-                    android:layout_width="4dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Start Date"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="Course Title"
+                        android:gravity="center"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:layout_width="4dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="End Date"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Start Date"
+                        android:gravity="center"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="Schedule"
-                    android:textStyle="bold" />
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="End Date"
+                        android:gravity="center"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="4dp"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="Instructor" />
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:text="Schedule"
+                        android:gravity="center"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="4dp"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="Venue" />
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="110dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="Instructor" />
 
-            </TableRow>
-        </TableLayout>
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:gravity="center"
+                        android:text="Venue" />
+
+                </TableRow>
+            </TableLayout>
+        </HorizontalScrollView>
     </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

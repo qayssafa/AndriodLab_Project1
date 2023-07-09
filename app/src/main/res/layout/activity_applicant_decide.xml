@@ -65,30 +65,36 @@
             android:stretchColumns="*">
 
             <!-- Table Header -->
-            <TableRow>
+            <TableRow
+                android:background="#CCC">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
-                    android:background="@android:color/white"
                     android:padding="5dp"
                     android:text="Applicant id"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxLines="5"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Course  Name"
-                    android:textStyle="bold" />
+                    android:text="Course Name"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxLines="5"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Student Email"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:maxLines="5"/>
             </TableRow>
         </TableLayout>
     </ScrollView>

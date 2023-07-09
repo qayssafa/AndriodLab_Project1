@@ -41,11 +41,12 @@
             <TableRow android:background="#CCC">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="1dp"
                     android:padding="5dp"
                     android:text="Course id"
+                    android:gravity="center"
                     android:textStyle="bold" />
 
                 <TextView
@@ -53,13 +54,15 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Course title"
+                    android:gravity="center"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:text="Schedule"
+                    android:gravity="center"
                     android:textStyle="bold" />
 
             </TableRow>

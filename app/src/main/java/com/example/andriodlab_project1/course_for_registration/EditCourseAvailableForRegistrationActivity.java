@@ -4,8 +4,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +37,9 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
     private EditText CourseSchedule;
     private EditText Venue;
     private TextView CourseNumber;
+    private Spinner courseSchedule;
+    private String selectedValue;
+
 
     private List<Map.Entry<Integer, Integer>> continents;
     private AvailableCourseDataBaseHelper dbHelper;
@@ -68,6 +75,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         Venue = (EditText) findViewById(R.id.VenueEditTextEdit);
         CourseNumber = (TextView) findViewById(R.id.CourseNumberTextViewEdit);
         Button submit = findViewById(R.id.submitEdit);
+        courseSchedule = (Spinner)findViewById(R.id.spinner);
 
         check = false;
         checkInstructor = false;
@@ -80,6 +88,38 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
         continents = dbHelper.getAllCoursesAreAvailableForRegistrationWithRegId();
         instructor = new Instructor();
+
+        String[] courseScheduleOptions = {
+                "M,W 8:00AM-9:00AM",
+                "M,W 9:30AM-10:30AM",
+                "M,W 11:00AM-12:00PM",
+                "M,W 12:30PM-1:30PM",
+                "M,W 2:00PM-3:30PM",
+                "M 8:00AM-10:00AM",
+                "M 11:00AM-1:00PM",
+                "M 2:00PM-4:00PM",
+                "W 8:00AM-10:00AM",
+                "W 11:00AM-1:00PM",
+                "W 2:00PM-4:00PM",
+                "T,R 8:00AM-9:00AM",
+                "T,R 9:30AM-10:30AM",
+                "T,R 11:00AM-12:00PM",
+                "T,R 12:30PM-1:30PM",
+                "T,R 2:00PM-3:30PM",
+                "T 8:00AM-10:00AM",
+                "T 1:00AM-1:00PM",
+                "T 2:00PM-4:00PM",
+                "R 8:00AM-10:00AM",
+                "R 11:00AM-1:00PM",
+                "R 2:00PM-4:00PM",
+                "S,M 9:30AM-10:30AM",
+                "S,M 11:00AM-12:00PM",
+                "S,W 9:30AM-10:30AM",
+                "S,W 11:00AM-12:00PM",
+                "S 8:00AM-10:00AM",
+                "S 11:00AM-1:00PM",
+                "S 2:00PM-4:00PM"
+        };
 
 
         if (!continents.isEmpty()) {
@@ -97,6 +137,19 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
                     key = entry.getKey();
                     value=entry.getValue();
                     CourseNumber.setText(String.valueOf(value));
+
+                    availableCourses = dbHelper.getAvailableCourseByCourse_Id(value);
+                    for (Triple<AvailableCourse, String, Integer> lCourseInfo : availableCourses) {
+                        AvailableCourse availableCourse = lCourseInfo.getFirst();
+                        Venue.setText(availableCourse.getVenue());
+                        CourseSchedule.setText(availableCourse.getCourseSchedule());
+                        InstructorName.setText(lCourseInfo.getSecond());
+                        deadLine.setText(availableCourse.getRegistrationDeadline());
+                        editStartDate.setText(availableCourse.getCourseStartDate());
+                        editEndDate.setText(availableCourse.getCourseEndDate());
+
+                    }
+
                 });
                 builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
 
@@ -172,6 +225,19 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
         } else {
             Toast.makeText(EditCourseAvailableForRegistrationActivity.this, "No Courses Are found.", Toast.LENGTH_SHORT).show();
         }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, courseScheduleOptions);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        courseSchedule.setAdapter(adapter);
+        courseSchedule.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedValue = parent.getItemAtPosition(position).toString();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
         submit.setOnClickListener(v -> {
             check = false;
             checkInstructor = false;
@@ -261,6 +327,7 @@ public class EditCourseAvailableForRegistrationActivity extends DrawerBaseActivi
             }
         });
     }
+
     public static boolean isEndDateAfterStartDate(String startDateString, String endDateString) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate startDate = LocalDate.parse(startDateString, formatter);
