@@ -70,9 +70,6 @@
             android:name=".student.SearchAndViewCourseAreAvailableActivity"
             android:exported="false" />
         <activity
-            android:name=".student.OfferingCoursesInStudentViewActivity"
-            android:exported="false" />
-        <activity
             android:name=".student.messages"
             android:exported="false" />
         <activity

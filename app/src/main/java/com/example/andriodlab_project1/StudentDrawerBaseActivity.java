@@ -15,7 +15,6 @@ import android.widget.FrameLayout;
 import com.example.andriodlab_project1.student.CourseWithdrawActivity;
 import com.example.andriodlab_project1.student.CoursesStudiedInTheCenterActivity;
 import com.example.andriodlab_project1.student.OfferingCoursesInStudentActivity;
-import com.example.andriodlab_project1.student.OfferingCoursesInStudentViewActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
