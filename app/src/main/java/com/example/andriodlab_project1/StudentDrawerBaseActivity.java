@@ -13,13 +13,12 @@ import android.view.View;
 import android.widget.FrameLayout;
 
 import com.example.andriodlab_project1.student.CourseWithdrawActivity;
-import com.example.andriodlab_project1.student.CoursesStudiedInTheCenterActivity;
+import com.example.andriodlab_project1.student.CoursesStudiedActivity;
 import com.example.andriodlab_project1.student.OfferingCoursesInStudentActivity;
 import com.example.andriodlab_project1.student.SearchAndViewCourseAreAvailableActivity;
 import com.example.andriodlab_project1.student.SearchCoursesActivity;
 import com.example.andriodlab_project1.student.StudentMainActivity;
 import com.example.andriodlab_project1.student.StudentProfileActivity;
-import com.example.andriodlab_project1.student.ViewEditProfile;
 import com.example.andriodlab_project1.student.messages;
 import com.google.android.material.navigation.NavigationView;
 
@@ -72,7 +71,7 @@ public class StudentDrawerBaseActivity extends AppCompatActivity implements Navi
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CoursesStudiedInTheCenter) {
-            startActivity(new Intent(StudentDrawerBaseActivity.this, CoursesStudiedInTheCenterActivity.class));
+            startActivity(new Intent(StudentDrawerBaseActivity.this, CoursesStudiedActivity.class));
             overridePendingTransition(0, 0);
             finish();
         }else if (id == R.id.CourseWithdraw) {

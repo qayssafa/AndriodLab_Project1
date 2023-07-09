@@ -12,6 +12,7 @@ import android.os.Bundle;
 import com.example.andriodlab_project1.InstructorDrawerBaswActivity;
 import com.example.andriodlab_project1.MainActivity;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.databinding.ActivityInstructorProfileBinding;
 
 import android.provider.MediaStore;
@@ -22,7 +23,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.andriodlab_project1.R;
+import com.example.andriodlab_project1.signup.SignUPMainActivity;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
@@ -39,6 +43,7 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
     Button changeImagesButton;
 
     private InstructorDataBaseHelper instructorDataBaseHelper;
+    private CourseDataBaseHelper dbHelperCourse;
 
     public static final int PICK_IMAGE_REQUEST = 100;
     private Uri imageFilePath;
@@ -68,8 +73,11 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
 
 
         instructorDataBaseHelper = new InstructorDataBaseHelper(this);
+        dbHelperCourse = new CourseDataBaseHelper(this);
+
         instructorName.setText(instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getFirstName() + " " + instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail).getLastName());
         Instructor instructor = instructorDataBaseHelper.getInstructorByEmail(MainActivity.instructorEmail);
+        instructor.setCoursesTaught(instructor.getCoursesTaught());
         setInstructorData(instructor);
         Bitmap Photo1 = instructorDataBaseHelper.getImage(insEmail.getText().toString());
         if(Photo1 != null) {
@@ -97,7 +105,9 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                 String passwordText = password.getText().toString();
                 String insEmailText = insEmail.getText().toString();
                 String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+                String in=inscourses.getText().toString();
                 Pattern emailPattern = Pattern.compile(emailRegex);
+
 
                 if (firstNameText.isEmpty() || firstNameText.isBlank() || firstNameText.length() < 3 || firstNameText.length() > 20) {
                     Toast.makeText(InstructorProfileActivity.this, "First name must be between 3 and 20 characters!", Toast.LENGTH_SHORT).show();
@@ -118,8 +128,10 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                 }
                 else if (insEmailText.isEmpty() || insEmailText.isBlank() || !emailPattern.matcher(insEmailText).matches()) {
                     showToastMessage("This Email not Valid!");
-                }
-                else {
+                } else if (insEmailText.isEmpty() || insEmailText.isBlank()) {
+                    showToastMessage("This courses not Valid!");
+
+                } else {
                     Instructor updatedInstructor = new Instructor();
                     updatedInstructor.setFirstName(firstNameText);
                     updatedInstructor.setLastName(lastNameText);
@@ -129,6 +141,7 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
                     updatedInstructor.setDegree(degreeText);
                     updatedInstructor.setPassword(passwordText);
                     updatedInstructor.setEmail(insEmailText);
+                    updatedInstructor.setCoursesTaught(convertStringToList(inscourses.getText().toString()));
                     if(imageToStore != null){
                         changeimages.setImageBitmap(imageToStore);
                     }
@@ -182,7 +195,7 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
         password.setText(instructor.getPassword());
         password.setSelection(password.getText().length());
         password.clearFocus();
-
+        inscourses.setText(convertListToString(instructor.getCoursesTaught()));
         //changeimages.
     }
 
@@ -209,5 +222,36 @@ public class InstructorProfileActivity extends InstructorDrawerBaswActivity {
         } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+    }
+    public List<String> convertStringToList(String input) {
+        ArrayList<String> listOfCourses = new ArrayList<>();
+        if (input.isEmpty() || input.isBlank()) {
+            Toast.makeText(InstructorProfileActivity.this, "This Courses not Valid!", Toast.LENGTH_SHORT).show();
+            return null;
+        } else {
+            String[] splitArray = input.split(","); // Split the string by space
+            for (String s : splitArray) {
+                if (s.matches("^-?\\d+$")) {
+                    if (dbHelperCourse.isCourseExists(Integer.parseInt(s))) {
+                        listOfCourses.add(s);
+                    } else {
+                        Toast.makeText(InstructorProfileActivity.this, "This Course : " + s + " Not Found", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Toast.makeText(InstructorProfileActivity.this, "This Course : " + s + " Not Valid", Toast.LENGTH_SHORT).show();
+                }
+            }
+            return listOfCourses; // Convert array to list
+        }
+    }
+    public String convertListToString(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String element : list) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1); // Remove the last comma
+        }
+        return sb.toString();
     }
 }

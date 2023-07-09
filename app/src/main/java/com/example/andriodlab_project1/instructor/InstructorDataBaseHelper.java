@@ -137,21 +137,6 @@ public class InstructorDataBaseHelper {
         return email;
     }
 
-    public String convertListToString(List<String> list) {
-        StringBuilder sb = new StringBuilder();
-        for (String element : list) {
-            sb.append(element).append(",");
-        }
-        if (sb.length() > 0) {
-            sb.setLength(sb.length() - 1); // Remove the last comma
-        }
-        return sb.toString();
-    }
-
-    public List<String> splitStringToList(String input) {
-        String[] splitArray = input.split(",");
-        return Arrays.asList(splitArray);
-    }
 
     public List<Map.Entry<String, String>> getAllInstructorsEmailAndName() {
         List<Map.Entry<String, String>> emailAndNameList = new ArrayList<>();
@@ -179,6 +164,7 @@ public class InstructorDataBaseHelper {
         contentValues.put("MOBILE_NUMBER", instructor.getMobileNumber());
         contentValues.put("ADDRESS", instructor.getAddress());
         contentValues.put("SPECIALIZATION", instructor.getSpecialization());
+        contentValues.put("COURSES_TAUGHT", convertListToString(instructor.getCoursesTaught()));
         contentValues.put("DEGREE", instructor.getDegree());
         Bitmap imageStore = instructor.getPhoto();
         objectByteArrayOutputStream2 = new ByteArrayOutputStream();
@@ -188,5 +174,18 @@ public class InstructorDataBaseHelper {
         // Update the row with matching EMAIL, return the number of rows affected
         return sqLiteDatabase.update("INSTRUCTOR", contentValues, "EMAIL = ?", new String[]{instructor.getEmail()});
     }
-
+    public List<String> splitStringToList(String input) {
+        String[] splitArray = input.split(",");
+        return Arrays.asList(splitArray);
+    }
+    public String convertListToString(List<String> list) {
+        StringBuilder sb = new StringBuilder();
+        for (String element : list) {
+            sb.append(element).append(",");
+        }
+        if (sb.length() > 0) {
+            sb.setLength(sb.length() - 1); // Remove the last comma
+        }
+        return sb.toString();
+    }
 }

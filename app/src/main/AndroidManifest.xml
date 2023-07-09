@@ -106,7 +106,7 @@
             android:name=".student.CourseWithdrawActivity"
             android:exported="false" />
         <activity
-            android:name=".student.CoursesStudiedInTheCenterActivity"
+            android:name=".student.CoursesStudiedActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

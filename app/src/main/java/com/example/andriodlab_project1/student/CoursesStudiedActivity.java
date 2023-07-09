@@ -1,7 +1,5 @@
 package com.example.andriodlab_project1.student;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -16,14 +14,13 @@ import com.example.andriodlab_project1.course.Course;
 import com.example.andriodlab_project1.course.CourseDataBaseHelper;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourse;
 import com.example.andriodlab_project1.course_for_registration.AvailableCourseDataBaseHelper;
-import com.example.andriodlab_project1.databinding.ActivityCoursesStudiedInTheCenterBinding;
 
 import java.util.List;
 import java.util.Map;
 
 import kotlin.Triple;
 
-public class CoursesStudiedInTheCenterActivity extends StudentDrawerBaseActivity {
+public class CoursesStudiedActivity extends StudentDrawerBaseActivity {
 
     ActivityCoursesStudiedInTheCenterBinding activityCoursesStudiedInTheCenterBinding;
 
