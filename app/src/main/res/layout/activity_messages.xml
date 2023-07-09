@@ -46,7 +46,7 @@
                 android:background="#CCC">
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/courseoneid"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
