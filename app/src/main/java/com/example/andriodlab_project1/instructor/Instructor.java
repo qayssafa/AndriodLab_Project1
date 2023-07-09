@@ -1,5 +1,7 @@
 package com.example.andriodlab_project1.instructor;
 
+import android.graphics.Bitmap;
+
 import com.example.andriodlab_project1.common.User;
 
 import java.util.List;
@@ -10,15 +12,17 @@ public class Instructor extends User {
     private String specialization;
     private String degree;
     private List<String> coursesTaught;
+    private Bitmap photo;
 
     public Instructor(String email, String firstName, String lastName, String password, String mobileNumber,
-                      String address, String specialization, String degree, List<String> coursesTaught) {
+                      String address, String specialization, String degree, List<String> coursesTaught,Bitmap photo) {
         super(email, firstName, lastName, password);
         this.mobileNumber = mobileNumber;
         this.address = address;
         this.specialization = specialization;
         this.degree = degree;
         this.coursesTaught = coursesTaught;
+        this.photo = photo;
     }
 
     public Instructor() {
@@ -63,6 +67,14 @@ public class Instructor extends User {
 
     public void setCoursesTaught(List<String> coursesTaught) {
         this.coursesTaught = coursesTaught;
+    }
+
+    public Bitmap getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Bitmap photo) {
+        this.photo = photo;
     }
 }
 

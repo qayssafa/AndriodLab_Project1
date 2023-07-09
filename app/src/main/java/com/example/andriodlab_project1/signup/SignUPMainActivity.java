@@ -167,7 +167,7 @@ public class SignUPMainActivity extends AppCompatActivity {
                 String checkDegree = checkDegree(bsc, msc, phd);
                 List<String> coursesList = convertStringToList(lListOfCourses);
                 if (checkResult && !coursesList.isEmpty()) {
-                    instructor1 = new Instructor(lEmail, lFirstName, lLastName, lPassword, lPhone, lAddress, lSpecialization, checkDegree, coursesList);
+                    instructor1 = new Instructor(lEmail, lFirstName, lLastName, lPassword, lPhone, lAddress, lSpecialization, checkDegree, coursesList,imageToStore);
                     dbHelperInstructor.insertInstructor(instructor1);
                     Toast.makeText(SignUPMainActivity.this, "Singed Up Successfully", Toast.LENGTH_SHORT).show();
                     firstName.setText("");

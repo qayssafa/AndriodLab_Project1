@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,6 +36,8 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
     TextView instructorSpecialization;
     TextView instructorDegree;
     ImageButton searchInstructor;
+
+    ImageView displayPhotoIns;
     private InstructorDataBaseHelper instructorDataBaseHelper;
     private StudentDataBaseHelper studentDataBaseHelper;
 
@@ -100,7 +103,12 @@ public class ViewInstructorProfileActivity extends DrawerBaseActivity {
                                     instructorAddress.setText("");
                                     instructorSpecialization.setText("");
                                     instructorDegree.setText("");
-
+                                    Bitmap Photo1 = studentDataBaseHelper.getImage(instructor.getEmail());
+                                    if(Photo1 != null) {
+                                        //courseImageView = findViewById(R.id.imageView4);
+                                        displayPhotoIns = findViewById(R.id.imageView18);
+                                        displayPhotoIns.setImageBitmap(Photo1);
+                                    }
                                 }
                             }
                         });

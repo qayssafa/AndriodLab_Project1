@@ -5,12 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import androidx.annotation.Nullable;
 
 import com.example.andriodlab_project1.common.DataBaseHelper;
 import com.example.andriodlab_project1.signup.SignUPMainActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,6 +23,8 @@ import java.util.stream.Collectors;
 
 public class InstructorDataBaseHelper {
     private final DataBaseHelper dbHelper;
+    private byte[] imageBytes;
+    private ByteArrayOutputStream objectByteArrayOutputStream;
 
     public InstructorDataBaseHelper(Context context) {
         dbHelper = new DataBaseHelper(context);
@@ -30,7 +35,7 @@ public class InstructorDataBaseHelper {
         if (isTableCreatedFirstTime("INSTRUCTOR")) {
             SQLiteDatabase sqLiteDatabase = dbHelper.getWritableDatabase();
             sqLiteDatabase.execSQL("CREATE TABLE INSTRUCTOR(EMAIL TEXT PRIMARY KEY, FIRSTNAME TEXT NOT NULL, LASTNAME TEXT NOT NULL, PASSWORD TEXT NOT NULL," +
-                    "MOBILE_NUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL,COURSES_TAUGHT TEXT NOT NULL)");
+                    "MOBILE_NUMBER TEXT NOT NULL,ADDRESS TEXT NOT NULL,SPECIALIZATION TEXT NOT NULL,DEGREE TEXT NOT NULL,COURSES_TAUGHT TEXT NOT NULL,PHOTO BLOB)");
         }
     }
 
@@ -65,6 +70,11 @@ public class InstructorDataBaseHelper {
             contentValues.put("SPECIALIZATION", instructor.getSpecialization());
             contentValues.put("DEGREE", instructor.getDegree());
             contentValues.put("COURSES_TAUGHT", convertListToString(instructor.getCoursesTaught()));
+            Bitmap imageStore = instructor.getPhoto();
+            objectByteArrayOutputStream = new ByteArrayOutputStream();
+            imageStore.compress(Bitmap.CompressFormat.PNG,100,objectByteArrayOutputStream);
+            imageBytes = objectByteArrayOutputStream.toByteArray();
+            contentValues.put("PHOTO",imageBytes);
             sqLiteDatabase.insert("INSTRUCTOR", null, contentValues);
             return true;
         }
@@ -88,6 +98,18 @@ public class InstructorDataBaseHelper {
             instructor.setCoursesTaught(splitStringToList(cursor.getString(8)));
         }
         return instructor;
+    }
+
+    public Bitmap getImage(String Instructor_Email) {
+        Cursor c = dbHelper.getReadableDatabase().rawQuery("SELECT PHOTO FROM INSTRUCTOR WHERE EMAIL = ?", new String[]{Instructor_Email});
+        Bitmap ret = null;
+        if (c.getCount() != 0) {
+            while (c.moveToNext()) {
+                byte[] conv = c.getBlob(0);
+                ret = BitmapFactory.decodeByteArray(conv, 0, conv.length);
+            }
+        }
+        return ret;
     }
 
 
